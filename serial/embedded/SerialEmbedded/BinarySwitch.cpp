@@ -1,6 +1,5 @@
 
-#include "Arduino.h"
-#include "BinarySwitch.hpp"
+#include "BinarySwitch.h"
 
 BinarySwitch::BinarySwitch(const int pin)
 {

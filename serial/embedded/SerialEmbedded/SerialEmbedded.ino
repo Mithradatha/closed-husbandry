@@ -1,10 +1,10 @@
 
-#include "BinarySwitch.hpp"
-#include "FletcherChecksum.hpp"
-#include "CobsEncoder.hpp"
+#include "BinarySwitch.h"
+#include "FletcherChecksum.h"
+#include "CobsEncoder.h"
 
 const uint8_t delimiter = 0x0;
-const size_t buf_sz = 255;
+const size_t buf_sz = 256;
 unsigned long baud_rt = 9600;
 
 uint8_t recv[buf_sz];
@@ -17,29 +17,32 @@ void setup()
 {
   led.switchOff();
   Serial.begin(baud_rt);
+
+  test_FletcherChecksum();
+  test_CobsEncoder();
 }
 
 void loop()
 {
-  while (Serial.available() > 0)
-  {
-    const uint8_t token = Serial.read();
-
-    if (token == delimiter)
-    {
-      uint8_t decoded[recvx];
-      const size_t sz = encoder.unpack(recv, recvx, decoded);
-      onData(decoded, sz);
-      recvx = 0;
-    }
-    else if (recvx + 1 < buf_sz)
-    {
-      recv[recvx++] = token;
-    }
-    else
-    {
-    }
-  }
+  //  while (Serial.available() > 0)
+  //  {
+  //    const uint8_t token = Serial.read();
+  //
+  //    if (token == delimiter)
+  //    {
+  //      uint8_t decoded[recvx];
+  //      const size_t sz = encoder.unpack(recv, recvx, decoded);
+  //      onData(decoded, sz);
+  //      recvx = 0;
+  //    }
+  //    else if (recvx + 1 < buf_sz)
+  //    {
+  //      recv[recvx++] = token;
+  //    }
+  //    else
+  //    {
+  //    }
+  //  }
 }
 
 void onData(const uint8_t *buf, const size_t sz)
@@ -79,19 +82,29 @@ void printArray(const uint8_t *arr, const size_t sz)
   Serial.println(" ]");
 }
 
-void test()
+void test(const char *file, const char *func, const boolean val)
 {
-  Serial.println(delimiter);
+  Serial.print((val) ? "Passed: " : "Failed: ");
+  Serial.print(func);
+  Serial.print(" (");
+  Serial.print(file);
+  Serial.println(")");
+}
 
-  uint8_t msg[] = {0x30, 0x33, 0x35, 0x30, 0x34};
-  const size_t msg_len = 5;
-  printArray(msg, msg_len);
+void test_FletcherChecksum()
+{
+  test("FletcherChecksum", "test_generate_2", FletcherChecksum::test_generate_2());
+  test("FletcherChecksum", "test_generate_5", FletcherChecksum::test_generate_5());
+  test("FletcherChecksum", "test_generate_6", FletcherChecksum::test_generate_6());
+  test("FletcherChecksum", "test_generate_8", FletcherChecksum::test_generate_8());
+  test("FletcherChecksum", "test_append_2", FletcherChecksum::test_append_2());
+  test("FletcherChecksum", "test_valid_2", FletcherChecksum::test_valid_2());
+}
 
-  uint8_t encoded[msg_len + 1];
-  encoder.pack(msg, msg_len, encoded);
-  printArray(encoded, msg_len + 1);
-
-  uint8_t decoded[msg_len];
-  encoder.unpack(encoded, msg_len + 1, decoded);
-  printArray(decoded, msg_len);
+void test_CobsEncoder()
+{
+  test("CobsEncoder", "test_pack_2", encoder.test_pack_2());
+  test("CobsEncoder", "test_pack_5", encoder.test_pack_5());
+  test("CobsEncoder", "test_unpack_2", encoder.test_unpack_2());
+  test("CobsEncoder", "test_unpack_5", encoder.test_unpack_5());
 }
