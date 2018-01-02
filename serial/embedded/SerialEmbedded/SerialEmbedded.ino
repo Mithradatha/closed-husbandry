@@ -18,31 +18,76 @@ void setup()
   led.switchOff();
   Serial.begin(baud_rt);
 
-  test_FletcherChecksum();
-  test_CobsEncoder();
+//  test_FletcherChecksum();
+//  test_CobsEncoder();
+
+  uint8_t msg[2] = { 0x01, 0x02 };
+  deliver(msg, 2);
+
+  uint8_t abc[1] = { 0x31 };
+  deliver(abc, 1);
+}
+
+void deliver(const uint8_t *src, const size_t sz)
+{
+  const size_t msglen = sz + 2;
+  uint8_t msg[msglen];
+  
+  for (size_t i = 0; i < sz; i++)
+  {
+    msg[i] = src[i];
+  }
+  
+  const uint16_t sum = FletcherChecksum::generate(msg, sz);
+  FletcherChecksum::append(msg, msglen, sum);
+
+  const size_t encodedlen = msglen + 2;
+  uint8_t encoded[encodedlen];
+  encoder.pack(msg, msglen, encoded);
+  encoded[encodedlen - 1] = delimiter;
+
+  Serial.write(encoded, encodedlen);
+}
+
+boolean retrieve()
+{
+  uint8_t decoded[recvx];
+  const size_t sz = encoder.unpack(recv, recvx, decoded);
+
+  recvx = 0;
+
+  if (FletcherChecksum::valid(decoded, sz))
+  {
+    const size_t payloadlen = sz - 2;
+    uint8_t payload[payloadlen];
+    
+    FletcherChecksum::strip(decoded, sz, payload);
+    onData(payload, payloadlen);
+
+    return true;
+  }
+
+  return false;
 }
 
 void loop()
 {
-  //  while (Serial.available() > 0)
-  //  {
-  //    const uint8_t token = Serial.read();
-  //
-  //    if (token == delimiter)
-  //    {
-  //      uint8_t decoded[recvx];
-  //      const size_t sz = encoder.unpack(recv, recvx, decoded);
-  //      onData(decoded, sz);
-  //      recvx = 0;
-  //    }
-  //    else if (recvx + 1 < buf_sz)
-  //    {
-  //      recv[recvx++] = token;
-  //    }
-  //    else
-  //    {
-  //    }
-  //  }
+    while (Serial.available() > 0)
+    {
+      const uint8_t token = Serial.read();
+  
+      if (token == delimiter)
+      {
+        retrieve();
+      }
+      else if (recvx + 1 < buf_sz)
+      {
+        recv[recvx++] = token;
+      }
+      else
+      {
+      }
+    }
 }
 
 void onData(const uint8_t *buf, const size_t sz)
@@ -98,6 +143,7 @@ void test_FletcherChecksum()
   test("FletcherChecksum", "test_generate_6", FletcherChecksum::test_generate_6());
   test("FletcherChecksum", "test_generate_8", FletcherChecksum::test_generate_8());
   test("FletcherChecksum", "test_append_2", FletcherChecksum::test_append_2());
+  test("FletcherChecksum", "test_strip_2", FletcherChecksum::test_strip_2());
   test("FletcherChecksum", "test_valid_2", FletcherChecksum::test_valid_2());
 }
 

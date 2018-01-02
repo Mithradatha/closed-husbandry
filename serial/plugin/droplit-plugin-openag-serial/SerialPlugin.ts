@@ -2,15 +2,14 @@ import { CobsEncoder } from './CobsEncoder';
 import * as droplit from 'droplit-plugin';
 import * as SerialPort from 'serialport';
 
-import { FletcherChecksum } from "./FletcherChecksum";
-
 export class SerialPlugin extends droplit.DroplitPlugin {
 
     private readonly BAUD_RATE = 9600;
     private readonly DELIMITER = 0x0;
 
     // iterate over /dev/tty* for more than one device
-    private readonly DEVICE_PATH = '/dev/ttyACM0';
+    // private readonly DEVICE_PATH = '/dev/ttyACM0';
+    private readonly DEVICE_PATH = 'COM5';
 
     private devices: any;
     private services: any;
@@ -132,6 +131,6 @@ export class SerialPlugin extends droplit.DroplitPlugin {
     protected switchOn(localId: string): boolean {
         console.log('Switch On');
 
-        return this.setSwitch(localId, 'off');
+        return this.setSwitch(localId, 'on');
     }
 }

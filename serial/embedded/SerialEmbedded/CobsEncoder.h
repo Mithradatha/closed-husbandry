@@ -2,8 +2,6 @@
 #ifndef __COBSENCODER_H__
 #define __COBSENCODER_H__
 
-#include "Arduino.h"
-
 /**
  * https://en.wikipedia.org/wiki/Consistent_Overhead_Byte_Stuffing
  * 
@@ -12,6 +10,8 @@
  * If the packet size needs to be larger,
  * include a modulo operation when packing
  */
+
+#include "Arduino.h"
 
 class CobsEncoder
 {

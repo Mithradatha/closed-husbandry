@@ -1,6 +1,3 @@
-
-#include "CobsEncoder.h"
-
 /**
  * https://en.wikipedia.org/wiki/Consistent_Overhead_Byte_Stuffing
  * 
@@ -9,6 +6,8 @@
  * If the packet size needs to be larger,
  * include a modulo operation when packing
  */
+
+#include "CobsEncoder.h"
 
 CobsEncoder::CobsEncoder(const uint8_t delimiter = 0) : _delim(delimiter) {}
 

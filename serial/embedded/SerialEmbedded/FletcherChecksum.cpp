@@ -1,6 +1,3 @@
-
-#include "FletcherChecksum.h";
-
 /**
  * https://en.wikipedia.org/wiki/Fletcher%27s_checksum
  * 
@@ -9,6 +6,8 @@
  * This implementation was not written with optimization
  * in mind. There are ways to optimize this code if needed
 */
+
+#include "FletcherChecksum.h";
 
 namespace FletcherChecksum
 {
@@ -39,6 +38,14 @@ void append(uint8_t *src, size_t sz, uint16_t sum)
 
   src[fst] = chk0;
   src[lst] = chk1;
+}
+
+void strip(uint8_t *src, size_t sz, uint8_t *dst)
+{
+  for(size_t i = 0; i < sz - 2; i++)
+  {
+    dst[i] = src[i];
+  }
 }
 
 boolean valid(const uint8_t *src, const size_t sz)
@@ -120,6 +127,19 @@ boolean test_append_2()
 
   // Assert
   return msg[2] == 0xF8 && msg[3] == 0x04;
+}
+
+boolean test_strip_2()
+{
+  // Arrange
+  uint8_t data[] = {0x01, 0x02, 0xF8, 0x04};
+  uint8_t msg[2];
+
+  // Act
+  strip(data, 4, msg);
+
+  // Assert
+  return msg[0] == 0x01 && msg[1] == 0x02;
 }
 
 boolean test_valid_2()
