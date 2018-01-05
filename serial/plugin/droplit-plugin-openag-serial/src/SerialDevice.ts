@@ -1,15 +1,12 @@
-import { CobsEncoder } from './CobsEncoder';
+import { Response } from 'communication/response/interface/Response';
 import { SerialDeviceOptions } from './SerialDeviceOptions';
-import * as SerialPort from 'serialport';
+import { Sequence, Delimeter } from "UtilTypes";
+import * as SerialPort from "serialport";
 import { AsyncQueue, queue, AsyncResultCallback } from 'async';
 import { clearTimeout, clearInterval } from 'timers';
-import { FletcherChecksum } from './FletcherChecksum';
-import { MessageBroker } from './MessageBroker';
-import { Sequence, Delimeter } from './Message';
-import { Request } from './Request';
-import { Response } from './Response';
-
-
+import { SerialMessageEncoder } from 'communication/protocol/frame/implementation/SerialMessageEncoder';
+import { SerialMessage } from 'communication/protocol/frame/implementation/SerialMessage';
+import { Request } from 'communication/request/interface/Request';
 
 export class SerialDevice {
 
@@ -28,34 +25,32 @@ export class SerialDevice {
     private serialPort: SerialPort;
     private delimiter: Delimeter;
 
-    private msgBroker: MessageBroker;
+    private encoder: SerialMessageEncoder;
     private requestQueue: AsyncQueue<Request>;
 
     constructor(options: SerialDeviceOptions) {
 
-        this.responseTimeout = (options.responseTimeout)
-            ? options.responseTimeout
-            : 500; // ms
-
-        this.maxRetries = (options.maxRetries || options.maxRetries == 0)
-            ? options.maxRetries
-            : 5;
+        this.devicePath = options.devicePath;
 
         this.delimiter = (options.delimiter)
             ? options.delimiter
             : [0x0];
 
-        this.msgBroker = new MessageBroker();
-        this.devicePath = options.devicePath;
+        this.maxRetries = (options.maxRetries || options.maxRetries == 0)
+            ? options.maxRetries
+            : 5;
+
+        this.responseTimeout = (options.responseTimeout)
+            ? options.responseTimeout
+            : 500; // ms
 
         this.serialPort = new SerialPort(this.devicePath, options);
         this.serialPort.on('open', () => this.onOpen(this.delimiter));
 
+        this.encoder = new SerialMessageEncoder(this.delimiter);
+
         // 1: only process one request at a time
         this.requestQueue = queue(this.repeatRequest.bind(this), 1);
-        this.requestQueue.drain = function () {
-            console.log('Finished processing all items');
-        }
     }
 
     private onOpen(delim: Delimeter): void {
@@ -73,39 +68,22 @@ export class SerialDevice {
 
     private onData(data: Buffer): void {
 
-        const payload = this.msgBroker.unwrap(data);
-        const bytes = payload.length;
-
-        if (bytes == 2 || bytes == 4) {
-
-            const sequence = payload[0];
-            console.log('onData');
-            if (this.sequence !== sequence) {
-                throw 'Synchronization Fault';
-            }
-
-            this.acknowledged[sequence] = true;
-
-            if (bytes == 4) {
-                // TODO: Read value and raise event
-            }
-        }
+        const message: SerialMessage = this.encoder.decode(data);
+        this.acknowledged[message.sequence] = true;
     }
 
-    private onError(err: any): void {
+    public send(request: Request): Promise<Response> {
 
+        return new Promise<Response>((resolve, reject) => {
+
+            this.requestQueue.push(request, (err?: Error, result?: Response) => {
+                if (err) reject(err);
+                else resolve(result);
+            });
+        });
     }
 
-    private onClose(err?: any): void {
-
-        if (err && err.disconnect == true) {
-            // Disconnect Message
-        }
-
-        this.connected = false;
-    }
-
-    private deliver(msg: Buffer, timeout: number): Promise<any> {
+    private deliver(msg: Buffer, timeout: number): Promise<number> {
 
         this.serialPort.write(msg);
 
@@ -113,13 +91,9 @@ export class SerialDevice {
 
             const intervalId = setInterval(() => {
 
-                console.log('interval');
-
-                console.log('deliver');
                 if (this.acknowledged[this.sequence]) {
 
                     clearInterval(intervalId);
-                    console.log('ACK');
                     resolve('acknowledgement received');
                 }
 
@@ -138,15 +112,13 @@ export class SerialDevice {
     /** 
      * stop and wait implementation of automatic repeat request
      */
-    private async repeatRequest(request: Request, callback) {
+    private async repeatRequest(request: Request, callback: (err?: Error, result?: Response) => void) {
 
         // alternating bit sequence
-        console.log('repeatRequest');
         this.sequence = (this.sequence === 0x0) ? 0x1 : 0x0;
 
-        const seq = Buffer.from([this.sequence]);
-        const payload = Buffer.concat([seq, msg]);
-        const frame = this.msgBroker.wrap(msg);
+        const message = SerialMessage.FromRequest(request, this.sequence);
+        const encoded: Buffer = this.encoder.encode(message);
 
         let timeout = this.responseTimeout;
         let success: boolean = false;
@@ -154,29 +126,31 @@ export class SerialDevice {
         for (let retry = 0; retry <= this.maxRetries; retry++) {
 
             try {
+
                 let val = await this.deliver(frame, timeout);
                 console.log(val);
                 success = true;
                 break;
+
             } catch (err) {
                 console.log(err);
                 // timeout *= 2;
             }
-
-            console.log(retry);
         }
 
-        callback(success);
+        callback(undefined, { success: success, value: };
     }
 
-    public send(request: Request): Promise<Response> {
+    private onError(err: any): void {
 
-        return new Promise<Response>((resolve, reject) => {
+    }
 
-            this.requestQueue.push(request, function (err) {
-                console.log('finished processing request');
-                if (!err) resolve(new Response)
-            });
-        });
+    private onClose(err?: any): void {
+
+        if (err && err.disconnect == true) {
+            // Disconnect Message
+        }
+
+        this.connected = false;
     }
 }

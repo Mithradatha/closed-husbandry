@@ -44,12 +44,12 @@ export namespace FletcherChecksum {
 
     export function strip(src: Buffer): Buffer {
 
-        return Buffer.from(src.slice(0, src.length - 2));
+        return src.slice(0, src.length - 2);
     }
 
     export function valid(src: Buffer) {
 
         const sum: Buffer = generate(src);
-        return sum[0] == 0 && sum[1] == 0;
+        return sum[0] === 0 && sum[1] === 0;
     }
 }
