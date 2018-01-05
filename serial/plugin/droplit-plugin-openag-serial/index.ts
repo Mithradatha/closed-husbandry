@@ -1,3 +1,4 @@
+import { DigitalReadRequest } from './DigitalReadRequest';
 import { SerialDevice } from './SerialDevice';
 import { queue } from 'async';
 import { clearTimeout, clearInterval } from 'timers';
@@ -8,10 +9,16 @@ import { FletcherChecksum } from "./FletcherChecksum";
 
 console.log('Hey');
 
-// let device = new SerialDevice({
-//     devicePath: 'COM5',
-//     baudRate: 9600,
-//     delimiter: [0x0]
-// });
+let device = new SerialDevice({
+    devicePath: 'COM5',
+    baudRate: 9600,
+    delimiter: [0x0]
+});
 
-// device.sendMessage(Buffer.from([0x31]));
+device.sendMessage(Buffer.from([0x31]));
+
+let req = new DigitalReadRequest(0, 7);
+req.send(SerialDevice);
+
+
+SerialDevice.send(Request);

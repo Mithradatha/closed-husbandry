@@ -21,11 +21,11 @@ void setup()
 //  test_FletcherChecksum();
 //  test_CobsEncoder();
 
-  uint8_t msg[2] = { 0x01, 0x02 };
-  deliver(msg, 2);
-
-  uint8_t abc[1] = { 0x31 };
-  deliver(abc, 1);
+//  uint8_t msg[2] = { 0x01, 0x02 };
+//  deliver(msg, 2);
+//
+//  uint8_t abc[1] = { 0x31 };
+//  deliver(abc, 1);
 }
 
 void deliver(const uint8_t *src, const size_t sz)

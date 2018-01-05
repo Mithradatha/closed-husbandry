@@ -1,3 +1,4 @@
+import { Sequence } from './Message';
 
 export namespace SerialProtocol {
 

@@ -1,19 +1,22 @@
 import { CobsEncoder } from './CobsEncoder';
 import { SerialDeviceOptions } from './SerialDeviceOptions';
 import * as SerialPort from 'serialport';
-import { AsyncQueue, queue } from 'async';
+import { AsyncQueue, queue, AsyncResultCallback } from 'async';
 import { clearTimeout, clearInterval } from 'timers';
 import { FletcherChecksum } from './FletcherChecksum';
+import { MessageBroker } from './MessageBroker';
+import { Sequence, Delimeter } from './Message';
+import { Request } from './Request';
+import { Response } from './Response';
 
-type Sequence = 0x0 | 0x1;
-export type Delimiter = string | Buffer | number[];
+
 
 export class SerialDevice {
 
     // ms between acknowledgement checks
-    private readonly interval: number = 50;
+    private readonly ackInterval: number = 50;
 
-    private requestTimeout: number;
+    private responseTimeout: number;
     private maxRetries: number;
 
     private acknowledged: boolean[] = [false, false];
@@ -23,19 +26,26 @@ export class SerialDevice {
     private devicePath: string;
 
     private serialPort: SerialPort;
-    private encoder: CobsEncoder;
-    private delimiter: Delimiter;
+    private delimiter: Delimeter;
 
-    private requestQueue: AsyncQueue<any>;
+    private msgBroker: MessageBroker;
+    private requestQueue: AsyncQueue<Request>;
 
     constructor(options: SerialDeviceOptions) {
 
-        this.requestTimeout = options.responseTimeout;
-        this.maxRetries = options.maxRetries;
+        this.responseTimeout = (options.responseTimeout)
+            ? options.responseTimeout
+            : 500; // ms
 
-        this.delimiter = options.delimiter;
-        this.encoder = new CobsEncoder(this.delimiter);
+        this.maxRetries = (options.maxRetries || options.maxRetries == 0)
+            ? options.maxRetries
+            : 5;
 
+        this.delimiter = (options.delimiter)
+            ? options.delimiter
+            : [0x0];
+
+        this.msgBroker = new MessageBroker();
         this.devicePath = options.devicePath;
 
         this.serialPort = new SerialPort(this.devicePath, options);
@@ -43,25 +53,27 @@ export class SerialDevice {
 
         // 1: only process one request at a time
         this.requestQueue = queue(this.repeatRequest.bind(this), 1);
+        this.requestQueue.drain = function () {
+            console.log('Finished processing all items');
+        }
     }
 
-    private onOpen(delimiter: Delimiter): void {
-
-        this.connected = true;
+    private onOpen(delim: Delimeter): void {
 
         const parser = this.serialPort.pipe(
-            new SerialPort.parsers.Delimiter(
-                { delimiter: delimiter }));
+            new SerialPort.parsers.Delimiter({ delimiter: delim }));
 
         parser.on('data', (data: Buffer) => this.onData(data));
 
         this.serialPort.on('error', (err: any) => this.onError(err));
         this.serialPort.on('close', (err?: any) => this.onClose(err));
+
+        this.connected = true;
     }
 
     private onData(data: Buffer): void {
 
-        const payload = this.unwrap(data);
+        const payload = this.msgBroker.unwrap(data);
         const bytes = payload.length;
 
         if (bytes == 2 || bytes == 4) {
@@ -80,37 +92,6 @@ export class SerialDevice {
         }
     }
 
-    private wrap(msg: Buffer): Buffer {
-
-        console.log('wrap');
-        const seq = Buffer.from([this.sequence]);
-        const payload = Buffer.concat([seq, msg]);
-
-        const sum = FletcherChecksum.generate(payload);
-        const data = FletcherChecksum.append(payload, sum);
-        const encoded = this.encoder.pack(data);
-
-        const delim = Buffer.from([this.delimiter])
-        const frame = Buffer.concat([new Buffer(encoded), delim]);
-
-        return frame;
-    }
-
-    private unwrap(data: Buffer): Buffer {
-
-        // TODO: unwrap should remove sequence
-
-        const decoded = this.encoder.unpack(data);
-
-        if (FletcherChecksum.valid(decoded)) {
-
-            const payload = FletcherChecksum.strip(decoded);
-            return Buffer.from(payload.buffer);
-        }
-
-        return Buffer.from([]);
-    }
-
     private onError(err: any): void {
 
     }
@@ -122,14 +103,6 @@ export class SerialDevice {
         }
 
         this.connected = false;
-    }
-
-    public sendMessage(msg: Buffer): void {
-
-        this.requestQueue.push(msg, function (result) {
-            console.log('finished processing message');
-            console.log(result);
-        });
     }
 
     private deliver(msg: Buffer, timeout: number): Promise<any> {
@@ -146,14 +119,16 @@ export class SerialDevice {
                 if (this.acknowledged[this.sequence]) {
 
                     clearInterval(intervalId);
+                    console.log('ACK');
                     resolve('acknowledgement received');
                 }
 
-            }, this.interval);
+            }, this.ackInterval);
 
             setTimeout(() => {
 
                 clearInterval(intervalId);
+                console.log('NACK');
                 reject('timed out');
 
             }, timeout);
@@ -163,32 +138,45 @@ export class SerialDevice {
     /** 
      * stop and wait implementation of automatic repeat request
      */
-    private async repeatRequest(msg: Buffer, callback) {
+    private async repeatRequest(request: Request, callback) {
 
         // alternating bit sequence
         console.log('repeatRequest');
         this.sequence = (this.sequence === 0x0) ? 0x1 : 0x0;
 
-        const frame = this.wrap(msg);
+        const seq = Buffer.from([this.sequence]);
+        const payload = Buffer.concat([seq, msg]);
+        const frame = this.msgBroker.wrap(msg);
 
-        let timeout = this.requestTimeout;
-        let sucess: boolean = false;
+        let timeout = this.responseTimeout;
+        let success: boolean = false;
 
-        for (let retry = 0; retry < this.maxRetries; retry++) {
+        for (let retry = 0; retry <= this.maxRetries; retry++) {
 
             try {
                 let val = await this.deliver(frame, timeout);
                 console.log(val);
-                sucess = true;
+                success = true;
                 break;
             } catch (err) {
                 console.log(err);
-                timeout *= 2;
+                // timeout *= 2;
             }
 
             console.log(retry);
         }
 
-        callback(sucess);
+        callback(success);
+    }
+
+    public send(request: Request): Promise<Response> {
+
+        return new Promise<Response>((resolve, reject) => {
+
+            this.requestQueue.push(request, function (err) {
+                console.log('finished processing request');
+                if (!err) resolve(new Response)
+            });
+        });
     }
 }
