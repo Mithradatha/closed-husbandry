@@ -1,4 +1,4 @@
-import WriteRequest from "communication/request/interface/WriteRequest";
+import WriteRequest from "./WriteRequest";
 
 export default class DigitalWriteRequest extends WriteRequest {
 

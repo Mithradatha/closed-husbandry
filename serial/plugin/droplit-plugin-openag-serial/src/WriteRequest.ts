@@ -1,4 +1,4 @@
-import Request from "communication/request/interface/Request";
+import Request from "./Request";
 
 export default abstract class WriteRequest extends Request {
 

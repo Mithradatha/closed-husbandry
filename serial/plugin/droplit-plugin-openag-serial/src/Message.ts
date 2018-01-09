@@ -20,13 +20,13 @@ export default class Message {
 
     public prepend(data: any): number {
 
-        this._buffer = Buffer.from([data, this._buffer]);
+        this._buffer = Buffer.concat([Buffer.from([data]), this._buffer]);
         return this._buffer.length;
     }
 
     public append(data: any): number {
 
-        this._buffer = Buffer.from([this._buffer, data]);
+        this._buffer = Buffer.concat([this._buffer, Buffer.from([data])]);
         return this._buffer.length;
     }
 }

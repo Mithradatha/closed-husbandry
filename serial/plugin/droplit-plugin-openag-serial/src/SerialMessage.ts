@@ -1,5 +1,5 @@
-import { Sequence } from "UtilTypes";
-import Message from "communication/protocol/frame/interface/Message";
+import { Sequence } from "../UtilTypes";
+import Message from "./Message";
 
 export default class SerialMessage extends Message {
 
@@ -7,6 +7,8 @@ export default class SerialMessage extends Message {
 
     public constructor(msg: Buffer, sequence: Sequence) {
         super(msg);
+
+        console.log(msg);
 
         this._sequence = sequence;
         this.prepend(this._sequence);

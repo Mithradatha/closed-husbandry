@@ -1,4 +1,4 @@
-import Response from "communication/response/interface/Response";
+import Response from "./Response";
 
 export default abstract class ReadResponse extends Response {
 

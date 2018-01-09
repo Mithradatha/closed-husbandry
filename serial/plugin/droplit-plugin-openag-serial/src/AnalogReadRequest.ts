@@ -1,4 +1,4 @@
-import ReadRequest from "communication/request/interface/ReadRequest";
+import ReadRequest from "./ReadRequest";
 
 export default class AnalogReadRequest extends ReadRequest {
 

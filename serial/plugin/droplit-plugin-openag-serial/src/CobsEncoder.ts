@@ -1,3 +1,5 @@
+import { Delimeter } from "../UtilTypes";
+
 /**
  * https://en.wikipedia.org/wiki/Consistent_Overhead_Byte_Stuffing
  * 
@@ -9,9 +11,9 @@
 
 export default class CobsEncoder {
 
-    private _delim: any;
+    private _delim: Delimeter;
 
-    constructor(delim: any) {
+    constructor(delim: Delimeter) {
 
         this._delim = delim;
     }
