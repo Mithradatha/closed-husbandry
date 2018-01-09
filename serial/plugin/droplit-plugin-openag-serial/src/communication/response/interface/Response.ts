@@ -1,6 +1,5 @@
 
-export interface Response {
+export abstract class Response {
 
-    success: boolean;
-    value?: number;
+    public abstract get value(): number | undefined;
 }

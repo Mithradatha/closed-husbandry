@@ -1,5 +1,5 @@
 import { Response } from 'communication/response/interface/Response';
-import { SerialDeviceOptions } from './SerialDeviceOptions';
+import { SerialDeviceOptions } from 'SerialDeviceOptions';
 import { Sequence, Delimeter } from "UtilTypes";
 import * as SerialPort from "serialport";
 import { AsyncQueue, queue, AsyncResultCallback } from 'async';
@@ -7,6 +7,7 @@ import { clearTimeout, clearInterval } from 'timers';
 import { SerialMessageEncoder } from 'communication/protocol/frame/implementation/SerialMessageEncoder';
 import { SerialMessage } from 'communication/protocol/frame/implementation/SerialMessage';
 import { Request } from 'communication/request/interface/Request';
+import { SerialResponseFactory } from 'communication/response/implementation/SerialResponseFactory';
 
 export class SerialDevice {
 
@@ -17,6 +18,7 @@ export class SerialDevice {
     private maxRetries: number;
 
     private acknowledged: boolean[] = [false, false];
+    private latestResponse?: Response;
     private sequence: Sequence = 0x0;
 
     private connected: boolean = false;
@@ -69,6 +71,7 @@ export class SerialDevice {
     private onData(data: Buffer): void {
 
         const message: SerialMessage = this.encoder.decode(data);
+        this.latestResponse = SerialResponseFactory.assembleFrom(message);
         this.acknowledged[message.sequence] = true;
     }
 
@@ -83,7 +86,7 @@ export class SerialDevice {
         });
     }
 
-    private deliver(msg: Buffer, timeout: number): Promise<number> {
+    private deliver(msg: Buffer, timeout: number): Promise<Response> {
 
         this.serialPort.write(msg);
 
@@ -93,8 +96,11 @@ export class SerialDevice {
 
                 if (this.acknowledged[this.sequence]) {
 
+                    this.acknowledged[this.sequence] = false;
                     clearInterval(intervalId);
-                    resolve('acknowledgement received');
+                    const response = this.latestResponse;
+                    this.latestResponse = undefined;
+                    resolve(response);
                 }
 
             }, this.ackInterval);
@@ -102,7 +108,6 @@ export class SerialDevice {
             setTimeout(() => {
 
                 clearInterval(intervalId);
-                console.log('NACK');
                 reject('timed out');
 
             }, timeout);
@@ -117,28 +122,28 @@ export class SerialDevice {
         // alternating bit sequence
         this.sequence = (this.sequence === 0x0) ? 0x1 : 0x0;
 
-        const message = SerialMessage.FromRequest(request, this.sequence);
+        const message = new SerialMessage(request.toBuffer(), this.sequence);
         const encoded: Buffer = this.encoder.encode(message);
 
         let timeout = this.responseTimeout;
-        let success: boolean = false;
+        let error: Error | undefined;
+        let response: Response | undefined;
 
         for (let retry = 0; retry <= this.maxRetries; retry++) {
 
             try {
 
-                let val = await this.deliver(frame, timeout);
-                console.log(val);
-                success = true;
+                response = await this.deliver(encoded, timeout);
+                error = undefined;
                 break;
 
             } catch (err) {
-                console.log(err);
+                error = err;
                 // timeout *= 2;
             }
         }
 
-        callback(undefined, { success: success, value: };
+        callback(error, response);
     }
 
     private onError(err: any): void {

@@ -1,13 +1,13 @@
-import { DigitalReadRequest } from './DigitalReadRequest';
-import { SerialDevice } from './SerialDevice';
+import { Response } from 'communication/response/interface/Response';
+
 import { queue } from 'async';
 import { clearTimeout, clearInterval } from 'timers';
 
 import { setTimeout } from 'timers';
-import { CobsEncoder } from './CobsEncoder';
-import { FletcherChecksum } from "./FletcherChecksum";
+import { DigitalReadRequest } from 'communication/request/implementation/DigitalReadRequest';
+import { SerialDevice } from 'SerialDevice';
+import { DigitalWriteRequest } from 'communication/request/implementation/DigitalWriteRequest';
 
-console.log('Hey');
 
 let device = new SerialDevice({
     devicePath: 'COM5',
@@ -15,10 +15,12 @@ let device = new SerialDevice({
     delimiter: [0x0]
 });
 
-device.sendMessage(Buffer.from([0x31]));
 
-let req = new DigitalReadRequest(0, 7);
-req.send(SerialDevice);
-
-
-SerialDevice.send(Request);
+let req = new DigitalWriteRequest(7, 0);
+console.log('Sending...');
+device.send(req)
+    .then((res: Response) => {
+        console.log('SUCCESS');
+    }).catch((err: any) => {
+        console.log('ERROR');
+    })
