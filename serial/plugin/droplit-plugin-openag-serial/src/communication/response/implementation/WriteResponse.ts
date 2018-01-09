@@ -1,7 +1,6 @@
-import { Response } from "communication/response/interface/Response";
+import Response from "communication/response/interface/Response";
 
-
-export class WriteResponse extends Response {
+export default class WriteResponse extends Response {
 
     public constructor() {
         super();

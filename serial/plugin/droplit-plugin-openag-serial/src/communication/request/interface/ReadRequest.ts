@@ -1,6 +1,6 @@
-import { Request } from "./Request";
+import Request from "communication/request/interface/Request";
 
-export abstract class ReadRequest extends Request {
+export default abstract class ReadRequest extends Request {
 
     public constructor(pin: number, fnc: number) {
         super(pin, fnc);

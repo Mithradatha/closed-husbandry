@@ -1,6 +1,6 @@
-import { ReadResponse } from "communication/response/interface/ReadResponse";
+import ReadResponse from "communication/response/interface/ReadResponse";
 
-export class AnalogReadResponse extends ReadResponse {
+export default class AnalogReadResponse extends ReadResponse {
 
     public constructor(value: number) {
 

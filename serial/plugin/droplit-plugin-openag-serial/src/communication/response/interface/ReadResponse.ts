@@ -1,7 +1,6 @@
-import { Response } from "communication/response/interface/Response";
+import Response from "communication/response/interface/Response";
 
-
-export abstract class ReadResponse extends Response {
+export default abstract class ReadResponse extends Response {
 
     private val: number;
 

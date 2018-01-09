@@ -1,5 +1,5 @@
 
-export abstract class Request {
+export default abstract class Request {
 
     protected pin: number;
     protected fnc: number;

@@ -1,15 +1,17 @@
-import { Response } from 'communication/response/interface/Response';
-import { SerialDeviceOptions } from 'SerialDeviceOptions';
+
+import SerialDeviceOptions from 'SerialDeviceOptions';
 import { Sequence, Delimeter } from "UtilTypes";
 import * as SerialPort from "serialport";
 import { AsyncQueue, queue, AsyncResultCallback } from 'async';
 import { clearTimeout, clearInterval } from 'timers';
-import { SerialMessageEncoder } from 'communication/protocol/frame/implementation/SerialMessageEncoder';
-import { SerialMessage } from 'communication/protocol/frame/implementation/SerialMessage';
-import { Request } from 'communication/request/interface/Request';
-import { SerialResponseFactory } from 'communication/response/implementation/SerialResponseFactory';
+import Response from 'communication/response/interface/Response';
+import SerialMessageEncoder from 'communication/protocol/frame/implementation/SerialMessageEncoder';
+import SerialMessage from 'communication/protocol/frame/implementation/SerialMessage';
+import * as SerialResponseFactory from 'communication/response/implementation/SerialResponseFactory';
+import Request from 'communication/request/interface/Request';
 
-export class SerialDevice {
+
+export default class SerialDevice {
 
     // ms between acknowledgement checks
     private readonly ackInterval: number = 50;

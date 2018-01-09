@@ -1,12 +1,6 @@
-import { Response } from 'communication/response/interface/Response';
-
-import { queue } from 'async';
-import { clearTimeout, clearInterval } from 'timers';
-
-import { setTimeout } from 'timers';
-import { DigitalReadRequest } from 'communication/request/implementation/DigitalReadRequest';
-import { SerialDevice } from 'SerialDevice';
-import { DigitalWriteRequest } from 'communication/request/implementation/DigitalWriteRequest';
+import DigitalWriteRequest from './src/communication/request/implementation/DigitalWriteRequest';
+import SerialDevice from './src/SerialDevice';
+import Response from './src/communication/response/interface/Response';
 
 
 let device = new SerialDevice({

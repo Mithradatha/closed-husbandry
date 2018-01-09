@@ -1,7 +1,7 @@
 import { Delimeter } from './UtilTypes';
 import { OpenOptions } from 'serialport';
 
-export interface SerialDeviceOptions extends OpenOptions {
+export default interface SerialDeviceOptions extends OpenOptions {
 
     devicePath: string;
     delimiter?: Delimeter

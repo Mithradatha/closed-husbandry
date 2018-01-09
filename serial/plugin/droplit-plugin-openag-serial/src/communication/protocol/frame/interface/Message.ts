@@ -1,5 +1,5 @@
 
-export class Message {
+export default class Message {
 
     private _buffer: Buffer;
 

@@ -1,11 +1,10 @@
-
-import { SerialMessage } from 'communication/protocol/frame/implementation/SerialMessage';
-import { MessageEncoder } from "communication/protocol/frame/interface/MessageEncoder";
-import { FletcherChecksum } from 'communication/protocol/FletcherChecksum';
-import { CobsEncoder } from "communication/protocol/CobsEncoder";
+import * as FletcherChecksum from 'communication/protocol/FletcherChecksum';
 import { Delimeter } from "UtilTypes";
+import SerialMessage from "communication/protocol/frame/implementation/SerialMessage";
+import CobsEncoder from "communication/protocol/CobsEncoder";
+import MessageEncoder from 'communication/protocol/frame/interface/MessageEncoder';
 
-export class SerialMessageEncoder extends MessageEncoder {
+export default class SerialMessageEncoder extends MessageEncoder {
 
     private delimiter: Delimeter;
 

@@ -1,22 +1,21 @@
 {
-    "name": "droplit-plugin-openag-serial",
-    "version": "1.0.0",
-    "description": "",
-    "main": "dist/index.js",
-    "scripts": {
-        "test": "tsc index.ts --outDir dist/ && node dist/index.js"
-    },
-    "author": "Samuel Kellar",
-    "license": "ISC",
-    "dependencies": {
-        "async": "^2.6.0",
-        "serialport": "^6.0.4"
-    },
-    "devDependencies": {
-        "@types/async": "^2.0.45",
-        "@types/es6-collections": "^0.5.31",
-        "@types/es6-promise": "0.0.33",
-        "@types/node": "^8.0.53",
-        "@types/serialport": "^6.0.0"
-    }
+  "name": "droplit-plugin-openag-serial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "tsc && node dist/index.js"
+  },
+  "author": "Samuel Kellar",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.0",
+    "serialport": "^6.0.4",
+    "systemjs": "^0.20.19"
+  },
+  "devDependencies": {
+    "@types/async": "^2.0.45",
+    "@types/node": "^8.0.53",
+    "@types/serialport": "^6.0.0"
+  }
 }

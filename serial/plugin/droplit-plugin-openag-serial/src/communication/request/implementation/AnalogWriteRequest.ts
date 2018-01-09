@@ -1,6 +1,6 @@
-import { WriteRequest } from "communication/request/interface/WriteRequest";
+import WriteRequest from "communication/request/interface/WriteRequest";
 
-export class AnalogWriteRequest extends WriteRequest {
+export default class AnalogWriteRequest extends WriteRequest {
 
     private static readonly ID: number = 0x3;
 

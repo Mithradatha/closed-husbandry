@@ -1,6 +1,6 @@
-import { ReadRequest } from "communication/request/interface/ReadRequest";
+import ReadRequest from "communication/request/interface/ReadRequest";
 
-export class DigitalReadRequest extends ReadRequest {
+export default class DigitalReadRequest extends ReadRequest {
 
     private static readonly ID: number = 0x0;
 

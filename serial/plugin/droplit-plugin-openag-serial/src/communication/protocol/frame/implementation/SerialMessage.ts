@@ -1,10 +1,7 @@
-
-import { Request } from "communication/request/interface/Request";
-import { Response } from "communication/response/interface/Response";
-import { Message } from "communication/protocol/frame/interface/Message";
 import { Sequence } from "UtilTypes";
+import Message from "communication/protocol/frame/interface/Message";
 
-export class SerialMessage extends Message {
+export default class SerialMessage extends Message {
 
     private _sequence: Sequence;
 

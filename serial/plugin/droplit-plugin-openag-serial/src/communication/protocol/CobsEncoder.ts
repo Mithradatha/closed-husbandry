@@ -7,7 +7,7 @@
  * include a modulo operation when packing
  */
 
-export class CobsEncoder {
+export default class CobsEncoder {
 
     private _delim: any;
 

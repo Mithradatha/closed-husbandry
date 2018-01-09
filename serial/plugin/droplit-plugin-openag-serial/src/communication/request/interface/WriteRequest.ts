@@ -1,6 +1,6 @@
-import { Request } from "./Request";
+import Request from "communication/request/interface/Request";
 
-export abstract class WriteRequest extends Request {
+export default abstract class WriteRequest extends Request {
 
     protected val: number;
 
