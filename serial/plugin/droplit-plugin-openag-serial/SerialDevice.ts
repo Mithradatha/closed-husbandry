@@ -8,46 +8,53 @@ import SerialMessage from "./src/SerialMessage";
 import * as SerialResponseFactory from './src/SerialResponseFactory';
 import Request from "./src/Request";
 import Response from "./src/Response";
+import MessageEncoder from "./src/MessageEncoder";
+
+const ACK_INTERVAL: number = 50; // ms between acknowledgement checks
+
+const DEFAULT_DELIMITER: number = 0x0;
+const DEFAULT_BAUD_RATE: number = 9600;
+const DEFAULT_MAX_RETRIES: number = 3;
+const DEFAULT_RES_TIMEOUT: number = 1000; // ms
 
 export default class SerialDevice {
 
-    // ms between acknowledgement checks
-    private readonly ackInterval: number = 50;
+    private options: SerialPort.OpenOptions;
 
-    private responseTimeout: number;
-    private maxRetries: number;
-
-    private acknowledged: boolean[] = [false, false];
-    private latestResponse?: Response;
-    private sequence: Sequence = 0x0;
-
-    private deviceConnected: boolean = false;
     private devicePath: string;
+    private delimiter: number;
+    private maxRetries: number;
+    private responseTimeout: number;
+
+    private sequence: Sequence;
+    private acknowledged: boolean[];
 
     private serialPort: SerialPort;
-    private delimiter: Delimeter;
+    private deviceConnected: boolean;
 
     private encoder: SerialMessageEncoder;
     private requestQueue: AsyncQueue<Request>;
 
+    private latestResponse?: Response;
+
     constructor(options: SerialDeviceOptions) {
 
+        options.autoOpen = false;
+        options.baudRate = options.baudRate || DEFAULT_BAUD_RATE;
+        this.options = options;
+
         this.devicePath = options.devicePath;
+        this.delimiter = options.delimiter || DEFAULT_DELIMITER;
+        this.maxRetries = options.maxRetries || DEFAULT_MAX_RETRIES;
+        this.responseTimeout = options.responseTimeout || DEFAULT_RES_TIMEOUT;
 
-        this.delimiter = (options.delimiter)
-            ? options.delimiter
-            : 0x0;
+        this.sequence = 0x0;
+        this.acknowledged = [false, false];
 
-        this.maxRetries = (options.maxRetries || options.maxRetries == 0)
-            ? options.maxRetries
-            : 5;
-
-        this.responseTimeout = (options.responseTimeout)
-            ? options.responseTimeout
-            : 5000; // ms
-
-        this.serialPort = new SerialPort(this.devicePath, options);
-        this.serialPort.on('open', () => this.onOpen(this.delimiter));
+        this.deviceConnected = false;
+        this.serialPort = new SerialPort(this.devicePath, this.options);
+        this.serialPort.on('error', (err?: Error) => this.onError(err));
+        this.serialPort.on('close', (err?: Error) => this.onClose(err));
 
         this.encoder = new SerialMessageEncoder(this.delimiter);
 
@@ -55,32 +62,35 @@ export default class SerialDevice {
         this.requestQueue = queue(this.repeatRequest.bind(this), 1);
     }
 
-    private onOpen(delim: Delimeter): void {
-
-        const parser = this.serialPort.pipe(
-            new SerialPort.parsers.Delimiter({ delimiter: [delim] }));
-
-        parser.on('data', (data: Buffer) => this.onData(data));
-
-        this.serialPort.on('error', (err: any) => this.onError(err));
-        this.serialPort.on('close', (err?: any) => this.onClose(err));
-
-        this.deviceConnected = true;
-        console.log('Serial Device Connected');
+    public static Discover(): string[] {
+        // TODO: Implement
+        return ['COM5'];
     }
 
-    private onData(data: Buffer): void {
+    public connect(): Promise<string> {
 
-        console.log('Serial Message Received');
-        this.encoder.decode(data)
-            .then((message: SerialMessage) => {
-                this.latestResponse = SerialResponseFactory.assembleFrom(message);
-                console.log(`This: ${this.sequence} vs. That: ${message.sequence}`);
-                console.log(`Response Value: ${this.latestResponse.value}`);
-                this.acknowledged[message.sequence] = true;
-            }).catch((reason: any) => {
-                console.log('Message Could Not Be Decoded');
+        return new Promise((resolve, reject) => {
+
+            if (this.deviceConnected) resolve(this.devicePath);
+            else this.serialPort.open((err?: Error) => {
+
+                if (err) reject(err.message);
+                else this.onOpen(resolve);
             });
+        });
+    }
+
+    public disconnect(): Promise<string> {
+
+        return new Promise((resolve, reject) => {
+
+            if (!this.deviceConnected) resolve(this.devicePath);
+            else this.serialPort.close((err?: Error) => {
+
+                if (err) reject(err.message);
+                else resolve(this.devicePath);
+            });
+        });
     }
 
     public send(request: Request): Promise<Response> {
@@ -108,6 +118,33 @@ export default class SerialDevice {
         });
     }
 
+    private onOpen(callback: (value?: string | PromiseLike<string>) => void): void {
+
+        const parser = this.serialPort.pipe(
+            new SerialPort.parsers.Delimiter({ delimiter: [this.delimiter] }));
+
+        parser.on('data', (data: Buffer) => this.onData(data));
+
+        this.deviceConnected = true;
+        console.log('Serial Device Connected');
+
+        callback(this.devicePath);
+    }
+
+    private onData(data: Buffer): void {
+
+        console.log('Serial Message Received');
+        this.encoder.decode(data)
+            .then((message: SerialMessage) => {
+                this.latestResponse = SerialResponseFactory.assembleFrom(message);
+                console.log(`This: ${this.sequence} vs. That: ${message.sequence}`);
+                console.log(`Response Value: ${this.latestResponse.value}`);
+                this.acknowledged[message.sequence] = true;
+            }).catch((reason: any) => {
+                console.log('Message Could Not Be Decoded');
+            });
+    }
+
     private deliver(msg: Buffer, timeout: number): Promise<Response> {
 
         console.log('Delivering Message');
@@ -128,7 +165,7 @@ export default class SerialDevice {
                     resolve(response);
                 }
 
-            }, this.ackInterval);
+            }, ACK_INTERVAL);
 
             setTimeout(() => {
 
@@ -176,18 +213,14 @@ export default class SerialDevice {
         callback(error, response);
     }
 
-    private onError(err: any): void {
+    private onError(err?: Error): void {
 
-        console.log(`OnError: ${err}`);
+        console.log('Error Occured');
     }
 
-    private onClose(err?: any): void {
+    private onClose(err?: Error) {
 
-        console.log(`OnClose: ${err}`);
-
-        if (err && err.disconnect == true) {
-            // Disconnect Message
-        }
+        console.log('Close Occured');
 
         this.deviceConnected = false;
     }

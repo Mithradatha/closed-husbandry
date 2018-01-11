@@ -1,136 +1,160 @@
-// import { CobsEncoder } from './CobsEncoder';
-// import * as droplit from 'droplit-plugin';
-// import * as SerialPort from 'serialport';
 
-// export class SerialPlugin extends droplit.DroplitPlugin {
+import * as droplit from 'droplit-plugin';
+import SerialDevice from './SerialDevice';
+import DigitalReadRequest from './src/DigitalReadRequest';
+import DigitalReadResponse from './src/DigitalReadResponse';
+import Response from './src/Response';
+import { setImmediate } from 'async';
 
-//     private readonly BAUD_RATE = 9600;
-//     private readonly DELIMITER = 0x0;
+const BAUD_RATE: number = 9600;
+const DELIMITER: number = 0x0;
+const MAX_RETRIES: number = 3;
+const RES_TIMEOUT: number = 1000 * 3; // ms
 
-//     // iterate over /dev/tty* for more than one device
-//     // private readonly DEVICE_PATH = '/dev/ttyACM0';
-//     private readonly DEVICE_PATH = 'COM5';
+export class SerialPlugin extends droplit.DroplitPlugin {
 
-//     private devices: any;
-//     private services: any;
+    private devices: Map<string, SerialDevice>;
 
-//     private serial: SerialPort;
-//     private encoder: CobsEncoder;
+    private services: any;
+    private members: any;
 
-//     constructor() {
-//         super();
+    public constructor() {
+        super();
 
-//         console.log('Constructor');
+        this.services = {
+            BinarySwitch: {
+                get_switch: this.getSwitch,
+                set_switch: this.setSwitch,
+                switchOff: this.switchOff,
+                switchOn: this.switchOn
+            },
+            DimmableSwitch: {
+                get_brightness: this.getBrightness,
+                set_brightness: this.setBrightness,
+                stepUp: this.stepUp,
+                stepdown: this.stepDown
+            }
+        };
 
-//         this.services = {
-//             BinarySwitch: {
-//                 get_switch: this.getSwitch,
-//                 set_switch: this.setSwitch,
-//                 switchOff: this.switchOff,
-//                 switchOn: this.switchOn
-//             }
-//         };
+        this.members = {
+            switch: 'BinarySwitch.switch',
+            brightness: 'DimmableSwitch.brightness'
+        };
+    }
 
-//         this.serial = new SerialPort(
-//             this.DEVICE_PATH,
-//             { baudRate: this.BAUD_RATE }
-//         );
+    public discover(): void {
 
-//         this.encoder = new CobsEncoder(this.DELIMITER);
-//         this.serial.on('open', onOpen.bind(this));
+        const devicePaths: string[] = SerialDevice.Discover();
 
-//         function onOpen(): void {
+        devicePaths.forEach(devicePath => {
 
-//             console.log('Connect');
+            if (!this.devices.has(devicePath)) {
 
-//             setImmediate(() => { // simulate async
+                const device = new SerialDevice({
+                    baudRate: BAUD_RATE,
+                    devicePath: devicePath,
+                    delimiter: DELIMITER,
+                    maxRetries: MAX_RETRIES,
+                    responseTimeout: RES_TIMEOUT
+                });
 
-//                 this.devices = {
-//                     1: { 'BinarySwitch.switch': 'off' }
-//                 };
+                device.connect()
+                    .then((devicePath: string) => {
 
-//                 this.onDeviceInfo({
-//                     localId: '1',
-//                     address: this.DEVICE_PATH,
-//                     services: ['BinarySwitch'],
-//                     promotedMembers: {
-//                         switch: 'BinarySwitch.switch'
-//                     }
-//                 });
-//             });
-//         }
-//     }
+                        console.log('Connected!');
+                        this.onDeviceInfo({
+                            localId: devicePath,
+                            services: this.services,
+                            promotedMembers: this.members,
+                            pluginName: SerialPlugin.name,
+                            timestamp: new Date()
+                        });
 
-//     public discover() {
+                        this.devices.set(devicePath, device);
+                        this.onDiscoverComplete();
+                    })
+                    .catch((reason: any) => {
+                        this.onDiscoverComplete();
+                    });
+            }
+        });
 
-//         console.log('Discover');
+    }
 
-//         setImmediate(() => { // simulate async
+    public dropDevice(localId: string): boolean {
 
-//             this.onDiscoverComplete();
-//         });
-//     }
+        const device = this.devices.get(localId);
+        if (device) {
 
-//     public dropDevice(localId: string): boolean {
-//         console.log('Drop');
-//         this.disconnect(localId);
-//         delete this.devices[localId];
-//         return true;
-//     }
+            device.disconnect()
+                .then((devicePath: string) => {
+                    this.devices.delete(devicePath);
+                });
+        }
 
-//     // BinarySwitch Implementation
-//     protected getSwitch(localId: string, callback: (value: any) => void): boolean {
+        /* 
+        * Note: Not sure how to wait on disconnect
+        * without changing method signature to async,
+        * so just return true always, and if the disconnect
+        * is rejected, then the device is still cached.
+        */
 
-//         console.log('Get Switch');
+        return true;
+    }
 
-//         // device does not exist
-//         if (!this.devices[localId]) {
-//             callback(undefined);
-//             return true;
-//         }
+    protected getSwitch(localId: string, callback: (value: any) => void, index: string): boolean {
 
-//         setImmediate(() => { // simulate async
-//             // send last set value
-//             callback(this.devices[localId]['BinarySwitch.switch']);
-//         });
-//         return true;
-//     }
+        const device = this.devices.get(localId);
 
-//     protected setSwitch(localId: string, value: any): boolean {
+        if (!device) {
+            callback(undefined);
+            return true;
 
-//         console.log('Set Switch');
+        } else {
 
-//         // device does not exist
-//         if (!this.devices[localId])
-//             return true;
+            try {
+                const req = new DigitalReadRequest(Number(index));
+                const res = await device.send(req) as DigitalReadResponse;
+                callback(res.value);
+                return true;
 
-//         // check if values are valid
-//         if (value !== 'on' && value !== 'off')
-//             return true;
+            } catch (err) {
+                return false;
+            }
+        }
+    }
 
-//         const cmd = (value === 'off')
-//             ? new Uint8Array([0x30])
-//             : new Uint8Array([0x31]);
+    protected setSwitch(localId: string, value: any, index: string): boolean {
 
-//         const encoded = new Buffer(this.encoder.pack(cmd));
-//         const packet = Buffer.concat([encoded, new Buffer([this.DELIMITER])]);
+    }
 
-//         this.serial.write(packet);
+    protected switchOff(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
 
-//         // simulate setting device property
-//         this.devices[localId]['BinarySwitch.switch'] = value;
-//         return true;
-//     }
+    }
 
-//     protected switchOff(localId: string): boolean {
-//         console.log('Switch Off');
 
-//         return this.setSwitch(localId, 'off');
-//     }
+    protected switchOn(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
 
-//     protected switchOn(localId: string): boolean {
-//         console.log('Switch On');
+    }
 
-//         return this.setSwitch(localId, 'on');
-//     }
-// }
+    protected getBrightness(localId: string, callback: (value: any) => void, index: string): boolean {
+
+
+    }
+
+    protected setBrightness(localId: string, value: any, index: string): boolean {
+
+    }
+
+
+    protected stepUp(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
+
+    }
+
+
+    protected stepDown(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
+
+    }
+
+
+}
