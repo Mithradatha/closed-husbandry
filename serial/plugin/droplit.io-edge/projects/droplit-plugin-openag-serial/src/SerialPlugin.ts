@@ -57,7 +57,7 @@ export class SerialPlugin extends DroplitPlugin {
                     }
                 );
 
-                device.connect(() => {
+                device.connect().then((devicePath: string) => {
 
                     this.onDeviceInfo({
                         localId: devicePath,
@@ -69,6 +69,7 @@ export class SerialPlugin extends DroplitPlugin {
 
                     this.devices[devicePath] = device;
                     this.onDiscoverComplete();
+
                 });
             }
         });

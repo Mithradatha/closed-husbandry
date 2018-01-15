@@ -5,7 +5,7 @@
 1 verbose cli   '--no-bin-links' ]
 2 info using npm@3.10.10
 3 info using node@v6.11.2
-4 verbose linkPkg C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c
+4 verbose linkPkg C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c
 5 silly gentlyRm C:\Users\samke\AppData\Roaming\npm\node_modules\droplit-plugin-apa102c is being purged
 6 verbose gentlyRm don't care about contents; nuking C:\Users\samke\AppData\Roaming\npm\node_modules\droplit-plugin-apa102c
 7 verbose link build target C:\Users\samke\AppData\Roaming\npm\node_modules\droplit-plugin-apa102c
@@ -40,8 +40,8 @@
 29 silly mapToRegistry uri https://registry.npmjs.org/rpio
 30 verbose request uri https://registry.npmjs.org/rpio
 31 verbose request no auth needed
-32 info attempt registry request try #1 at 3:18:55 PM
-33 verbose request id ddc8e7e2701d3254
+32 info attempt registry request try #1 at 5:13:14 PM
+33 verbose request id 9149f3d110306647
 34 verbose etag "5a5225ba-1a7c8"
 35 verbose lastModified Sun, 7 Jan 2018 13:50:50 GMT
 36 http request GET https://registry.npmjs.org/rpio
@@ -54,153 +54,153 @@
 40 silly cache add   escapedName: 'droplit-plugin',
 40 silly cache add   name: 'droplit-plugin',
 40 silly cache add   rawSpec: '../droplit-plugin',
-40 silly cache add   spec: 'C:\\Users\\samke\\Documents\\Projects\\droplit\\droplit.io-edge\\projects\\droplit-plugin',
+40 silly cache add   spec: 'C:\\Users\\samke\\Documents\\Projects\\closed-husbandry\\serial\\plugin\\droplit.io-edge\\projects\\droplit-plugin',
 40 silly cache add   type: 'directory' }
 41 verbose addLocalDirectory C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package.tgz not in flight; packing
 42 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
 43 info lifecycle droplit-plugin@2.0.6~prepublish: droplit-plugin@2.0.6
 44 silly lifecycle droplit-plugin@2.0.6~prepublish: no script for prepublish, continuing
 45 verbose tar pack [ 'C:\\Users\\samke\\AppData\\Roaming\\npm-cache\\droplit-plugin\\2.0.6\\package.tgz',
-45 verbose tar pack   'C:\\Users\\samke\\Documents\\Projects\\droplit\\droplit.io-edge\\projects\\droplit-plugin' ]
+45 verbose tar pack   'C:\\Users\\samke\\Documents\\Projects\\closed-husbandry\\serial\\plugin\\droplit.io-edge\\projects\\droplit-plugin' ]
 46 verbose tarball C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package.tgz
-47 verbose folder C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin
-48 verbose addLocalTarball adding from inside cache C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package.tgz
-49 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-50 http 304 https://registry.npmjs.org/rpio
-51 verbose headers { date: 'Mon, 15 Jan 2018 20:18:57 GMT',
-51 verbose headers   via: '1.1 varnish',
-51 verbose headers   'cache-control': 'max-age=300',
-51 verbose headers   etag: '"5a5225ba-1a7c8"',
-51 verbose headers   age: '79',
-51 verbose headers   connection: 'keep-alive',
-51 verbose headers   'x-served-by': 'cache-mia17621-MIA',
-51 verbose headers   'x-cache': 'HIT',
-51 verbose headers   'x-cache-hits': '1',
-51 verbose headers   'x-timer': 'S1516047537.230178,VS0,VE0',
-51 verbose headers   vary: 'Accept-Encoding, Accept' }
-52 silly get cb [ 304,
-52 silly get   { date: 'Mon, 15 Jan 2018 20:18:57 GMT',
-52 silly get     via: '1.1 varnish',
-52 silly get     'cache-control': 'max-age=300',
-52 silly get     etag: '"5a5225ba-1a7c8"',
-52 silly get     age: '79',
-52 silly get     connection: 'keep-alive',
-52 silly get     'x-served-by': 'cache-mia17621-MIA',
-52 silly get     'x-cache': 'HIT',
-52 silly get     'x-cache-hits': '1',
-52 silly get     'x-timer': 'S1516047537.230178,VS0,VE0',
-52 silly get     vary: 'Accept-Encoding, Accept' } ]
-53 verbose etag https://registry.npmjs.org/rpio from cache
-54 verbose get saving rpio to C:\Users\samke\AppData\Roaming\npm-cache\registry.npmjs.org\rpio\.cache.json
-55 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-56 silly cache afterAdd droplit-plugin@2.0.6
-57 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package\package.json not in flight; writing
-58 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-59 silly resolveWithNewModule rpio@0.9.20 checking installable status
-60 silly cache add args [ 'rpio@^0.9.19', null ]
-61 verbose cache add spec rpio@^0.9.19
-62 silly cache add parsed spec Result {
-62 silly cache add   raw: 'rpio@^0.9.19',
-62 silly cache add   scope: null,
-62 silly cache add   escapedName: 'rpio',
-62 silly cache add   name: 'rpio',
-62 silly cache add   rawSpec: '^0.9.19',
-62 silly cache add   spec: '>=0.9.19 <0.10.0',
-62 silly cache add   type: 'range' }
-63 silly addNamed rpio@>=0.9.19 <0.10.0
-64 verbose addNamed ">=0.9.19 <0.10.0" is a valid semver range for rpio
-65 silly addNameRange { name: 'rpio', range: '>=0.9.19 <0.10.0', hasData: false }
-66 silly mapToRegistry name rpio
-67 silly mapToRegistry using default registry
-68 silly mapToRegistry registry https://registry.npmjs.org/
-69 silly mapToRegistry data Result {
-69 silly mapToRegistry   raw: 'rpio',
-69 silly mapToRegistry   scope: null,
-69 silly mapToRegistry   escapedName: 'rpio',
-69 silly mapToRegistry   name: 'rpio',
-69 silly mapToRegistry   rawSpec: '',
-69 silly mapToRegistry   spec: 'latest',
-69 silly mapToRegistry   type: 'tag' }
-70 silly mapToRegistry uri https://registry.npmjs.org/rpio
-71 verbose addNameRange registry:https://registry.npmjs.org/rpio not in flight; fetching
-72 verbose get https://registry.npmjs.org/rpio not expired, no request
-73 silly addNameRange number 2 { name: 'rpio', range: '>=0.9.19 <0.10.0', hasData: true }
-74 silly addNameRange versions [ 'rpio',
-74 silly addNameRange   [ '0.0.1',
-74 silly addNameRange     '0.0.2',
-74 silly addNameRange     '0.0.3',
-74 silly addNameRange     '0.0.4',
-74 silly addNameRange     '0.0.5',
-74 silly addNameRange     '0.0.6',
-74 silly addNameRange     '0.0.7',
-74 silly addNameRange     '0.0.8',
-74 silly addNameRange     '0.0.9',
-74 silly addNameRange     '0.0.10',
-74 silly addNameRange     '0.1.0',
-74 silly addNameRange     '0.1.1',
-74 silly addNameRange     '0.1.2',
-74 silly addNameRange     '0.2.0',
-74 silly addNameRange     '0.2.1',
-74 silly addNameRange     '0.2.2',
-74 silly addNameRange     '0.2.3',
-74 silly addNameRange     '0.3.0',
-74 silly addNameRange     '0.3.1',
-74 silly addNameRange     '0.4.0',
-74 silly addNameRange     '0.4.1',
-74 silly addNameRange     '0.4.2',
-74 silly addNameRange     '0.4.3',
-74 silly addNameRange     '0.4.4',
-74 silly addNameRange     '0.4.5',
-74 silly addNameRange     '0.5.0',
-74 silly addNameRange     '0.5.1',
-74 silly addNameRange     '0.6.0',
-74 silly addNameRange     '0.6.1',
-74 silly addNameRange     '0.6.2',
-74 silly addNameRange     '0.6.3',
-74 silly addNameRange     '0.6.4',
-74 silly addNameRange     '0.6.5',
-74 silly addNameRange     '0.6.6',
-74 silly addNameRange     '0.7.0',
-74 silly addNameRange     '0.8.0',
-74 silly addNameRange     '0.8.1',
-74 silly addNameRange     '0.8.2',
-74 silly addNameRange     '0.8.3',
-74 silly addNameRange     '0.8.4',
-74 silly addNameRange     '0.8.5',
-74 silly addNameRange     '0.8.6',
-74 silly addNameRange     '0.8.7',
-74 silly addNameRange     '0.8.8',
-74 silly addNameRange     '0.8.9',
-74 silly addNameRange     '0.8.10',
-74 silly addNameRange     '0.8.11',
-74 silly addNameRange     '0.9.0',
-74 silly addNameRange     '0.9.1',
-74 silly addNameRange     '0.9.2',
-74 silly addNameRange     '0.9.3',
-74 silly addNameRange     '0.9.4',
-74 silly addNameRange     '0.9.5',
-74 silly addNameRange     '0.9.6',
-74 silly addNameRange     '0.9.7',
-74 silly addNameRange     '0.9.8',
-74 silly addNameRange     '0.9.9',
-74 silly addNameRange     '0.9.10',
-74 silly addNameRange     '0.9.11',
-74 silly addNameRange     '0.9.12',
-74 silly addNameRange     '0.9.13',
-74 silly addNameRange     '0.9.14',
-74 silly addNameRange     '0.9.15',
-74 silly addNameRange     '0.9.16',
-74 silly addNameRange     '0.9.17',
-74 silly addNameRange     '0.9.18',
-74 silly addNameRange     '0.9.19',
-74 silly addNameRange     '0.9.20' ] ]
-75 silly addNamed rpio@0.9.20
-76 verbose addNamed "0.9.20" is a plain semver version for rpio
-77 silly cache afterAdd rpio@0.9.20
-78 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\rpio\0.9.20\package\package.json not in flight; writing
+47 verbose folder C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin
+48 http 304 https://registry.npmjs.org/rpio
+49 verbose headers { date: 'Mon, 15 Jan 2018 22:13:15 GMT',
+49 verbose headers   via: '1.1 varnish',
+49 verbose headers   'cache-control': 'max-age=300',
+49 verbose headers   etag: '"5a5225ba-1a7c8"',
+49 verbose headers   age: '6937',
+49 verbose headers   connection: 'keep-alive',
+49 verbose headers   'x-served-by': 'cache-mia17628-MIA',
+49 verbose headers   'x-cache': 'HIT',
+49 verbose headers   'x-cache-hits': '1',
+49 verbose headers   'x-timer': 'S1516054396.790569,VS0,VE0',
+49 verbose headers   vary: 'Accept-Encoding, Accept' }
+50 silly get cb [ 304,
+50 silly get   { date: 'Mon, 15 Jan 2018 22:13:15 GMT',
+50 silly get     via: '1.1 varnish',
+50 silly get     'cache-control': 'max-age=300',
+50 silly get     etag: '"5a5225ba-1a7c8"',
+50 silly get     age: '6937',
+50 silly get     connection: 'keep-alive',
+50 silly get     'x-served-by': 'cache-mia17628-MIA',
+50 silly get     'x-cache': 'HIT',
+50 silly get     'x-cache-hits': '1',
+50 silly get     'x-timer': 'S1516054396.790569,VS0,VE0',
+50 silly get     vary: 'Accept-Encoding, Accept' } ]
+51 verbose etag https://registry.npmjs.org/rpio from cache
+52 verbose get saving rpio to C:\Users\samke\AppData\Roaming\npm-cache\registry.npmjs.org\rpio\.cache.json
+53 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+54 silly resolveWithNewModule rpio@0.9.20 checking installable status
+55 silly cache add args [ 'rpio@^0.9.19', null ]
+56 verbose cache add spec rpio@^0.9.19
+57 silly cache add parsed spec Result {
+57 silly cache add   raw: 'rpio@^0.9.19',
+57 silly cache add   scope: null,
+57 silly cache add   escapedName: 'rpio',
+57 silly cache add   name: 'rpio',
+57 silly cache add   rawSpec: '^0.9.19',
+57 silly cache add   spec: '>=0.9.19 <0.10.0',
+57 silly cache add   type: 'range' }
+58 silly addNamed rpio@>=0.9.19 <0.10.0
+59 verbose addNamed ">=0.9.19 <0.10.0" is a valid semver range for rpio
+60 silly addNameRange { name: 'rpio', range: '>=0.9.19 <0.10.0', hasData: false }
+61 silly mapToRegistry name rpio
+62 silly mapToRegistry using default registry
+63 silly mapToRegistry registry https://registry.npmjs.org/
+64 silly mapToRegistry data Result {
+64 silly mapToRegistry   raw: 'rpio',
+64 silly mapToRegistry   scope: null,
+64 silly mapToRegistry   escapedName: 'rpio',
+64 silly mapToRegistry   name: 'rpio',
+64 silly mapToRegistry   rawSpec: '',
+64 silly mapToRegistry   spec: 'latest',
+64 silly mapToRegistry   type: 'tag' }
+65 silly mapToRegistry uri https://registry.npmjs.org/rpio
+66 verbose addNameRange registry:https://registry.npmjs.org/rpio not in flight; fetching
+67 verbose addLocalTarball adding from inside cache C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package.tgz
+68 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+69 verbose get https://registry.npmjs.org/rpio not expired, no request
+70 silly addNameRange number 2 { name: 'rpio', range: '>=0.9.19 <0.10.0', hasData: true }
+71 silly addNameRange versions [ 'rpio',
+71 silly addNameRange   [ '0.0.1',
+71 silly addNameRange     '0.0.2',
+71 silly addNameRange     '0.0.3',
+71 silly addNameRange     '0.0.4',
+71 silly addNameRange     '0.0.5',
+71 silly addNameRange     '0.0.6',
+71 silly addNameRange     '0.0.7',
+71 silly addNameRange     '0.0.8',
+71 silly addNameRange     '0.0.9',
+71 silly addNameRange     '0.0.10',
+71 silly addNameRange     '0.1.0',
+71 silly addNameRange     '0.1.1',
+71 silly addNameRange     '0.1.2',
+71 silly addNameRange     '0.2.0',
+71 silly addNameRange     '0.2.1',
+71 silly addNameRange     '0.2.2',
+71 silly addNameRange     '0.2.3',
+71 silly addNameRange     '0.3.0',
+71 silly addNameRange     '0.3.1',
+71 silly addNameRange     '0.4.0',
+71 silly addNameRange     '0.4.1',
+71 silly addNameRange     '0.4.2',
+71 silly addNameRange     '0.4.3',
+71 silly addNameRange     '0.4.4',
+71 silly addNameRange     '0.4.5',
+71 silly addNameRange     '0.5.0',
+71 silly addNameRange     '0.5.1',
+71 silly addNameRange     '0.6.0',
+71 silly addNameRange     '0.6.1',
+71 silly addNameRange     '0.6.2',
+71 silly addNameRange     '0.6.3',
+71 silly addNameRange     '0.6.4',
+71 silly addNameRange     '0.6.5',
+71 silly addNameRange     '0.6.6',
+71 silly addNameRange     '0.7.0',
+71 silly addNameRange     '0.8.0',
+71 silly addNameRange     '0.8.1',
+71 silly addNameRange     '0.8.2',
+71 silly addNameRange     '0.8.3',
+71 silly addNameRange     '0.8.4',
+71 silly addNameRange     '0.8.5',
+71 silly addNameRange     '0.8.6',
+71 silly addNameRange     '0.8.7',
+71 silly addNameRange     '0.8.8',
+71 silly addNameRange     '0.8.9',
+71 silly addNameRange     '0.8.10',
+71 silly addNameRange     '0.8.11',
+71 silly addNameRange     '0.9.0',
+71 silly addNameRange     '0.9.1',
+71 silly addNameRange     '0.9.2',
+71 silly addNameRange     '0.9.3',
+71 silly addNameRange     '0.9.4',
+71 silly addNameRange     '0.9.5',
+71 silly addNameRange     '0.9.6',
+71 silly addNameRange     '0.9.7',
+71 silly addNameRange     '0.9.8',
+71 silly addNameRange     '0.9.9',
+71 silly addNameRange     '0.9.10',
+71 silly addNameRange     '0.9.11',
+71 silly addNameRange     '0.9.12',
+71 silly addNameRange     '0.9.13',
+71 silly addNameRange     '0.9.14',
+71 silly addNameRange     '0.9.15',
+71 silly addNameRange     '0.9.16',
+71 silly addNameRange     '0.9.17',
+71 silly addNameRange     '0.9.18',
+71 silly addNameRange     '0.9.19',
+71 silly addNameRange     '0.9.20' ] ]
+72 silly addNamed rpio@0.9.20
+73 verbose addNamed "0.9.20" is a plain semver version for rpio
+74 silly cache afterAdd rpio@0.9.20
+75 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\rpio\0.9.20\package\package.json not in flight; writing
+76 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+77 silly cache afterAdd droplit-plugin@2.0.6
+78 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package\package.json not in flight; writing
 79 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-80 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package\package.json written
-81 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\rpio\0.9.20\package\package.json written
+80 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\rpio\0.9.20\package\package.json written
+81 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package\package.json written
 82 silly fetchNamedPackageData bindings
 83 silly mapToRegistry name bindings
 84 silly mapToRegistry using default registry
@@ -229,39 +229,39 @@
 93 silly mapToRegistry uri https://registry.npmjs.org/nan
 94 verbose request uri https://registry.npmjs.org/bindings
 95 verbose request no auth needed
-96 info attempt registry request try #1 at 3:18:55 PM
+96 info attempt registry request try #1 at 5:13:14 PM
 97 verbose etag "5a1d3205-4c42"
 98 verbose lastModified Tue, 28 Nov 2017 9:53:09 GMT
 99 http request GET https://registry.npmjs.org/bindings
 100 verbose request uri https://registry.npmjs.org/nan
 101 verbose request no auth needed
-102 info attempt registry request try #1 at 3:18:55 PM
+102 info attempt registry request try #1 at 5:13:14 PM
 103 verbose etag "5a3ad7f1-20c2f"
 104 verbose lastModified Wed, 20 Dec 2017 21:36:49 GMT
 105 http request GET https://registry.npmjs.org/nan
 106 http 304 https://registry.npmjs.org/bindings
-107 verbose headers { date: 'Mon, 15 Jan 2018 20:18:57 GMT',
+107 verbose headers { date: 'Mon, 15 Jan 2018 22:13:15 GMT',
 107 verbose headers   via: '1.1 varnish',
 107 verbose headers   'cache-control': 'max-age=300',
 107 verbose headers   etag: '"5a1d3205-4c42"',
-107 verbose headers   age: '3813',
+107 verbose headers   age: '10672',
 107 verbose headers   connection: 'keep-alive',
-107 verbose headers   'x-served-by': 'cache-mia17621-MIA',
+107 verbose headers   'x-served-by': 'cache-mia17628-MIA',
 107 verbose headers   'x-cache': 'HIT',
 107 verbose headers   'x-cache-hits': '2',
-107 verbose headers   'x-timer': 'S1516047537.303935,VS0,VE0',
+107 verbose headers   'x-timer': 'S1516054396.860194,VS0,VE0',
 107 verbose headers   vary: 'Accept-Encoding, Accept' }
 108 silly get cb [ 304,
-108 silly get   { date: 'Mon, 15 Jan 2018 20:18:57 GMT',
+108 silly get   { date: 'Mon, 15 Jan 2018 22:13:15 GMT',
 108 silly get     via: '1.1 varnish',
 108 silly get     'cache-control': 'max-age=300',
 108 silly get     etag: '"5a1d3205-4c42"',
-108 silly get     age: '3813',
+108 silly get     age: '10672',
 108 silly get     connection: 'keep-alive',
-108 silly get     'x-served-by': 'cache-mia17621-MIA',
+108 silly get     'x-served-by': 'cache-mia17628-MIA',
 108 silly get     'x-cache': 'HIT',
 108 silly get     'x-cache-hits': '2',
-108 silly get     'x-timer': 'S1516047537.303935,VS0,VE0',
+108 silly get     'x-timer': 'S1516054396.860194,VS0,VE0',
 108 silly get     vary: 'Accept-Encoding, Accept' } ]
 109 verbose etag https://registry.npmjs.org/bindings from cache
 110 verbose get saving bindings to C:\Users\samke\AppData\Roaming\npm-cache\registry.npmjs.org\bindings\.cache.json
@@ -319,28 +319,28 @@
 132 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
 133 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\bindings\1.3.0\package\package.json written
 134 http 304 https://registry.npmjs.org/nan
-135 verbose headers { date: 'Mon, 15 Jan 2018 20:18:57 GMT',
+135 verbose headers { date: 'Mon, 15 Jan 2018 22:13:15 GMT',
 135 verbose headers   via: '1.1 varnish',
 135 verbose headers   'cache-control': 'max-age=300',
 135 verbose headers   etag: '"5a3ad7f1-20c2f"',
-135 verbose headers   age: '2823',
+135 verbose headers   age: '9682',
 135 verbose headers   connection: 'keep-alive',
-135 verbose headers   'x-served-by': 'cache-mia17622-MIA',
+135 verbose headers   'x-served-by': 'cache-mia17623-MIA',
 135 verbose headers   'x-cache': 'HIT',
-135 verbose headers   'x-cache-hits': '29',
-135 verbose headers   'x-timer': 'S1516047537.323234,VS0,VE0',
+135 verbose headers   'x-cache-hits': '65',
+135 verbose headers   'x-timer': 'S1516054396.878939,VS0,VE0',
 135 verbose headers   vary: 'Accept-Encoding, Accept' }
 136 silly get cb [ 304,
-136 silly get   { date: 'Mon, 15 Jan 2018 20:18:57 GMT',
+136 silly get   { date: 'Mon, 15 Jan 2018 22:13:15 GMT',
 136 silly get     via: '1.1 varnish',
 136 silly get     'cache-control': 'max-age=300',
 136 silly get     etag: '"5a3ad7f1-20c2f"',
-136 silly get     age: '2823',
+136 silly get     age: '9682',
 136 silly get     connection: 'keep-alive',
-136 silly get     'x-served-by': 'cache-mia17622-MIA',
+136 silly get     'x-served-by': 'cache-mia17623-MIA',
 136 silly get     'x-cache': 'HIT',
-136 silly get     'x-cache-hits': '29',
-136 silly get     'x-timer': 'S1516047537.323234,VS0,VE0',
+136 silly get     'x-cache-hits': '65',
+136 silly get     'x-timer': 'S1516054396.878939,VS0,VE0',
 136 silly get     vary: 'Accept-Encoding, Accept' } ]
 137 verbose etag https://registry.npmjs.org/nan from cache
 138 verbose get saving nan to C:\Users\samke\AppData\Roaming\npm-cache\registry.npmjs.org\nan\.cache.json
@@ -494,7 +494,7 @@
 199 silly decomposeActions finalize rpio@0.9.20
 200 silly runTopLevelLifecycles Starting
 201 silly install runPreinstallTopLevelLifecycles
-202 silly preinstall droplit-plugin-apa102c@0.1.0 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\droplit-plugin-apa102c-8b12d065
+202 silly preinstall droplit-plugin-apa102c@0.1.0 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\droplit-plugin-apa102c-85afddbe
 203 info lifecycle droplit-plugin-apa102c@0.1.0~preinstall: droplit-plugin-apa102c@0.1.0
 204 silly lifecycle droplit-plugin-apa102c@0.1.0~preinstall: no script for preinstall, continuing
 205 silly executeActions Starting
@@ -502,32 +502,32 @@
 207 silly doSerial global-install 0
 208 silly doParallel fetch 3
 209 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache\_locks correctMkdir not in flight; initializing
-210 verbose lock using C:\Users\samke\AppData\Roaming\npm-cache\_locks\staging-4c93c75e7d9c6729.lock for C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging
+210 verbose lock using C:\Users\samke\AppData\Roaming\npm-cache\_locks\staging-8e32d68a1784260f.lock for C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging
 211 silly doParallel extract 3
 212 silly extract bindings@1.3.0
 213 silly extract nan@2.8.0
 214 silly extract rpio@0.9.20
-215 verbose unbuild node_modules\.staging\bindings-39b2f0ac
-216 verbose unbuild node_modules\.staging\rpio-9baa9588
-217 verbose unbuild node_modules\.staging\nan-a80a6fc6
-218 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-39b2f0ac is being purged from base C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c
-219 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-39b2f0ac
-220 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-9baa9588 is being purged from base C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c
-221 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-9baa9588
-222 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-a80a6fc6 is being purged from base C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c
-223 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-a80a6fc6
-224 verbose tar unpack C:\Users\samke\AppData\Roaming\npm-cache\bindings\1.3.0\package.tgz
-225 verbose tar unpacking to C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-39b2f0ac
-226 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-39b2f0ac is being purged
-227 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-39b2f0ac
+215 verbose unbuild node_modules\.staging\nan-8386a6ef
+216 verbose unbuild node_modules\.staging\rpio-14c3a2cc
+217 verbose unbuild node_modules\.staging\bindings-ccc348bc
+218 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-8386a6ef is being purged from base C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c
+219 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-8386a6ef
+220 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-14c3a2cc is being purged from base C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c
+221 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-14c3a2cc
+222 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-ccc348bc is being purged from base C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c
+223 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-ccc348bc
+224 verbose tar unpack C:\Users\samke\AppData\Roaming\npm-cache\nan\2.8.0\package.tgz
+225 verbose tar unpacking to C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-8386a6ef
+226 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-8386a6ef is being purged
+227 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-8386a6ef
 228 verbose tar unpack C:\Users\samke\AppData\Roaming\npm-cache\rpio\0.9.20\package.tgz
-229 verbose tar unpacking to C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-9baa9588
-230 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-9baa9588 is being purged
-231 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-9baa9588
-232 verbose tar unpack C:\Users\samke\AppData\Roaming\npm-cache\nan\2.8.0\package.tgz
-233 verbose tar unpacking to C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-a80a6fc6
-234 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-a80a6fc6 is being purged
-235 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-a80a6fc6
+229 verbose tar unpacking to C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-14c3a2cc
+230 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-14c3a2cc is being purged
+231 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-14c3a2cc
+232 verbose tar unpack C:\Users\samke\AppData\Roaming\npm-cache\bindings\1.3.0\package.tgz
+233 verbose tar unpacking to C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-ccc348bc
+234 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-ccc348bc is being purged
+235 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-ccc348bc
 236 silly gunzTarPerm modes [ '777', '666' ]
 237 silly gunzTarPerm modes [ '777', '666' ]
 238 silly gunzTarPerm modes [ '777', '666' ]
@@ -542,11 +542,11 @@
 247 silly gunzTarPerm extractEntry README.md
 248 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
 249 silly gunzTarPerm extractEntry README.md
-250 silly gunzTarPerm modified mode [ 'README.md', 436, 438 ]
-251 silly gunzTarPerm extractEntry README.md
-252 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
-253 silly gunzTarPerm extractEntry bindings.js
-254 silly gunzTarPerm modified mode [ 'bindings.js', 420, 438 ]
+250 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
+251 silly gunzTarPerm extractEntry bindings.js
+252 silly gunzTarPerm modified mode [ 'bindings.js', 420, 438 ]
+253 silly gunzTarPerm extractEntry README.md
+254 silly gunzTarPerm modified mode [ 'README.md', 436, 438 ]
 255 silly gunzTarPerm extractEntry include_dirs.js
 256 silly gunzTarPerm modified mode [ 'include_dirs.js', 436, 438 ]
 257 silly gunzTarPerm extractEntry examples/blink.js
@@ -557,14 +557,14 @@
 262 silly gunzTarPerm modified mode [ 'LICENSE.md', 436, 438 ]
 263 silly gunzTarPerm extractEntry doc/new.md
 264 silly gunzTarPerm modified mode [ 'doc/new.md', 436, 438 ]
-265 silly gunzTarPerm extractEntry examples/button.js
-266 silly gunzTarPerm modified mode [ 'examples/button.js', 420, 438 ]
-267 silly gunzTarPerm extractEntry examples/dht11.js
-268 silly gunzTarPerm modified mode [ 'examples/dht11.js', 420, 438 ]
-269 silly gunzTarPerm extractEntry examples/i2c-lcd.js
-270 silly gunzTarPerm modified mode [ 'examples/i2c-lcd.js', 420, 438 ]
-271 silly gunzTarPerm extractEntry doc/asyncworker.md
-272 silly gunzTarPerm modified mode [ 'doc/asyncworker.md', 436, 438 ]
+265 silly gunzTarPerm extractEntry doc/asyncworker.md
+266 silly gunzTarPerm modified mode [ 'doc/asyncworker.md', 436, 438 ]
+267 silly gunzTarPerm extractEntry examples/button.js
+268 silly gunzTarPerm modified mode [ 'examples/button.js', 420, 438 ]
+269 silly gunzTarPerm extractEntry examples/dht11.js
+270 silly gunzTarPerm modified mode [ 'examples/dht11.js', 420, 438 ]
+271 silly gunzTarPerm extractEntry examples/i2c-lcd.js
+272 silly gunzTarPerm modified mode [ 'examples/i2c-lcd.js', 420, 438 ]
 273 silly gunzTarPerm extractEntry examples/padcontrol.js
 274 silly gunzTarPerm modified mode [ 'examples/padcontrol.js', 420, 438 ]
 275 silly gunzTarPerm extractEntry doc/callback.md
@@ -587,26 +587,26 @@
 292 silly gunzTarPerm modified mode [ 'doc/maybe_types.md', 436, 438 ]
 293 silly gunzTarPerm extractEntry doc/methods.md
 294 silly gunzTarPerm modified mode [ 'doc/methods.md', 436, 438 ]
-295 silly gunzTarPerm extractEntry handler.diff
-296 silly gunzTarPerm modified mode [ 'handler.diff', 420, 438 ]
-297 silly gunzTarPerm extractEntry lib/rpio.js
-298 silly gunzTarPerm modified mode [ 'lib/rpio.js', 420, 438 ]
-299 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-39b2f0ac\node_modules is being purged
-300 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-39b2f0ac\node_modules
-301 silly gunzTarPerm extractEntry src/bcm2835.c
-302 silly gunzTarPerm modified mode [ 'src/bcm2835.c', 420, 438 ]
-303 silly gunzTarPerm extractEntry src/bcm2835.h
-304 silly gunzTarPerm modified mode [ 'src/bcm2835.h', 420, 438 ]
-305 silly gunzTarPerm extractEntry doc/buffers.md
-306 silly gunzTarPerm modified mode [ 'doc/buffers.md', 436, 438 ]
-307 silly gunzTarPerm extractEntry doc/node_misc.md
-308 silly gunzTarPerm modified mode [ 'doc/node_misc.md', 436, 438 ]
-309 silly gunzTarPerm extractEntry src/rpio.cc
-310 silly gunzTarPerm modified mode [ 'src/rpio.cc', 420, 438 ]
-311 silly gunzTarPerm extractEntry doc/object_wrappers.md
-312 silly gunzTarPerm modified mode [ 'doc/object_wrappers.md', 436, 438 ]
-313 silly gunzTarPerm extractEntry doc/persistent.md
-314 silly gunzTarPerm modified mode [ 'doc/persistent.md', 436, 438 ]
+295 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-ccc348bc\node_modules is being purged
+296 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-ccc348bc\node_modules
+297 silly gunzTarPerm extractEntry handler.diff
+298 silly gunzTarPerm modified mode [ 'handler.diff', 420, 438 ]
+299 silly gunzTarPerm extractEntry lib/rpio.js
+300 silly gunzTarPerm modified mode [ 'lib/rpio.js', 420, 438 ]
+301 silly gunzTarPerm extractEntry doc/buffers.md
+302 silly gunzTarPerm modified mode [ 'doc/buffers.md', 436, 438 ]
+303 silly gunzTarPerm extractEntry doc/node_misc.md
+304 silly gunzTarPerm modified mode [ 'doc/node_misc.md', 436, 438 ]
+305 silly gunzTarPerm extractEntry src/bcm2835.c
+306 silly gunzTarPerm modified mode [ 'src/bcm2835.c', 420, 438 ]
+307 silly gunzTarPerm extractEntry src/bcm2835.h
+308 silly gunzTarPerm modified mode [ 'src/bcm2835.h', 420, 438 ]
+309 silly gunzTarPerm extractEntry doc/object_wrappers.md
+310 silly gunzTarPerm modified mode [ 'doc/object_wrappers.md', 436, 438 ]
+311 silly gunzTarPerm extractEntry doc/persistent.md
+312 silly gunzTarPerm modified mode [ 'doc/persistent.md', 436, 438 ]
+313 silly gunzTarPerm extractEntry src/rpio.cc
+314 silly gunzTarPerm modified mode [ 'src/rpio.cc', 420, 438 ]
 315 silly gunzTarPerm extractEntry doc/scopes.md
 316 silly gunzTarPerm modified mode [ 'doc/scopes.md', 436, 438 ]
 317 silly gunzTarPerm extractEntry doc/script.md
@@ -655,24 +655,24 @@
 360 silly gunzTarPerm modified mode [ 'nan_typedarray_contents.h', 436, 438 ]
 361 silly gunzTarPerm extractEntry nan_weak.h
 362 silly gunzTarPerm modified mode [ 'nan_weak.h', 436, 438 ]
-363 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-9baa9588\node_modules is being purged
-364 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-9baa9588\node_modules
-365 silly gunzTarPerm extractEntry CHANGELOG.md
-366 silly gunzTarPerm modified mode [ 'CHANGELOG.md', 436, 438 ]
-367 silly gunzTarPerm extractEntry tools/package.json
-368 silly gunzTarPerm modified mode [ 'tools/package.json', 436, 438 ]
-369 silly gunzTarPerm extractEntry tools/README.md
-370 silly gunzTarPerm modified mode [ 'tools/README.md', 436, 438 ]
-371 silly gunzTarPerm extractEntry tools/1to2.js
-372 silly gunzTarPerm modified mode [ 'tools/1to2.js', 509, 511 ]
-373 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-a80a6fc6\node_modules is being purged
-374 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-a80a6fc6\node_modules
+363 silly gunzTarPerm extractEntry CHANGELOG.md
+364 silly gunzTarPerm modified mode [ 'CHANGELOG.md', 436, 438 ]
+365 silly gunzTarPerm extractEntry tools/package.json
+366 silly gunzTarPerm modified mode [ 'tools/package.json', 436, 438 ]
+367 silly gunzTarPerm extractEntry tools/README.md
+368 silly gunzTarPerm modified mode [ 'tools/README.md', 436, 438 ]
+369 silly gunzTarPerm extractEntry tools/1to2.js
+370 silly gunzTarPerm modified mode [ 'tools/1to2.js', 509, 511 ]
+371 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-14c3a2cc\node_modules is being purged
+372 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-14c3a2cc\node_modules
+373 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-8386a6ef\node_modules is being purged
+374 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-8386a6ef\node_modules
 375 silly doParallel preinstall 3
-376 silly preinstall bindings@1.3.0 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-39b2f0ac
+376 silly preinstall bindings@1.3.0 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-ccc348bc
 377 info lifecycle bindings@1.3.0~preinstall: bindings@1.3.0
-378 silly preinstall nan@2.8.0 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-a80a6fc6
+378 silly preinstall nan@2.8.0 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-8386a6ef
 379 info lifecycle nan@2.8.0~preinstall: nan@2.8.0
-380 silly preinstall rpio@0.9.20 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-9baa9588
+380 silly preinstall rpio@0.9.20 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-14c3a2cc
 381 info lifecycle rpio@0.9.20~preinstall: rpio@0.9.20
 382 silly lifecycle bindings@1.3.0~preinstall: no script for preinstall, continuing
 383 silly lifecycle nan@2.8.0~preinstall: no script for preinstall, continuing
@@ -680,9 +680,9 @@
 385 silly doReverseSerial remove 0
 386 silly doSerial move 0
 387 silly doSerial finalize 3
-388 silly finalize C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\bindings
-389 silly finalize C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\nan
-390 silly finalize C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\rpio
+388 silly finalize C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\bindings
+389 silly finalize C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\nan
+390 silly finalize C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\rpio
 391 silly doSerial build 3
 392 silly build bindings@1.3.0
 393 silly build nan@2.8.0
@@ -690,21 +690,21 @@
 395 silly doSerial global-link 0
 396 silly doParallel update-linked 1
 397 silly doSerial install 3
-398 silly install bindings@1.3.0 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-39b2f0ac
+398 silly install bindings@1.3.0 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\bindings-ccc348bc
 399 info lifecycle bindings@1.3.0~install: bindings@1.3.0
 400 silly lifecycle bindings@1.3.0~install: no script for install, continuing
-401 silly install nan@2.8.0 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-a80a6fc6
+401 silly install nan@2.8.0 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\nan-8386a6ef
 402 info lifecycle nan@2.8.0~install: nan@2.8.0
 403 silly lifecycle nan@2.8.0~install: no script for install, continuing
-404 silly install rpio@0.9.20 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-9baa9588
+404 silly install rpio@0.9.20 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging\rpio-14c3a2cc
 405 info lifecycle rpio@0.9.20~install: rpio@0.9.20
 406 verbose lifecycle rpio@0.9.20~install: unsafe-perm in lifecycle true
-407 verbose lifecycle rpio@0.9.20~install: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\rpio\node_modules\.bin;C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\samke\bin;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Python36-32\Scripts;C:\Program Files (x86)\Python36-32;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Skype\Phone;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files\MongoDB\Server\3.4\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\Bitvise SSH Client;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Users\samke\AppData\Local\Microsoft\WindowsApps;C:\Users\samke\AppData\Roaming\npm;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\ucrt;C:\Users\samke\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Users\samke\AppData\Roaming\npm;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\ucrt
-408 verbose lifecycle rpio@0.9.20~install: CWD: C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\rpio
+407 verbose lifecycle rpio@0.9.20~install: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\rpio\node_modules\.bin;C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\samke\bin;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Python36-32\Scripts;C:\Program Files (x86)\Python36-32;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Skype\Phone;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files\MongoDB\Server\3.4\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\Bitvise SSH Client;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Users\samke\AppData\Local\Microsoft\WindowsApps;C:\Users\samke\AppData\Roaming\npm;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\ucrt;C:\Users\samke\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Users\samke\AppData\Roaming\npm;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\ucrt
+408 verbose lifecycle rpio@0.9.20~install: CWD: C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\rpio
 409 silly lifecycle rpio@0.9.20~install: Args: [ '/d /s /c', 'node-gyp rebuild' ]
 410 silly lifecycle rpio@0.9.20~install: Returned: code: 1  signal: null
 411 info lifecycle rpio@0.9.20~install: Failed to exec install script
-412 verbose unlock done using C:\Users\samke\AppData\Roaming\npm-cache\_locks\staging-4c93c75e7d9c6729.lock for C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging
+412 verbose unlock done using C:\Users\samke\AppData\Roaming\npm-cache\_locks\staging-8e32d68a1784260f.lock for C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c\node_modules\.staging
 413 silly rollbackFailedOptional Starting
 414 silly rollbackFailedOptional Finishing
 415 silly runTopLevelLifecycles Finishing
@@ -726,7 +726,7 @@
 421 verbose stack     at maybeClose (internal/child_process.js:891:16)
 421 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 422 verbose pkgid rpio@0.9.20
-423 verbose cwd C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-apa102c
+423 verbose cwd C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-apa102c
 424 error Windows_NT 10.0.16299
 425 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "link" "--no-bin-links"
 426 error node v6.11.2

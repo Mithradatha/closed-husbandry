@@ -5,7 +5,7 @@
 1 verbose cli   '--no-bin-links' ]
 2 info using npm@3.10.10
 3 info using node@v6.11.2
-4 verbose linkPkg C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel
+4 verbose linkPkg C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel
 5 silly gentlyRm C:\Users\samke\AppData\Roaming\npm\node_modules\droplit-plugin-neopixel is being purged
 6 verbose gentlyRm don't care about contents; nuking C:\Users\samke\AppData\Roaming\npm\node_modules\droplit-plugin-neopixel
 7 verbose link build target C:\Users\samke\AppData\Roaming\npm\node_modules\droplit-plugin-neopixel
@@ -40,8 +40,8 @@
 29 silly mapToRegistry uri https://registry.npmjs.org/rpi-ws281x-native
 30 verbose request uri https://registry.npmjs.org/rpi-ws281x-native
 31 verbose request no auth needed
-32 info attempt registry request try #1 at 3:19:31 PM
-33 verbose request id 24ffa83e80aa593b
+32 info attempt registry request try #1 at 5:13:50 PM
+33 verbose request id 12ef4db0f576daca
 34 verbose etag "5a255c67-71d2"
 35 verbose lastModified Mon, 4 Dec 2017 14:32:07 GMT
 36 http request GET https://registry.npmjs.org/rpi-ws281x-native
@@ -54,39 +54,39 @@
 40 silly cache add   escapedName: 'droplit-plugin',
 40 silly cache add   name: 'droplit-plugin',
 40 silly cache add   rawSpec: '../droplit-plugin',
-40 silly cache add   spec: 'C:\\Users\\samke\\Documents\\Projects\\droplit\\droplit.io-edge\\projects\\droplit-plugin',
+40 silly cache add   spec: 'C:\\Users\\samke\\Documents\\Projects\\closed-husbandry\\serial\\plugin\\droplit.io-edge\\projects\\droplit-plugin',
 40 silly cache add   type: 'directory' }
 41 verbose addLocalDirectory C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package.tgz not in flight; packing
 42 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
 43 info lifecycle droplit-plugin@2.0.6~prepublish: droplit-plugin@2.0.6
 44 silly lifecycle droplit-plugin@2.0.6~prepublish: no script for prepublish, continuing
 45 verbose tar pack [ 'C:\\Users\\samke\\AppData\\Roaming\\npm-cache\\droplit-plugin\\2.0.6\\package.tgz',
-45 verbose tar pack   'C:\\Users\\samke\\Documents\\Projects\\droplit\\droplit.io-edge\\projects\\droplit-plugin' ]
+45 verbose tar pack   'C:\\Users\\samke\\Documents\\Projects\\closed-husbandry\\serial\\plugin\\droplit.io-edge\\projects\\droplit-plugin' ]
 46 verbose tarball C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package.tgz
-47 verbose folder C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin
+47 verbose folder C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin
 48 http 304 https://registry.npmjs.org/rpi-ws281x-native
-49 verbose headers { date: 'Mon, 15 Jan 2018 20:19:32 GMT',
+49 verbose headers { date: 'Mon, 15 Jan 2018 22:13:51 GMT',
 49 verbose headers   via: '1.1 varnish',
 49 verbose headers   'cache-control': 'max-age=300',
 49 verbose headers   etag: '"5a255c67-71d2"',
-49 verbose headers   age: '84',
+49 verbose headers   age: '6943',
 49 verbose headers   connection: 'keep-alive',
-49 verbose headers   'x-served-by': 'cache-mia17628-MIA',
+49 verbose headers   'x-served-by': 'cache-mia17624-MIA',
 49 verbose headers   'x-cache': 'HIT',
 49 verbose headers   'x-cache-hits': '1',
-49 verbose headers   'x-timer': 'S1516047573.737217,VS0,VE1',
+49 verbose headers   'x-timer': 'S1516054432.859136,VS0,VE0',
 49 verbose headers   vary: 'Accept-Encoding, Accept' }
 50 silly get cb [ 304,
-50 silly get   { date: 'Mon, 15 Jan 2018 20:19:32 GMT',
+50 silly get   { date: 'Mon, 15 Jan 2018 22:13:51 GMT',
 50 silly get     via: '1.1 varnish',
 50 silly get     'cache-control': 'max-age=300',
 50 silly get     etag: '"5a255c67-71d2"',
-50 silly get     age: '84',
+50 silly get     age: '6943',
 50 silly get     connection: 'keep-alive',
-50 silly get     'x-served-by': 'cache-mia17628-MIA',
+50 silly get     'x-served-by': 'cache-mia17624-MIA',
 50 silly get     'x-cache': 'HIT',
 50 silly get     'x-cache-hits': '1',
-50 silly get     'x-timer': 'S1516047573.737217,VS0,VE1',
+50 silly get     'x-timer': 'S1516054432.859136,VS0,VE0',
 50 silly get     vary: 'Accept-Encoding, Accept' } ]
 51 verbose etag https://registry.npmjs.org/rpi-ws281x-native from cache
 52 verbose get saving rpi-ws281x-native to C:\Users\samke\AppData\Roaming\npm-cache\registry.npmjs.org\rpi-ws281x-native\.cache.json
@@ -122,38 +122,38 @@
 66 silly mapToRegistry   type: 'tag' }
 67 silly mapToRegistry uri https://registry.npmjs.org/rpi-ws281x-native
 68 verbose addNameRange registry:https://registry.npmjs.org/rpi-ws281x-native not in flight; fetching
-69 silly cache afterAdd droplit-plugin@2.0.6
-70 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package\package.json not in flight; writing
-71 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-72 verbose get https://registry.npmjs.org/rpi-ws281x-native not expired, no request
-73 silly addNameRange number 2 { name: 'rpi-ws281x-native',
-73 silly addNameRange   range: '>=0.8.2 <0.9.0',
-73 silly addNameRange   hasData: true }
-74 silly addNameRange versions [ 'rpi-ws281x-native',
-74 silly addNameRange   [ '0.0.1',
-74 silly addNameRange     '0.1.0',
-74 silly addNameRange     '0.1.1',
-74 silly addNameRange     '0.1.2',
-74 silly addNameRange     '0.1.3',
-74 silly addNameRange     '0.1.4',
-74 silly addNameRange     '0.2.0',
-74 silly addNameRange     '0.3.0',
-74 silly addNameRange     '0.4.0',
-74 silly addNameRange     '0.5.0',
-74 silly addNameRange     '0.7.0',
-74 silly addNameRange     '0.7.1',
-74 silly addNameRange     '0.7.2',
-74 silly addNameRange     '0.8.0',
-74 silly addNameRange     '0.8.1',
-74 silly addNameRange     '0.8.2',
-74 silly addNameRange     '1.0.0-alpha1' ] ]
-75 silly addNamed rpi-ws281x-native@0.8.2
-76 verbose addNamed "0.8.2" is a plain semver version for rpi-ws281x-native
-77 silly cache afterAdd rpi-ws281x-native@0.8.2
-78 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\rpi-ws281x-native\0.8.2\package\package.json not in flight; writing
+69 verbose get https://registry.npmjs.org/rpi-ws281x-native not expired, no request
+70 silly addNameRange number 2 { name: 'rpi-ws281x-native',
+70 silly addNameRange   range: '>=0.8.2 <0.9.0',
+70 silly addNameRange   hasData: true }
+71 silly addNameRange versions [ 'rpi-ws281x-native',
+71 silly addNameRange   [ '0.0.1',
+71 silly addNameRange     '0.1.0',
+71 silly addNameRange     '0.1.1',
+71 silly addNameRange     '0.1.2',
+71 silly addNameRange     '0.1.3',
+71 silly addNameRange     '0.1.4',
+71 silly addNameRange     '0.2.0',
+71 silly addNameRange     '0.3.0',
+71 silly addNameRange     '0.4.0',
+71 silly addNameRange     '0.5.0',
+71 silly addNameRange     '0.7.0',
+71 silly addNameRange     '0.7.1',
+71 silly addNameRange     '0.7.2',
+71 silly addNameRange     '0.8.0',
+71 silly addNameRange     '0.8.1',
+71 silly addNameRange     '0.8.2',
+71 silly addNameRange     '1.0.0-alpha1' ] ]
+72 silly addNamed rpi-ws281x-native@0.8.2
+73 verbose addNamed "0.8.2" is a plain semver version for rpi-ws281x-native
+74 silly cache afterAdd rpi-ws281x-native@0.8.2
+75 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\rpi-ws281x-native\0.8.2\package\package.json not in flight; writing
+76 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
+77 silly cache afterAdd droplit-plugin@2.0.6
+78 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package\package.json not in flight; writing
 79 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache correctMkdir not in flight; initializing
-80 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package\package.json written
-81 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\rpi-ws281x-native\0.8.2\package\package.json written
+80 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\rpi-ws281x-native\0.8.2\package\package.json written
+81 verbose afterAdd C:\Users\samke\AppData\Roaming\npm-cache\droplit-plugin\2.0.6\package\package.json written
 82 silly fetchNamedPackageData nan
 83 silly mapToRegistry name nan
 84 silly mapToRegistry using default registry
@@ -169,33 +169,33 @@
 87 silly mapToRegistry uri https://registry.npmjs.org/nan
 88 verbose request uri https://registry.npmjs.org/nan
 89 verbose request no auth needed
-90 info attempt registry request try #1 at 3:19:31 PM
+90 info attempt registry request try #1 at 5:13:50 PM
 91 verbose etag "5a3ad7f1-20c2f"
 92 verbose lastModified Wed, 20 Dec 2017 21:36:49 GMT
 93 http request GET https://registry.npmjs.org/nan
 94 http 304 https://registry.npmjs.org/nan
-95 verbose headers { date: 'Mon, 15 Jan 2018 20:19:32 GMT',
+95 verbose headers { date: 'Mon, 15 Jan 2018 22:13:51 GMT',
 95 verbose headers   via: '1.1 varnish',
 95 verbose headers   'cache-control': 'max-age=300',
 95 verbose headers   etag: '"5a3ad7f1-20c2f"',
-95 verbose headers   age: '2859',
+95 verbose headers   age: '9718',
 95 verbose headers   connection: 'keep-alive',
-95 verbose headers   'x-served-by': 'cache-mia17628-MIA',
+95 verbose headers   'x-served-by': 'cache-mia17624-MIA',
 95 verbose headers   'x-cache': 'HIT',
-95 verbose headers   'x-cache-hits': '18',
-95 verbose headers   'x-timer': 'S1516047573.804256,VS0,VE0',
+95 verbose headers   'x-cache-hits': '50',
+95 verbose headers   'x-timer': 'S1516054432.922590,VS0,VE0',
 95 verbose headers   vary: 'Accept-Encoding, Accept' }
 96 silly get cb [ 304,
-96 silly get   { date: 'Mon, 15 Jan 2018 20:19:32 GMT',
+96 silly get   { date: 'Mon, 15 Jan 2018 22:13:51 GMT',
 96 silly get     via: '1.1 varnish',
 96 silly get     'cache-control': 'max-age=300',
 96 silly get     etag: '"5a3ad7f1-20c2f"',
-96 silly get     age: '2859',
+96 silly get     age: '9718',
 96 silly get     connection: 'keep-alive',
-96 silly get     'x-served-by': 'cache-mia17628-MIA',
+96 silly get     'x-served-by': 'cache-mia17624-MIA',
 96 silly get     'x-cache': 'HIT',
-96 silly get     'x-cache-hits': '18',
-96 silly get     'x-timer': 'S1516047573.804256,VS0,VE0',
+96 silly get     'x-cache-hits': '50',
+96 silly get     'x-timer': 'S1516054432.922590,VS0,VE0',
 96 silly get     vary: 'Accept-Encoding, Accept' } ]
 97 verbose etag https://registry.npmjs.org/nan from cache
 98 verbose get saving nan to C:\Users\samke\AppData\Roaming\npm-cache\registry.npmjs.org\nan\.cache.json
@@ -339,7 +339,7 @@
 150 silly decomposeActions finalize rpi-ws281x-native@0.8.2
 151 silly runTopLevelLifecycles Starting
 152 silly install runPreinstallTopLevelLifecycles
-153 silly preinstall droplit-plugin-neopixel@0.1.0 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\droplit-plugin-neopixel-335b9f8b
+153 silly preinstall droplit-plugin-neopixel@0.1.0 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\droplit-plugin-neopixel-d27b3108
 154 info lifecycle droplit-plugin-neopixel@0.1.0~preinstall: droplit-plugin-neopixel@0.1.0
 155 silly lifecycle droplit-plugin-neopixel@0.1.0~preinstall: no script for preinstall, continuing
 156 silly executeActions Starting
@@ -347,38 +347,38 @@
 158 silly doSerial global-install 0
 159 silly doParallel fetch 2
 160 verbose correctMkdir C:\Users\samke\AppData\Roaming\npm-cache\_locks correctMkdir not in flight; initializing
-161 verbose lock using C:\Users\samke\AppData\Roaming\npm-cache\_locks\staging-840e4c637058bc04.lock for C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging
+161 verbose lock using C:\Users\samke\AppData\Roaming\npm-cache\_locks\staging-694d2263092293da.lock for C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging
 162 silly doParallel extract 2
 163 silly extract nan@2.8.0
 164 silly extract rpi-ws281x-native@0.8.2
-165 verbose unbuild node_modules\.staging\nan-7328ae9d
-166 verbose unbuild node_modules\.staging\rpi-ws281x-native-a1e155d9
-167 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-7328ae9d is being purged from base C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel
-168 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-7328ae9d
-169 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-a1e155d9 is being purged from base C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel
-170 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-a1e155d9
-171 verbose tar unpack C:\Users\samke\AppData\Roaming\npm-cache\nan\2.8.0\package.tgz
-172 verbose tar unpacking to C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-7328ae9d
-173 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-7328ae9d is being purged
-174 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-7328ae9d
-175 verbose tar unpack C:\Users\samke\AppData\Roaming\npm-cache\rpi-ws281x-native\0.8.2\package.tgz
-176 verbose tar unpacking to C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-a1e155d9
-177 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-a1e155d9 is being purged
-178 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-a1e155d9
-179 silly gunzTarPerm modes [ '777', '666' ]
+165 verbose unbuild node_modules\.staging\nan-ca239d3e
+166 verbose unbuild node_modules\.staging\rpi-ws281x-native-3180514f
+167 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-ca239d3e is being purged from base C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel
+168 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-ca239d3e
+169 verbose tar unpack C:\Users\samke\AppData\Roaming\npm-cache\nan\2.8.0\package.tgz
+170 verbose tar unpacking to C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-ca239d3e
+171 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-ca239d3e is being purged
+172 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-ca239d3e
+173 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-3180514f is being purged from base C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel
+174 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-3180514f
+175 silly gunzTarPerm modes [ '777', '666' ]
+176 verbose tar unpack C:\Users\samke\AppData\Roaming\npm-cache\rpi-ws281x-native\0.8.2\package.tgz
+177 verbose tar unpacking to C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-3180514f
+178 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-3180514f is being purged
+179 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-3180514f
 180 silly gunzTarPerm modes [ '777', '666' ]
 181 silly gunzTarPerm extractEntry package.json
 182 silly gunzTarPerm modified mode [ 'package.json', 436, 438 ]
 183 silly gunzTarPerm extractEntry package.json
 184 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
-185 silly gunzTarPerm extractEntry .npmignore
-186 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
-187 silly gunzTarPerm extractEntry README.md
-188 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
-189 silly gunzTarPerm extractEntry README.md
-190 silly gunzTarPerm modified mode [ 'README.md', 436, 438 ]
-191 silly gunzTarPerm extractEntry include_dirs.js
-192 silly gunzTarPerm modified mode [ 'include_dirs.js', 436, 438 ]
+185 silly gunzTarPerm extractEntry README.md
+186 silly gunzTarPerm modified mode [ 'README.md', 436, 438 ]
+187 silly gunzTarPerm extractEntry include_dirs.js
+188 silly gunzTarPerm modified mode [ 'include_dirs.js', 436, 438 ]
+189 silly gunzTarPerm extractEntry .npmignore
+190 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+191 silly gunzTarPerm extractEntry README.md
+192 silly gunzTarPerm modified mode [ 'README.md', 420, 438 ]
 193 silly gunzTarPerm extractEntry LICENSE
 194 silly gunzTarPerm modified mode [ 'LICENSE', 420, 438 ]
 195 silly gunzTarPerm extractEntry index.js
@@ -399,32 +399,32 @@
 210 silly gunzTarPerm modified mode [ 'doc/callback.md', 436, 438 ]
 211 silly gunzTarPerm extractEntry doc/converters.md
 212 silly gunzTarPerm modified mode [ 'doc/converters.md', 436, 438 ]
-213 silly gunzTarPerm extractEntry examples/iterate.js
-214 silly gunzTarPerm modified mode [ 'examples/iterate.js', 420, 438 ]
-215 silly gunzTarPerm extractEntry examples/rainbow.js
-216 silly gunzTarPerm modified mode [ 'examples/rainbow.js', 420, 438 ]
-217 silly gunzTarPerm extractEntry lib/ws281x-native.js
-218 silly gunzTarPerm modified mode [ 'lib/ws281x-native.js', 420, 438 ]
-219 silly gunzTarPerm extractEntry doc/errors.md
-220 silly gunzTarPerm modified mode [ 'doc/errors.md', 436, 438 ]
-221 silly gunzTarPerm extractEntry doc/json.md
-222 silly gunzTarPerm modified mode [ 'doc/json.md', 436, 438 ]
-223 silly gunzTarPerm extractEntry lib/index-mapping/alternating-matrix.js
-224 silly gunzTarPerm modified mode [ 'lib/index-mapping/alternating-matrix.js', 420, 438 ]
-225 silly gunzTarPerm extractEntry lib/index-mapping/index.js
-226 silly gunzTarPerm modified mode [ 'lib/index-mapping/index.js', 420, 438 ]
-227 silly gunzTarPerm extractEntry doc/maybe_types.md
-228 silly gunzTarPerm modified mode [ 'doc/maybe_types.md', 436, 438 ]
-229 silly gunzTarPerm extractEntry doc/methods.md
-230 silly gunzTarPerm modified mode [ 'doc/methods.md', 436, 438 ]
-231 silly gunzTarPerm extractEntry lib/index-mapping/mirror-matrix-x.js
-232 silly gunzTarPerm modified mode [ 'lib/index-mapping/mirror-matrix-x.js', 420, 438 ]
-233 silly gunzTarPerm extractEntry .gitmodules
-234 silly gunzTarPerm modified mode [ '.gitmodules', 420, 438 ]
-235 silly gunzTarPerm extractEntry doc/buffers.md
-236 silly gunzTarPerm modified mode [ 'doc/buffers.md', 436, 438 ]
-237 silly gunzTarPerm extractEntry doc/node_misc.md
-238 silly gunzTarPerm modified mode [ 'doc/node_misc.md', 436, 438 ]
+213 silly gunzTarPerm extractEntry doc/errors.md
+214 silly gunzTarPerm modified mode [ 'doc/errors.md', 436, 438 ]
+215 silly gunzTarPerm extractEntry doc/json.md
+216 silly gunzTarPerm modified mode [ 'doc/json.md', 436, 438 ]
+217 silly gunzTarPerm extractEntry examples/iterate.js
+218 silly gunzTarPerm modified mode [ 'examples/iterate.js', 420, 438 ]
+219 silly gunzTarPerm extractEntry examples/rainbow.js
+220 silly gunzTarPerm modified mode [ 'examples/rainbow.js', 420, 438 ]
+221 silly gunzTarPerm extractEntry lib/ws281x-native.js
+222 silly gunzTarPerm modified mode [ 'lib/ws281x-native.js', 420, 438 ]
+223 silly gunzTarPerm extractEntry doc/maybe_types.md
+224 silly gunzTarPerm modified mode [ 'doc/maybe_types.md', 436, 438 ]
+225 silly gunzTarPerm extractEntry doc/methods.md
+226 silly gunzTarPerm modified mode [ 'doc/methods.md', 436, 438 ]
+227 silly gunzTarPerm extractEntry lib/index-mapping/alternating-matrix.js
+228 silly gunzTarPerm modified mode [ 'lib/index-mapping/alternating-matrix.js', 420, 438 ]
+229 silly gunzTarPerm extractEntry lib/index-mapping/index.js
+230 silly gunzTarPerm modified mode [ 'lib/index-mapping/index.js', 420, 438 ]
+231 silly gunzTarPerm extractEntry doc/buffers.md
+232 silly gunzTarPerm modified mode [ 'doc/buffers.md', 436, 438 ]
+233 silly gunzTarPerm extractEntry doc/node_misc.md
+234 silly gunzTarPerm modified mode [ 'doc/node_misc.md', 436, 438 ]
+235 silly gunzTarPerm extractEntry lib/index-mapping/mirror-matrix-x.js
+236 silly gunzTarPerm modified mode [ 'lib/index-mapping/mirror-matrix-x.js', 420, 438 ]
+237 silly gunzTarPerm extractEntry .gitmodules
+238 silly gunzTarPerm modified mode [ '.gitmodules', 420, 438 ]
 239 silly gunzTarPerm extractEntry src/rpi-ws281x.cc
 240 silly gunzTarPerm modified mode [ 'src/rpi-ws281x.cc', 493, 511 ]
 241 silly gunzTarPerm extractEntry src/rpi_ws281x/.npmignore
@@ -463,16 +463,16 @@
 274 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/dma.c', 420, 438 ]
 275 silly gunzTarPerm extractEntry nan_callbacks.h
 276 silly gunzTarPerm modified mode [ 'nan_callbacks.h', 436, 438 ]
-277 silly gunzTarPerm extractEntry nan_callbacks_12_inl.h
-278 silly gunzTarPerm modified mode [ 'nan_callbacks_12_inl.h', 436, 438 ]
-279 silly gunzTarPerm extractEntry nan_callbacks_pre_12_inl.h
-280 silly gunzTarPerm modified mode [ 'nan_callbacks_pre_12_inl.h', 436, 438 ]
-281 silly gunzTarPerm extractEntry nan_converters.h
-282 silly gunzTarPerm modified mode [ 'nan_converters.h', 436, 438 ]
-283 silly gunzTarPerm extractEntry src/rpi_ws281x/dma.h
-284 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/dma.h', 420, 438 ]
-285 silly gunzTarPerm extractEntry src/rpi_ws281x/ws2811.h
-286 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/ws2811.h', 420, 438 ]
+277 silly gunzTarPerm extractEntry src/rpi_ws281x/dma.h
+278 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/dma.h', 420, 438 ]
+279 silly gunzTarPerm extractEntry src/rpi_ws281x/ws2811.h
+280 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/ws2811.h', 420, 438 ]
+281 silly gunzTarPerm extractEntry nan_callbacks_12_inl.h
+282 silly gunzTarPerm modified mode [ 'nan_callbacks_12_inl.h', 436, 438 ]
+283 silly gunzTarPerm extractEntry nan_callbacks_pre_12_inl.h
+284 silly gunzTarPerm modified mode [ 'nan_callbacks_pre_12_inl.h', 436, 438 ]
+285 silly gunzTarPerm extractEntry nan_converters.h
+286 silly gunzTarPerm modified mode [ 'nan_converters.h', 436, 438 ]
 287 silly gunzTarPerm extractEntry nan_converters_pre_43_inl.h
 288 silly gunzTarPerm modified mode [ 'nan_converters_pre_43_inl.h', 436, 438 ]
 289 silly gunzTarPerm extractEntry src/rpi_ws281x/linux.py
@@ -519,60 +519,60 @@
 330 silly gunzTarPerm modified mode [ 'nan_string_bytes.h', 436, 438 ]
 331 silly gunzTarPerm extractEntry nan_typedarray_contents.h
 332 silly gunzTarPerm modified mode [ 'nan_typedarray_contents.h', 436, 438 ]
-333 silly gunzTarPerm extractEntry src/rpi_ws281x/python/neopixel.py
-334 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/python/neopixel.py', 420, 438 ]
-335 silly gunzTarPerm extractEntry src/rpi_ws281x/python/rpi_ws281x.i
-336 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/python/rpi_ws281x.i', 420, 438 ]
-337 silly gunzTarPerm extractEntry nan_weak.h
-338 silly gunzTarPerm modified mode [ 'nan_weak.h', 436, 438 ]
-339 silly gunzTarPerm extractEntry CHANGELOG.md
-340 silly gunzTarPerm modified mode [ 'CHANGELOG.md', 436, 438 ]
-341 silly gunzTarPerm extractEntry tools/package.json
-342 silly gunzTarPerm modified mode [ 'tools/package.json', 436, 438 ]
-343 silly gunzTarPerm extractEntry tools/README.md
-344 silly gunzTarPerm modified mode [ 'tools/README.md', 436, 438 ]
-345 silly gunzTarPerm extractEntry src/rpi_ws281x/python/setup.py
-346 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/python/setup.py', 420, 438 ]
-347 silly gunzTarPerm extractEntry src/rpi_ws281x/ws2811.c
-348 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/ws2811.c', 420, 438 ]
+333 silly gunzTarPerm extractEntry nan_weak.h
+334 silly gunzTarPerm modified mode [ 'nan_weak.h', 436, 438 ]
+335 silly gunzTarPerm extractEntry CHANGELOG.md
+336 silly gunzTarPerm modified mode [ 'CHANGELOG.md', 436, 438 ]
+337 silly gunzTarPerm extractEntry src/rpi_ws281x/python/neopixel.py
+338 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/python/neopixel.py', 420, 438 ]
+339 silly gunzTarPerm extractEntry src/rpi_ws281x/python/rpi_ws281x.i
+340 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/python/rpi_ws281x.i', 420, 438 ]
+341 silly gunzTarPerm extractEntry src/rpi_ws281x/python/setup.py
+342 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/python/setup.py', 420, 438 ]
+343 silly gunzTarPerm extractEntry src/rpi_ws281x/ws2811.c
+344 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/ws2811.c', 420, 438 ]
+345 silly gunzTarPerm extractEntry tools/package.json
+346 silly gunzTarPerm modified mode [ 'tools/package.json', 436, 438 ]
+347 silly gunzTarPerm extractEntry tools/README.md
+348 silly gunzTarPerm modified mode [ 'tools/README.md', 436, 438 ]
 349 silly gunzTarPerm extractEntry tools/1to2.js
 350 silly gunzTarPerm modified mode [ 'tools/1to2.js', 509, 511 ]
 351 silly gunzTarPerm extractEntry src/rpi_ws281x/gpio.h
 352 silly gunzTarPerm modified mode [ 'src/rpi_ws281x/gpio.h', 420, 438 ]
-353 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-a1e155d9\node_modules is being purged
-354 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-a1e155d9\node_modules
-355 silly gentlyRm C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-7328ae9d\node_modules is being purged
-356 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-7328ae9d\node_modules
+353 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-3180514f\node_modules is being purged
+354 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-3180514f\node_modules
+355 silly gentlyRm C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-ca239d3e\node_modules is being purged
+356 verbose gentlyRm don't care about contents; nuking C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-ca239d3e\node_modules
 357 silly doParallel preinstall 2
-358 silly preinstall nan@2.8.0 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-7328ae9d
+358 silly preinstall nan@2.8.0 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-ca239d3e
 359 info lifecycle nan@2.8.0~preinstall: nan@2.8.0
-360 silly preinstall rpi-ws281x-native@0.8.2 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-a1e155d9
+360 silly preinstall rpi-ws281x-native@0.8.2 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-3180514f
 361 info lifecycle rpi-ws281x-native@0.8.2~preinstall: rpi-ws281x-native@0.8.2
 362 silly lifecycle nan@2.8.0~preinstall: no script for preinstall, continuing
 363 silly lifecycle rpi-ws281x-native@0.8.2~preinstall: no script for preinstall, continuing
 364 silly doReverseSerial remove 0
 365 silly doSerial move 0
 366 silly doSerial finalize 2
-367 silly finalize C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\nan
-368 silly finalize C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\rpi-ws281x-native
+367 silly finalize C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\nan
+368 silly finalize C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\rpi-ws281x-native
 369 silly doSerial build 2
 370 silly build nan@2.8.0
 371 silly build rpi-ws281x-native@0.8.2
 372 silly doSerial global-link 0
 373 silly doParallel update-linked 1
 374 silly doSerial install 2
-375 silly install nan@2.8.0 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-7328ae9d
+375 silly install nan@2.8.0 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\nan-ca239d3e
 376 info lifecycle nan@2.8.0~install: nan@2.8.0
 377 silly lifecycle nan@2.8.0~install: no script for install, continuing
-378 silly install rpi-ws281x-native@0.8.2 C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-a1e155d9
+378 silly install rpi-ws281x-native@0.8.2 C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging\rpi-ws281x-native-3180514f
 379 info lifecycle rpi-ws281x-native@0.8.2~install: rpi-ws281x-native@0.8.2
 380 verbose lifecycle rpi-ws281x-native@0.8.2~install: unsafe-perm in lifecycle true
-381 verbose lifecycle rpi-ws281x-native@0.8.2~install: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\rpi-ws281x-native\node_modules\.bin;C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\samke\bin;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Python36-32\Scripts;C:\Program Files (x86)\Python36-32;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Skype\Phone;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files\MongoDB\Server\3.4\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\Bitvise SSH Client;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Users\samke\AppData\Local\Microsoft\WindowsApps;C:\Users\samke\AppData\Roaming\npm;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\ucrt;C:\Users\samke\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Users\samke\AppData\Roaming\npm;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\ucrt
-382 verbose lifecycle rpi-ws281x-native@0.8.2~install: CWD: C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\rpi-ws281x-native
+381 verbose lifecycle rpi-ws281x-native@0.8.2~install: PATH: C:\Program Files\nodejs\node_modules\npm\bin\node-gyp-bin;C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\rpi-ws281x-native\node_modules\.bin;C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\samke\bin;C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\Program Files (x86)\Python36-32\Scripts;C:\Program Files (x86)\Python36-32;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files (x86)\Skype\Phone;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files\MongoDB\Server\3.4\bin;C:\Program Files\Microsoft VS Code\bin;C:\Program Files (x86)\Bitvise SSH Client;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Users\samke\AppData\Local\Microsoft\WindowsApps;C:\Users\samke\AppData\Roaming\npm;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\ucrt;C:\Users\samke\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Microsoft VS Code\bin;C:\Users\samke\AppData\Roaming\npm;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\bin\Firefox_Extension\{442718d9-475e-452a-b3e1-fb1ee16b8e9f}\components;C:\Users\samke\AppData\Roaming\Dashlane\5.3.2.14186\ucrt
+382 verbose lifecycle rpi-ws281x-native@0.8.2~install: CWD: C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\rpi-ws281x-native
 383 silly lifecycle rpi-ws281x-native@0.8.2~install: Args: [ '/d /s /c', 'node-gyp rebuild' ]
 384 silly lifecycle rpi-ws281x-native@0.8.2~install: Returned: code: 1  signal: null
 385 info lifecycle rpi-ws281x-native@0.8.2~install: Failed to exec install script
-386 verbose unlock done using C:\Users\samke\AppData\Roaming\npm-cache\_locks\staging-840e4c637058bc04.lock for C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging
+386 verbose unlock done using C:\Users\samke\AppData\Roaming\npm-cache\_locks\staging-694d2263092293da.lock for C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel\node_modules\.staging
 387 silly rollbackFailedOptional Starting
 388 silly rollbackFailedOptional Finishing
 389 silly runTopLevelLifecycles Finishing
@@ -594,7 +594,7 @@
 395 verbose stack     at maybeClose (internal/child_process.js:891:16)
 395 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 396 verbose pkgid rpi-ws281x-native@0.8.2
-397 verbose cwd C:\Users\samke\Documents\Projects\droplit\droplit.io-edge\projects\droplit-plugin-neopixel
+397 verbose cwd C:\Users\samke\Documents\Projects\closed-husbandry\serial\plugin\droplit.io-edge\projects\droplit-plugin-neopixel
 398 error Windows_NT 10.0.16299
 399 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "link" "--no-bin-links"
 400 error node v6.11.2

@@ -58,14 +58,8 @@ export default class ProxySerialDevice {
         return ['COM5'];
     }
 
-    public connect(callback: () => void): void {
-
-        this.device.connect()
-            .then((devicePath: string) => {
-                callback();
-            });
-
-        // callback();
+    public connect(): Promise<string> {
+        return this.device.connect();
     }
 
     public set(pinNumber: number, value: any, callback: (err?: Error, val?: any) => void): boolean {
