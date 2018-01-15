@@ -14,6 +14,8 @@ CobsEncoder encoder(delimiter);
 
 void setup()
 {
+  pinMode(13, OUTPUT);
+  digitalWrite(13, LOW);
   Serial.begin(baud_rt);
 }
 
@@ -100,14 +102,14 @@ void execute(const uint8_t *buf, const size_t sz)
     {
       case 0x0: // Digital Read
       {
-        pinMode(pin, INPUT);
+        //pinMode(pin, INPUT);
         responselen = 2;
         response[1] = digitalRead(pin);
         break;
       }
       case 0x1: // Digital Write
       {
-        pinMode(pin, OUTPUT);
+        //pinMode(pin, OUTPUT);
         responselen = 1;
         const uint8_t dVal = (buf[3] == 0x0) ? LOW : HIGH;
         digitalWrite(pin, dVal);
@@ -115,7 +117,7 @@ void execute(const uint8_t *buf, const size_t sz)
       }
       case 0x2: // Analog Read
       {
-        pinMode(pin, INPUT);
+        //pinMode(pin, INPUT);
         responselen = 3;
         uint8_t aVal = analogRead(pin);
         response[1] = aVal & 0xFF;
@@ -124,12 +126,13 @@ void execute(const uint8_t *buf, const size_t sz)
       }
       case 0x3: // Analog Write
       {
-        pinMode(pin, OUTPUT);
+        //pinMode(pin, OUTPUT);
         responselen = 1;
         analogWrite(pin, buf[3]);
+        break;
       }
     }
-
+    
     deliver(response, responselen);
   }
 }
