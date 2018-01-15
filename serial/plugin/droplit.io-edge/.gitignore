@@ -9,9 +9,9 @@ npm-debug.log
 /temp
 
 #project specific
-#projects/droplit-edge/cache
-#projects/droplit-edge/plugins
-#projects/droplit-edge/localsettings.json
+projects/droplit-edge/cache
+projects/droplit-edge/plugins
+projects/droplit-edge/localsettings.json
 .vscode
 **/yarn.lock
 
