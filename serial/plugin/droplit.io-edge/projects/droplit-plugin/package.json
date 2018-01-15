@@ -1,0 +1,24 @@
+{
+  "name": "droplit-plugin",
+  "description": "Base class for developing droplit.io Edge Plugins",
+  "author": "Droplit, Inc.",
+  "version": "2.0.6",
+  "private": false,
+  "contributors": [
+    {
+      "name": "Bryan Jenks",
+      "email": "bryan@droplit.io"
+    },
+    {
+      "name": "Nik Doukellis",
+      "email": "nik@droplit.io"
+    },
+    {
+      "name": "Chris Woodle",
+      "email": "chris@droplit.io"
+    }
+  ],
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,0 +1,129 @@
+import Pin from './pins/Pin';
+import PinOptions from './pins/PinOptions';
+import DigitalPin from './pins/DigitalPin';
+import AnalogPin from './pins/AnalogPin';
+import SerialDevice from './SerialDevice';
+import Request from './requests/Request';
+import Response from './responses/Response';
+import DigitalReadRequest from './requests/DigitalReadRequest';
+import AnalogWriteRequest from './requests/AnalogWriteRequest';
+import DigitalWriteRequest from './requests/DigitalWriteRequest';
+import DigitalReadResponse from './responses/DigitalReadResponse';
+import AnalogReadRequest from './requests/AnalogReadRequest';
+import AnalogReadResponse from './responses/AnalogReadResponse';
+
+const BAUD_RATE = 9600;
+const DELIMITER = 0x0;
+const MAX_RETRIES = 3;
+const RES_TIMEOUT: number = 1000 * 3; // ms
+
+export default class ProxySerialDevice {
+
+    private device: SerialDevice;
+    private pins: { [pin: number]: Pin };
+
+    public constructor(path: string, pinOptions: { [pin: number]: PinOptions }) {
+        this.pins = {};
+
+        this.device = new SerialDevice({
+            baudRate: BAUD_RATE,
+            devicePath: path,
+            delimiter: DELIMITER,
+            maxRetries: MAX_RETRIES,
+            responseTimeout: RES_TIMEOUT
+        });
+
+        for (const pinNumber in pinOptions) {
+
+            if (!this.pins[pinNumber]) {
+
+                const pin = pinOptions[pinNumber];
+                // this.device.send(new PinDirectionRequest(pinNumber, pin.direction);
+                switch (pin.mode) {
+                    case 'Digital':
+                        this.pins[pinNumber] = new DigitalPin(pin.state);
+                        break;
+                    case 'Analog':
+                        this.pins[pinNumber] = new AnalogPin(pin.state);
+                }
+            }
+        }
+
+        console.log(this.pins);
+    }
+
+    public static Discover(): string[] {
+
+        // TODO: Implement
+        return ['COM5'];
+    }
+
+    public connect(callback: () => void): void {
+
+        this.device.connect()
+            .then((devicePath: string) => {
+                callback();
+            });
+
+        // callback();
+    }
+
+    public set(pinNumber: number, value: any, callback: (err?: Error, val?: any) => void): boolean {
+
+        if (!this.pins[pinNumber]) return false;
+
+        const pin: Pin = this.pins[pinNumber];
+
+        const req: Request = (pin.mode === 'Digital')
+            ? new DigitalWriteRequest(pinNumber, (value === 'on') ? 0x1 : 0x0)
+            : new AnalogWriteRequest(pinNumber, value);
+
+        this.device.send(req)
+            .then((res: Response) => {
+                pin.state = value;
+                callback(undefined, value);
+            })
+            .catch((reason: Error) => {
+                callback(reason);
+            });
+
+        // callback(undefined, value);
+
+        return true;
+    }
+
+    public get(pinNumber: number, callback: (value: any) => void): boolean {
+
+        if (!this.pins[pinNumber]) return false;
+
+        const pin = this.pins[pinNumber];
+
+        if (pin.mode === 'Digital') {
+
+            const req: Request = new DigitalReadRequest(pinNumber);
+            this.device.send(req)
+                .then((res: Response) => {
+                    const val = ((res as DigitalReadResponse).value === 0x0) ? 'off' : 'on';
+                    pin.state = val;
+                    callback(val);
+                });
+        } else {
+
+            const req: Request = new AnalogReadRequest(pinNumber);
+            this.device.send(req)
+                .then((res: Response) => {
+                    const val = (res as AnalogReadResponse).value;
+                    pin.state = val;
+                    callback(val);
+                });
+        }
+
+        // callback(this.getCached(pinNumber));
+
+        return true;
+    }
+
+    public getCached(pinNumber: number): any {
+        return this.pins[pinNumber].state;
+    }
+}

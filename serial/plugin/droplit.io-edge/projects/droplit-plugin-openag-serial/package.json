@@ -1,0 +1,25 @@
+{
+    "name": "droplit-plugin-openag-serial",
+    "description": "Open Agriculture Serial Plugin",
+    "author": "Open Agriculture",
+    "version": "2.0.0",
+    "private": false,
+    "contributors": [{
+        "name": "Samuel Kellar",
+        "email": "skellar2014@my.fit.edu"
+    }],
+    "main": "index.js",
+    "eslintConfig": {
+        "env": {
+            "es6": true,
+            "node": true
+        }
+    },
+    "dependencies": {
+        "droplit-plugin": "../droplit-plugin",
+        "serialport": "^6.0.4"
+    },
+    "devDependencies": {
+        "@types/serialport": "^6.0.0"
+    }
+}

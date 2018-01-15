@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "allowUnreachableCode": false,
+        "declaration": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noImplicitAny": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": false,
+        "preserveConstEnums": true,
+        "removeComments": true,
+        "target": "ES5"
+    },
+    "include": [
+        "typings/index.d.ts",
+        "projects/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
