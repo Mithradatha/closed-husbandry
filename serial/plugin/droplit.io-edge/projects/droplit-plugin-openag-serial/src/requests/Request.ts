@@ -12,10 +12,10 @@ export default abstract class Request {
             throw new RangeError('pin: out of range [0, 255]');
         }
 
-        if (fnc > -1 && fnc < 4) {
+        if (fnc > -1 && fnc < 5) {
             this.fnc = fnc;
         } else {
-            throw new RangeError('fnc: out of range [0, 3]');
+            throw new RangeError('fnc: out of range [0, 4]');
         }
     }
 

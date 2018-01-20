@@ -1,9 +1,10 @@
 import Pin from './Pin';
+import { Direction } from '../UtilTypes';
 
 export default class DigitalPin extends Pin {
 
-    public constructor(state: 'on' | 'off') {
-        super('Digital', state);
+    public constructor(direction: Direction, state: 'on' | 'off') {
+        super('Digital', direction, state);
     }
 
     public get state(): 'on' | 'off' {

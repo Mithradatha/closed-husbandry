@@ -14,8 +14,6 @@ CobsEncoder encoder(delimiter);
 
 void setup()
 {
-  pinMode(13, OUTPUT);
-  digitalWrite(13, LOW);
   Serial.begin(baud_rt);
 }
 
@@ -129,6 +127,13 @@ void execute(const uint8_t *buf, const size_t sz)
         //pinMode(pin, OUTPUT);
         responselen = 1;
         analogWrite(pin, buf[3]);
+        break;
+      }
+      case 0x4: // Pin Direction
+      {
+        const uint8_t pVal = (buf[3] == 0x0) ? INPUT : OUTPUT;
+        responselen = 1;
+        pinMode(pin, pVal);
         break;
       }
     }

@@ -11,6 +11,7 @@ import DigitalWriteRequest from './requests/DigitalWriteRequest';
 import DigitalReadResponse from './responses/DigitalReadResponse';
 import AnalogReadRequest from './requests/AnalogReadRequest';
 import AnalogReadResponse from './responses/AnalogReadResponse';
+import PinDirectionRequest from './requests/PinDirectionRequest';
 
 const BAUD_RATE = 9600;
 const DELIMITER = 0x0;
@@ -38,13 +39,13 @@ export default class ProxySerialDevice {
             if (!this.pins[pinNumber]) {
 
                 const pin = pinOptions[pinNumber];
-                // this.device.send(new PinDirectionRequest(pinNumber, pin.direction);
+
                 switch (pin.mode) {
                     case 'Digital':
-                        this.pins[pinNumber] = new DigitalPin(pin.state);
+                        this.pins[pinNumber] = new DigitalPin(pin.direction, pin.state);
                         break;
                     case 'Analog':
-                        this.pins[pinNumber] = new AnalogPin(pin.state);
+                        this.pins[pinNumber] = new AnalogPin(pin.direction, pin.state);
                 }
             }
         }
@@ -59,7 +60,25 @@ export default class ProxySerialDevice {
     }
 
     public connect(): Promise<string> {
-        return this.device.connect();
+
+        return new Promise<string>((resolve, reject) => {
+
+            this.device.connect()
+                .then((devicePath: string) => {
+
+                    for (const pinNumber in this.pins) {
+                        if (this.pins.hasOwnProperty(pinNumber)) {
+
+                            const direction = this.pins[pinNumber].direction;
+
+                            this.device.send(new PinDirectionRequest(Number(pinNumber), (direction === 'Input') ? 0x0 : 0x1));
+                        }
+                    }
+
+                    resolve(devicePath);
+                })
+                .catch((reason: any) => reject(reason));
+        });
     }
 
     public set(pinNumber: number, value: any, callback: (err?: Error, val?: any) => void): boolean {

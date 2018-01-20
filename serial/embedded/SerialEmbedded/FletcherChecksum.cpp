@@ -7,7 +7,7 @@
  * in mind. There are ways to optimize this code if needed
 */
 
-#include "FletcherChecksum.h";
+#include "FletcherChecksum.h"
 
 namespace FletcherChecksum
 {
