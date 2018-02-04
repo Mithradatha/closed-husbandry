@@ -204,7 +204,7 @@ export default class SerialDevice {
         }
 
         // alternating bit sequence
-        this.sequence = (this.sequence === 0x0) ? 0x1 : 0x0;
+        if (!error) this.sequence = (this.sequence === 0x0) ? 0x1 : 0x0;
         callback(error, Response);
     }
 

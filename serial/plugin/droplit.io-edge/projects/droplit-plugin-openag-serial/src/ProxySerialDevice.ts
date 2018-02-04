@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+import { resolve } from 'path';
 import Pin from './pins/Pin';
 import PinOptions from './pins/PinOptions';
 import DigitalPin from './pins/DigitalPin';
@@ -17,6 +19,8 @@ const BAUD_RATE = 9600;
 const DELIMITER = 0x0;
 const MAX_RETRIES = 3;
 const RES_TIMEOUT: number = 1000 * 3; // ms
+
+const SERIAL_DEVICE_PATH = '/dev/serial/by-id';
 
 export default class ProxySerialDevice {
 
@@ -56,7 +60,28 @@ export default class ProxySerialDevice {
     public static Discover(): string[] {
 
         // TODO: Implement
-        return ['COM5'];
+        // return ['COM5'];
+
+        const devicePaths: string[] = [];
+
+        try {
+            const files: string[] = fs.readdirSync(SERIAL_DEVICE_PATH);
+
+            files.forEach((name: string) => {
+
+                const filePath = `${SERIAL_DEVICE_PATH}/${name}`;
+
+                const stats = fs.lstatSync(filePath);
+                if (stats.isSymbolicLink()) {
+
+                    const linkString = fs.readlinkSync(filePath);
+                    devicePaths.push(
+                        resolve(SERIAL_DEVICE_PATH, linkString));
+                }
+            });
+        } catch (ignore) { }
+
+        return devicePaths;
     }
 
     public connect(): Promise<string> {

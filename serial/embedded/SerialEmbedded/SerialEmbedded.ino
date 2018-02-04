@@ -2,19 +2,22 @@
 #include "FletcherChecksum.h"
 #include "CobsEncoder.h"
 
-const uint8_t delimiter = 0x0;
-const unsigned long baud_rt = 9600;
-const size_t buf_sz = 256;
+// Constants
+const uint8_t DELIMITER = 0x0;
+const unsigned long BAUD_RATE = 9600;
+const size_t BUFFER_SIZE = 256;
 
-uint8_t recv[buf_sz];
+// Request Buffer
+uint8_t recv[BUFFER_SIZE];
 size_t recvx = 0;
 
-uint8_t sequence = 0x1;
-CobsEncoder encoder(delimiter);
+uint8_t sequence = 0x0;
+CobsEncoder encoder(DELIMITER);
 
 void setup()
 {
-  Serial.begin(baud_rt);
+  pinMode(13, OUTPUT);
+  Serial.begin(BAUD_RATE);
 }
 
 void deliver(const uint8_t *src, const size_t sz)
@@ -31,12 +34,12 @@ void deliver(const uint8_t *src, const size_t sz)
   const uint16_t sum = FletcherChecksum::generate(msg, sz);
   FletcherChecksum::append(msg, msglen, sum);
 
-  // encodedlen = msg + cobs encoding + delimiter
+  // encodedlen = msg + cobs encoding + DELIMITER
   const size_t encodedlen = msglen + 2;
   uint8_t encoded[encodedlen];
 
   encoder.pack(msg, msglen, encoded);
-  encoded[encodedlen - 1] = delimiter;
+  encoded[encodedlen - 1] = DELIMITER;
 
   Serial.write(encoded, encodedlen);
 }
@@ -54,7 +57,8 @@ void retrieve()
     uint8_t request[requestlen];
 
     FletcherChecksum::strip(decoded, sz, request);
-    if (sequence != request[0])
+    
+    if (sequence == request[0])
     {
       execute(request, requestlen);
     }
@@ -67,11 +71,11 @@ void loop()
   {
     const uint8_t token = Serial.read();
 
-    if (token == delimiter)
+    if (token == DELIMITER)
     {
       retrieve();
     }
-    else if (recvx + 1 < buf_sz)
+    else if (recvx + 1 < BUFFER_SIZE)
     {
       recv[recvx++] = token;
     }
@@ -93,7 +97,6 @@ void execute(const uint8_t *buf, const size_t sz)
     uint8_t response[3];
     response[0] = seq;
 
-    sequence = seq;
     size_t responselen;
 
     switch (cmd)
@@ -139,6 +142,7 @@ void execute(const uint8_t *buf, const size_t sz)
     }
     
     deliver(response, responselen);
+    sequence = !seq;
   }
 }
 
