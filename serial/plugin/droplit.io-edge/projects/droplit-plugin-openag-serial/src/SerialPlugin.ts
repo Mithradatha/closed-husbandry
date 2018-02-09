@@ -70,6 +70,8 @@ export class SerialPlugin extends DroplitPlugin {
                     this.devices[devicePath] = device;
                     this.onDiscoverComplete();
 
+                }).catch(ignore => {
+                    this.onDiscoverComplete();
                 });
             }
         });

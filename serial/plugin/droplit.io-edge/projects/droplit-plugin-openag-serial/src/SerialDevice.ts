@@ -4,6 +4,7 @@ import { clearInterval } from 'timers';
 import { Sequence } from './UtilTypes';
 import * as SerialResponseFactory from './responses/SerialResponseFactory';
 import SerialMessageEncoder from './protocol/SerialMessageEncoder';
+import SequenceGuard from './protocol/SequenceGuard';
 import SerialDeviceOptions from './SerialDeviceOptions';
 import Request from './requests/Request';
 import Response from './responses/Response';
@@ -26,15 +27,12 @@ export default class SerialDevice {
     private responseTimeout: number;
 
     private sequence: Sequence;
-    private acknowledged: boolean[];
-
-    private serialPort: SerialPort;
-    private deviceConnected: boolean;
-
+    private sequenceGuard: SequenceGuard;
     private encoder: SerialMessageEncoder;
     private requestQueue: any;
 
-    private latestResponse?: Response;
+    private serialPort: SerialPort;
+    private deviceConnected: boolean;
 
     constructor(options: SerialDeviceOptions) {
 
@@ -48,17 +46,16 @@ export default class SerialDevice {
         this.responseTimeout = options.responseTimeout || DEFAULT_RES_TIMEOUT;
 
         this.sequence = 0x0;
-        this.acknowledged = [false, false];
+        this.sequenceGuard = new SequenceGuard();
+        this.encoder = new SerialMessageEncoder(this.delimiter);
+
+        // 1: only process one Request at a time
+        this.requestQueue = queue(this.repeatRequest.bind(this), 1);
 
         this.deviceConnected = false;
         this.serialPort = new SerialPort(this.devicePath, this.options);
         this.serialPort.on('error', (err?: Error) => this.onError(err));
         this.serialPort.on('close', (err?: Error) => this.onClose(err));
-
-        this.encoder = new SerialMessageEncoder(this.delimiter);
-
-        // 1: only process one Request at a time
-        this.requestQueue = queue(this.repeatRequest.bind(this), 1);
     }
 
     public connect(): Promise<string> {
@@ -131,10 +128,16 @@ export default class SerialDevice {
         console.log('Serial Message Received');
         this.encoder.decode(data)
             .then((message: SerialMessage) => {
-                this.latestResponse = SerialResponseFactory.assembleFrom(message);
-                console.log(`This: ${this.sequence} vs. That: ${message.sequence}`);
-                console.log(`Response Value: ${this.latestResponse.value}`);
-                this.acknowledged[message.sequence] = true;
+
+                const res = SerialResponseFactory.assembleFrom(message);
+                const seq = message.sequence;
+
+                console.log(`This: ${this.sequence} vs. That: ${seq}`);
+                console.log(`Response Value: ${res.value}`);
+
+                this.sequenceGuard.unlock(seq);
+                this.sequenceGuard.set(seq, res.value);
+
             }).catch((reason: any) => {
                 console.log('Message Could Not Be Decoded');
             });
@@ -150,14 +153,16 @@ export default class SerialDevice {
 
             const intervalId = setInterval(() => {
 
-                if (this.acknowledged[this.sequence]) {
+                if (!this.sequenceGuard.isLocked(this.sequence)) {
 
-                    console.log('Message Acknowledged');
-                    this.acknowledged[this.sequence] = false;
                     clearInterval(intervalId);
-                    const Response = this.latestResponse;
-                    this.latestResponse = undefined;
-                    resolve(Response);
+                    console.log('Message Acknowledged');
+
+                    const res = this.sequenceGuard.get(this.sequence);
+                    this.sequenceGuard.set(this.sequence, undefined);
+                    this.sequenceGuard.lock(this.sequence);
+
+                    resolve(res);
                 }
 
             }, ACK_INTERVAL);

@@ -15,6 +15,8 @@ import AnalogReadRequest from './requests/AnalogReadRequest';
 import AnalogReadResponse from './responses/AnalogReadResponse';
 import PinDirectionRequest from './requests/PinDirectionRequest';
 
+const DEBUG = true;
+
 const BAUD_RATE = 9600;
 const DELIMITER = 0x0;
 const MAX_RETRIES = 3;
@@ -59,8 +61,8 @@ export default class ProxySerialDevice {
 
     public static Discover(): string[] {
 
-        // TODO: Implement
-        // return ['COM5'];
+        if (DEBUG)
+            return ['COM5'];
 
         const devicePaths: string[] = [];
 
