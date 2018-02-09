@@ -1,10 +1,9 @@
 import * as SerialPort from 'serialport';
 import { queue } from 'async';
 import { clearInterval } from 'timers';
-import { Sequence } from './UtilTypes';
 import * as SerialResponseFactory from './responses/SerialResponseFactory';
 import SerialMessageEncoder from './protocol/SerialMessageEncoder';
-import SequenceGuard from './protocol/SequenceGuard';
+import ResponseLock from './protocol/ResponseLock';
 import SerialDeviceOptions from './SerialDeviceOptions';
 import Request from './requests/Request';
 import Response from './responses/Response';
@@ -26,8 +25,8 @@ export default class SerialDevice {
     private maxRetries: number;
     private responseTimeout: number;
 
-    private sequence: Sequence;
-    private sequenceGuard: SequenceGuard;
+    // private sequence: Sequence;
+    private lock: ResponseLock;
     private encoder: SerialMessageEncoder;
     private requestQueue: any;
 
@@ -45,8 +44,7 @@ export default class SerialDevice {
         this.maxRetries = options.maxRetries || DEFAULT_MAX_RETRIES;
         this.responseTimeout = options.responseTimeout || DEFAULT_RES_TIMEOUT;
 
-        this.sequence = 0x0;
-        this.sequenceGuard = new SequenceGuard();
+        this.lock = new ResponseLock(0x0);
         this.encoder = new SerialMessageEncoder(this.delimiter);
 
         // 1: only process one Request at a time
@@ -132,11 +130,10 @@ export default class SerialDevice {
                 const res = SerialResponseFactory.assembleFrom(message);
                 const seq = message.sequence;
 
-                console.log(`This: ${this.sequence} vs. That: ${seq}`);
+                console.log(`This: ${this.lock.sequence} vs. That: ${seq}`);
                 console.log(`Response Value: ${res.value}`);
 
-                this.sequenceGuard.unlock(seq);
-                this.sequenceGuard.set(seq, res.value);
+                this.lock.setResponse(res.value);
 
             }).catch((reason: any) => {
                 console.log('Message Could Not Be Decoded');
@@ -153,17 +150,14 @@ export default class SerialDevice {
 
             const intervalId = setInterval(() => {
 
-                if (!this.sequenceGuard.isLocked(this.sequence)) {
+                this.lock.getResponse()
+                    .then((response: any) => {
 
-                    clearInterval(intervalId);
-                    console.log('Message Acknowledged');
+                        clearInterval(intervalId);
+                        console.log('Message Acknowledged');
+                        resolve(response);
 
-                    const res = this.sequenceGuard.get(this.sequence);
-                    this.sequenceGuard.set(this.sequence, undefined);
-                    this.sequenceGuard.lock(this.sequence);
-
-                    resolve(res);
-                }
+                    }).catch((ignored) => { });
 
             }, ACK_INTERVAL);
 
@@ -182,13 +176,13 @@ export default class SerialDevice {
     private async repeatRequest(Request: Request, callback: (err?: Error, result?: Response) => void) {
 
         console.log('Repeat Request Worker');
-        const message = new SerialMessage(Request.toBuffer(), this.sequence);
+        const message = new SerialMessage(Request.toBuffer(), this.lock.sequence);
         const encoded: Buffer = this.encoder.encode(message);
         console.log(encoded);
 
         const timeout = this.responseTimeout;
         let error: Error | undefined;
-        let Response: Response | undefined;
+        let response: Response | undefined;
 
         for (let retry = 0; retry <= this.maxRetries; retry++) {
 
@@ -196,7 +190,7 @@ export default class SerialDevice {
 
             try {
 
-                Response = await this.deliver(encoded, timeout);
+                response = await this.deliver(encoded, timeout);
                 console.log('Response Received');
                 error = undefined;
                 break;
@@ -209,8 +203,8 @@ export default class SerialDevice {
         }
 
         // alternating bit sequence
-        if (!error) this.sequence = (this.sequence === 0x0) ? 0x1 : 0x0;
-        callback(error, Response);
+        if (!error) this.lock.flipSequence();
+        callback(error, response);
     }
 
     private onError(err?: Error): void {
