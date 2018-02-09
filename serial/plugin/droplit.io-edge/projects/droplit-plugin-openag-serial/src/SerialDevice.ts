@@ -1,6 +1,7 @@
 import * as SerialPort from 'serialport';
 import { queue } from 'async';
 import { clearInterval } from 'timers';
+import log from './Logger';
 import * as SerialResponseFactory from './responses/SerialResponseFactory';
 import SerialMessageEncoder from './protocol/SerialMessageEncoder';
 import ResponseLock from './protocol/ResponseLock';
@@ -84,20 +85,19 @@ export default class SerialDevice {
 
     public send(request: Request): Promise<Response> {
 
-        console.log('Client Sent Request');
-        console.log(request.toBuffer());
+        log('Client Sent Request', request.toBuffer());
         return new Promise<Response>((resolve, reject) => {
 
             if (this.deviceConnected) {
 
-                console.log('Queueing Client\'s Request');
+                log('Queueing Client\'s Request');
                 this.requestQueue.push(request, (err?: Error, result?: Response) => {
                     if (err) {
-                        console.log('err in send');
+                        log('err in send');
                         reject(err);
                     }
                     else {
-                        console.log('Client Request Resolved');
+                        log('Client Request Resolved');
                         resolve(result);
                     }
                 });
@@ -116,34 +116,33 @@ export default class SerialDevice {
         parser.on('data', (data: Buffer) => this.onData(data));
 
         this.deviceConnected = true;
-        console.log('Serial Device Connected');
+        log('Serial Device Connected');
 
         callback(this.devicePath);
     }
 
     private onData(data: Buffer): void {
 
-        console.log('Serial Message Received');
+        log('Serial Message Received');
         this.encoder.decode(data)
             .then((message: SerialMessage) => {
 
                 const res = SerialResponseFactory.assembleFrom(message);
                 const seq = message.sequence;
 
-                console.log(`This: ${this.lock.sequence} vs. That: ${seq}`);
-                console.log(`Response Value: ${res.value}`);
+                log(`Expected Sequence Number: ${this.lock.sequence}`); log(`Actual Sequence Number: ${seq}`);
+                log(`Response Value: ${res.value}`);
 
                 this.lock.setResponse(res.value);
 
             }).catch((reason: any) => {
-                console.log('Message Could Not Be Decoded');
+                log('Message Could Not Be Decoded');
             });
     }
 
     private deliver(msg: Buffer, timeout: number): Promise<Response> {
 
-        console.log('Delivering Message');
-        console.log(msg);
+        log('Delivering Message', msg);
         this.serialPort.write(msg);
 
         return new Promise((resolve, reject) => {
@@ -154,10 +153,10 @@ export default class SerialDevice {
                     .then((response: any) => {
 
                         clearInterval(intervalId);
-                        console.log('Message Acknowledged');
+                        log('Message Acknowledged');
                         resolve(response);
 
-                    }).catch((ignored) => { });
+                    }).catch(ignored => { });
 
             }, ACK_INTERVAL);
 
@@ -175,10 +174,9 @@ export default class SerialDevice {
      */
     private async repeatRequest(Request: Request, callback: (err?: Error, result?: Response) => void) {
 
-        console.log('Repeat Request Worker');
+        log('Repeat Request Worker');
         const message = new SerialMessage(Request.toBuffer(), this.lock.sequence);
         const encoded: Buffer = this.encoder.encode(message);
-        console.log(encoded);
 
         const timeout = this.responseTimeout;
         let error: Error | undefined;
@@ -186,18 +184,18 @@ export default class SerialDevice {
 
         for (let retry = 0; retry <= this.maxRetries; retry++) {
 
-            console.log(`Delivery Retry #${retry}`);
+            log(`Delivery Retry #${retry}`);
 
             try {
 
                 response = await this.deliver(encoded, timeout);
-                console.log('Response Received');
+                log('Response Received');
                 error = undefined;
                 break;
 
             } catch (err) {
                 error = err;
-                console.log('Response Not Received');
+                log('Response Not Received');
                 // timeout *= 2;
             }
         }
@@ -209,12 +207,12 @@ export default class SerialDevice {
 
     private onError(err?: Error): void {
 
-        console.log('Error Occured');
+        log('Error Occured');
     }
 
     private onClose(err?: Error) {
 
-        console.log('Close Occured');
+        log('Close Occured');
 
         this.deviceConnected = false;
     }

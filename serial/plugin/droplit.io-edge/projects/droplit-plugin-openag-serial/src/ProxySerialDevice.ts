@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { resolve } from 'path';
+import log from './Logger';
 import Pin from './pins/Pin';
 import PinOptions from './pins/PinOptions';
 import DigitalPin from './pins/DigitalPin';
@@ -56,7 +57,7 @@ export default class ProxySerialDevice {
             }
         }
 
-        console.log(this.pins);
+        log(this.pins);
     }
 
     public static Discover(): string[] {

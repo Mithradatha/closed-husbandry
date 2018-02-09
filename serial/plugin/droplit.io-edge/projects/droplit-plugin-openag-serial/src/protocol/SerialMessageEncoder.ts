@@ -19,16 +19,16 @@ export default class SerialMessageEncoder extends MessageEncoder {
 
     public encode(message: SerialMessage): Buffer {
 
-        console.log(message.sequence);
+        // log(message.sequence);
         let payload: Buffer = message.buffer;
-        console.log(payload);
+        // log(payload);
         const sum: Buffer = FletcherChecksum.generate(payload);
-        console.log(sum);
+        // log(sum);
         payload = FletcherChecksum.append(payload, sum);
-        console.log(payload);
+        // log(payload);
 
         const encoded: Buffer = this.encoder.pack(payload);
-        console.log(encoded);
+        // log(encoded);
         return Buffer.concat([encoded, Buffer.from([this.delimiter])]);
     }
 

@@ -1,6 +1,7 @@
 import { DroplitPlugin } from 'droplit-plugin';
 import { setImmediate } from 'timers';
 import ProxySerialDevice from './ProxySerialDevice';
+import log from './Logger';
 
 const DEVICE_SERVICES = ['BinarySwitch', 'DimmableSwitch'];
 const DEVICE_MEMBERS = {
@@ -38,7 +39,7 @@ export class SerialPlugin extends DroplitPlugin {
 
     public discover(): void {
 
-        console.log('discover');
+        log('discover');
 
         const devicePaths: string[] = ProxySerialDevice.Discover();
 
@@ -79,16 +80,16 @@ export class SerialPlugin extends DroplitPlugin {
 
     public dropDevice(localId: string): boolean {
 
-        console.log('dropDevice');
+        log('dropDevice');
 
         return true;
     }
 
     protected getSwitch(localId: string, callback: (value: string) => void, index: string): boolean {
 
-        console.log('getSwitch');
+        log('getSwitch');
 
-        console.log(`localId: ${localId}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${localId}, callback: ${callback}, index: ${index}`);
 
         if (!this.devices[localId]) return false;
 
@@ -101,22 +102,22 @@ export class SerialPlugin extends DroplitPlugin {
 
     protected setSwitch(localId: string, value: string, index: string): boolean {
 
-        console.log('setSwitch');
+        log('setSwitch');
 
-        console.log(`localId: ${localId}, value: ${value}, index: ${index}`);
+        log(`localId: ${localId}, value: ${value}, index: ${index}`);
 
         const device = this.devices[localId];
         const pin = Number(index);
 
         if (!device || !(value === 'on' || value === 'off')) return false;
 
-        console.log('devices.set');
+        log('devices.set');
 
         const previousValue = this.devices[localId].getCached(pin);
 
         this.devices[localId].set(pin, value, (err?: Error, val?: any) => {
 
-            console.log(`err: ${err}, val: ${val}`);
+            log(`err: ${err}, val: ${val}`);
 
             if (val !== previousValue) {
 
@@ -137,27 +138,27 @@ export class SerialPlugin extends DroplitPlugin {
 
     protected switchOff(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
 
-        console.log('switchOff');
+        log('switchOff');
 
-        console.log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
 
         return this.setSwitch(localId, 'off', index);
     }
 
     protected switchOn(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
 
-        console.log('switchOn');
+        log('switchOn');
 
-        console.log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
 
         return this.setSwitch(localId, 'on', index);
     }
 
     protected getBrightness(localId: string, callback: (value: any) => void, index: string): boolean {
 
-        console.log('getBrightness');
+        log('getBrightness');
 
-        console.log(`localId: ${localId}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${localId}, callback: ${callback}, index: ${index}`);
 
         if (!this.devices[localId]) return false;
 
@@ -170,9 +171,9 @@ export class SerialPlugin extends DroplitPlugin {
 
     protected setBrightness(localId: string, value: any, index: string): boolean {
 
-        console.log('setBrightness');
+        log('setBrightness');
 
-        console.log(`localId: ${localId}, value: ${value}, index: ${index}`);
+        log(`localId: ${localId}, value: ${value}, index: ${index}`);
 
         const device = this.devices[localId];
         const pin = Number(index);
@@ -202,18 +203,18 @@ export class SerialPlugin extends DroplitPlugin {
 
     protected stepDown(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
 
-        console.log('stepDown');
+        log('stepDown');
 
-        console.log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
 
         return this.setBrightness(localId, 0, index);
     }
 
     protected stepUp(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
 
-        console.log('stepUp');
+        log('stepUp');
 
-        console.log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
 
         return this.setBrightness(localId, 255, index);
     }

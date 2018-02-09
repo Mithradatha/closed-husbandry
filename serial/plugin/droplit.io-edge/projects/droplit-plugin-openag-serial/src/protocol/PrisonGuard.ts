@@ -1,7 +1,7 @@
 
 export class PrisonGuard {
 
-    private prison: Prison
+    private prison: Prison;
     private prisonSize: number;
 
     private _position: number;
@@ -13,7 +13,7 @@ export class PrisonGuard {
     ) {
         this.prison = new Prison(prisonSize, defaultInmates);
         this.prisonSize = prisonSize;
-        this._position = initial_position
+        this._position = initial_position;
     }
 
     public get position() {
@@ -60,7 +60,7 @@ class Prison {
     public constructor(size: number, defaultInmates?: any) {
         this.prison = new Array<Cell>(size);
 
-        for (let cell: number = 0; cell < size; cell++) {
+        for (let cell = 0; cell < size; cell++) {
             this.prison[cell] = {
                 isLocked: true,
                 inmates: defaultInmates
