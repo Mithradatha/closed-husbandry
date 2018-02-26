@@ -30,6 +30,7 @@ export function append(src: Buffer, sum: Buffer): Buffer {
 
     const len = src.length;
     const res = new Buffer(len + 2);
+
     for (let i = 0; i < len; i++) {
         res[i] = src[i];
     }

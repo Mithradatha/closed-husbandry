@@ -16,7 +16,7 @@ CobsEncoder encoder(DELIMITER);
 
 void setup()
 {
-  pinMode(13, OUTPUT);
+  // pinMode(13, OUTPUT);
   Serial.begin(BAUD_RATE);
 }
 
@@ -120,9 +120,9 @@ void execute(const uint8_t *buf, const size_t sz)
       {
         //pinMode(pin, INPUT);
         responselen = 3;
-        uint8_t aVal = analogRead(pin);
-        response[1] = aVal & 0xFF;
-        response[2] = (aVal >> 8) & 0xFF;
+        uint16_t aVal = analogRead(pin);
+        response[1] = lowByte(aVal);
+        response[2] = highByte(aVal);
         break;
       }
       case 0x3: // Analog Write

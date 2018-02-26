@@ -1,4 +1,4 @@
-import { Delimeter } from './UtilTypes';
+import { Delimeter } from '../util/Types';
 import { OpenOptions } from 'serialport';
 
 export default interface SerialDeviceOptions extends OpenOptions {

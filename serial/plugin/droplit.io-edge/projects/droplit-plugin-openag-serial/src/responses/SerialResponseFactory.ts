@@ -1,21 +1,28 @@
 import Response from './Response';
-import SerialMessage from '../protocol/SerialMessage';
+import SerialMessage from '../framing/SerialMessage';
 import DigitalReadResponse from './DigitalReadResponse';
 import WriteResponse from './WriteResponse';
 import AnalogReadResponse from './AnalogReadResponse';
+import log from '../util/Logger';
 
-export function assembleFrom(message: SerialMessage): Response {
+export default abstract class SerialResponseFactory {
 
-    const buf: Buffer = message.buffer;
-    const len: number = buf.length;
+    public static AssembleFrom(message: SerialMessage): Response {
 
-    switch (len) {
+        const buf: Buffer = message.buffer;
+        const len: number = buf.length;
 
-        case 2:
-            return new DigitalReadResponse(buf[1]);
-        case 3:
-            return new AnalogReadResponse((buf[1] << 8) | buf[2]);
-        default:
-            return new WriteResponse();
+        switch (len) {
+
+            case 2:
+                log('DigitalReadResponse');
+                return new DigitalReadResponse(buf[1]);
+            case 3:
+                log('AnalogReadResponse');
+                return new AnalogReadResponse((buf[2] << 8) | buf[1]);
+            default:
+                log('DefaultWriteResponse');
+                return new WriteResponse();
+        }
     }
 }

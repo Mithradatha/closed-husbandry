@@ -7,7 +7,7 @@
  * 
  * This encoding is limited to 255 bytes
  *
- * If the packet size needs to be larger,
+ * If the frame size needs to be larger,
  * include a modulo operation when packing
  */
 

@@ -1,5 +1,5 @@
 import * as FletcherChecksum from './FletcherChecksum';
-import { Delimeter } from './../UtilTypes';
+import { Delimeter } from '../util/Types';
 import SerialMessage from './SerialMessage';
 import CobsEncoder from './CobsEncoder';
 import MessageEncoder from './MessageEncoder';
@@ -7,10 +7,10 @@ import MessageEncoder from './MessageEncoder';
 export default class SerialMessageEncoder extends MessageEncoder {
 
     private delimiter: Delimeter;
-
     private encoder: CobsEncoder;
 
     public constructor(delimiter: Delimeter) {
+
         super();
 
         this.delimiter = delimiter;
@@ -19,16 +19,12 @@ export default class SerialMessageEncoder extends MessageEncoder {
 
     public encode(message: SerialMessage): Buffer {
 
-        // log(message.sequence);
         let payload: Buffer = message.buffer;
-        // log(payload);
+
         const sum: Buffer = FletcherChecksum.generate(payload);
-        // log(sum);
         payload = FletcherChecksum.append(payload, sum);
-        // log(payload);
 
         const encoded: Buffer = this.encoder.pack(payload);
-        // log(encoded);
         return Buffer.concat([encoded, Buffer.from([this.delimiter])]);
     }
 

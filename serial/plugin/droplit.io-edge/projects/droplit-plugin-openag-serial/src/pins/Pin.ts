@@ -1,30 +1,32 @@
-import { Mode, Direction } from '../UtilTypes';
+import { Direction } from '../util/Types';
+import { ArduinoConverter } from '../util/ArduinoConverter';
 
-export default abstract class Pin {
+export default class Pin {
 
-    protected _state: any;
-
-    private _mode: Mode;
+    private _index: number;
     private _direction: Direction;
 
-    public constructor(mode: Mode, direction: Direction, state: any) {
-        this._mode = mode;
+    // range: [0, 255]
+    private state: number;
+
+    public constructor(
+        index: number, direction: Direction, state: number = 0
+    ) {
+        this._index = index;
         this._direction = direction;
-        this._state = state;
+        this.state = state;
     }
 
-    public abstract get state(): any;
-    public abstract set state(value: any);
+    public get index(): number { return this._index; }
+    public get direction(): Direction { return this._direction; }
 
-    public get mode(): Mode {
-        return this._mode;
+    public setState(value: number, inMin: number, inMax: number): void {
+
+        this.state = ArduinoConverter.toAnalog8(value, inMin, inMax);
     }
 
-    public get direction(): Direction {
-        return this._direction;
-    }
+    public getState(outMin: number, outMax: number): number {
 
-    public set direction(value: Direction) {
-        this._direction = value;
+        return ArduinoConverter.fromAnalog8(this.state, outMin, outMax);
     }
 }

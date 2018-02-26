@@ -1,17 +1,33 @@
-import { DroplitPlugin } from 'droplit-plugin';
+import { DroplitPlugin, DeviceServiceMember } from 'droplit-plugin';
 import { setImmediate } from 'timers';
-import ProxySerialDevice from './ProxySerialDevice';
-import log from './Logger';
+import SerialDeviceProxy from './devices/SerialDeviceProxy';
+import log from './util/Logger';
+import PinOptions from './pins/PinOptions';
 
-const DEVICE_SERVICES = ['BinarySwitch', 'DimmableSwitch'];
-const DEVICE_MEMBERS = {
+const DEVICE_SERVICES: string[] = ['BinarySwitch', 'DimmableSwitch'];
+const DEVICE_MEMBERS: { [name: string]: string } = {
     BinarySwitch: 'switch',
     DimmableSwitch: 'brightness'
 };
 
+const PINS: { [index: string]: PinOptions } = {
+    13: {
+        direction: 'Output',
+        service: 'DimmableSwitch',
+        member: 'brightness',
+        state: 100
+    },
+    9: {
+        direction: 'Input',
+        service: 'BinarySwitch',
+        member: 'switch',
+        state: 'off'
+    }
+};
+
 export class SerialPlugin extends DroplitPlugin {
 
-    private devices: { [path: string]: ProxySerialDevice };
+    private devices: { [path: string]: SerialDeviceProxy };
 
     private services: any;
 
@@ -41,22 +57,13 @@ export class SerialPlugin extends DroplitPlugin {
 
         log('discover');
 
-        const devicePaths: string[] = ProxySerialDevice.Discover();
+        const devicePaths: string[] = SerialDeviceProxy.Discover();
 
         devicePaths.forEach(devicePath => {
 
             if (!this.devices[devicePath]) {
 
-                const device = new ProxySerialDevice(
-                    devicePath,
-                    {
-                        13: {
-                            mode: 'Digital',
-                            direction: 'Output',
-                            state: 'off'
-                        }
-                    }
-                );
+                const device = new SerialDeviceProxy(devicePath, PINS);
 
                 device.connect().then((devicePath: string) => {
 
@@ -69,11 +76,14 @@ export class SerialPlugin extends DroplitPlugin {
                     });
 
                     this.devices[devicePath] = device;
-                    this.onDiscoverComplete();
 
-                }).catch(ignore => {
-                    this.onDiscoverComplete();
-                });
+                    device.initialize((properties: DeviceServiceMember) => {
+                        this.onPropertiesChanged([properties]);
+
+                        this.onDiscoverComplete();
+                    });
+
+                }).catch(ignore => this.onDiscoverComplete());
             }
         });
     }
@@ -82,140 +92,159 @@ export class SerialPlugin extends DroplitPlugin {
 
         log('dropDevice');
 
+        const device = this.devices[localId];
+        if (device) device.disconnect();
+
         return true;
     }
 
-    protected getSwitch(localId: string, callback: (value: string) => void, index: string): boolean {
+    protected getSwitch(devicePath: string, callback: (_switch: string) => void, index: string): boolean {
 
         log('getSwitch');
 
-        log(`localId: ${localId}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${devicePath}, callback: ${callback}, index: ${index}`);
 
-        if (!this.devices[localId]) return false;
+        if (!this.devices[devicePath]) return false;
 
         setImmediate(() => {
-            callback && this.devices[localId].get(Number(index), callback);
+
+            this.devices[devicePath].get('BinarySwitch',
+                Number(index), callback);
         });
 
         return true;
     }
 
-    protected setSwitch(localId: string, value: string, index: string): boolean {
+    protected setSwitch(devicePath: string, _switch: string, index: string): boolean {
 
         log('setSwitch');
 
-        log(`localId: ${localId}, value: ${value}, index: ${index}`);
+        log(`localId: ${devicePath}, value: ${_switch}, index: ${index}`);
 
-        const device = this.devices[localId];
+        const device = this.devices[devicePath];
         const pin = Number(index);
 
-        if (!device || !(value === 'on' || value === 'off')) return false;
+        if (!device || !(_switch === 'on' || _switch === 'off')) return false;
 
         log('devices.set');
 
-        const previousValue = this.devices[localId].getCached(pin);
+        this.devices[devicePath].set('BinarySwitch', pin, _switch,
+            (err?: Error, previousValue?: string) => {
 
-        this.devices[localId].set(pin, value, (err?: Error, val?: any) => {
+                log(`err: ${err}, val: ${previousValue}`);
 
-            log(`err: ${err}, val: ${val}`);
+                if (previousValue !== _switch) {
 
-            if (val !== previousValue) {
-
-                this.onPropertiesChanged([{
-                    localId,
-                    service: 'BinarySwitch',
-                    index,
-                    member: 'switch',
-                    value: val,
-                    error: err,
-                    timestamp: new Date()
-                }]);
-            }
-        });
+                    this.onPropertiesChanged([{
+                        localId: devicePath,
+                        service: 'BinarySwitch',
+                        index,
+                        member: 'switch',
+                        value: _switch,
+                        error: err,
+                        timestamp: new Date()
+                    }]);
+                }
+            });
 
         return true;
     }
 
-    protected switchOff(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
+    protected switchOff(devicePath: string, value: any, callback: (_switch: any) => void, index: string): boolean {
 
         log('switchOff');
 
-        log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
 
-        return this.setSwitch(localId, 'off', index);
+        return this.setSwitch(devicePath, 'off', index);
     }
 
-    protected switchOn(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
+    protected switchOn(devicePath: string, value: any, callback: (_switch: any) => void, index: string): boolean {
 
         log('switchOn');
 
-        log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
 
-        return this.setSwitch(localId, 'on', index);
+        return this.setSwitch(devicePath, 'on', index);
     }
 
-    protected getBrightness(localId: string, callback: (value: any) => void, index: string): boolean {
+    protected getBrightness(devicePath: string, callback: (_brightness: number) => void, index: string): boolean {
 
         log('getBrightness');
 
-        log(`localId: ${localId}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${devicePath}, callback: ${callback}, index: ${index}`);
 
-        if (!this.devices[localId]) return false;
+        if (!this.devices[devicePath]) return false;
 
         setImmediate(() => {
-            callback && this.devices[localId].get(Number(index), callback);
+
+            this.devices[devicePath].get('DimmableSwitch',
+                Number(index), callback);
         });
 
         return true;
     }
 
-    protected setBrightness(localId: string, value: any, index: string): boolean {
+    protected setBrightness(devicePath: string, _brightness: number, index: string): boolean {
 
         log('setBrightness');
 
-        log(`localId: ${localId}, value: ${value}, index: ${index}`);
+        log(`localId: ${devicePath}, value: ${_brightness}, index: ${index}`);
 
-        const device = this.devices[localId];
+        const device = this.devices[devicePath];
         const pin = Number(index);
 
-        if (!device || !(value > -1 || value < 101)) return false;
+        if (!device || (_brightness < 0 || _brightness > 100)) {
 
-        const previousValue = this.devices[localId].getCached(pin);
+            log('value out of expected range');
+            return false;
+        }
 
-        this.devices[localId].set(pin, value, (err?: Error, val?: any) => {
+        this.devices[devicePath].set('DimmableSwitch', pin, _brightness,
+            (err?: Error, previousValue?: number) => {
 
-            if (val !== previousValue) {
+                if (previousValue !== _brightness) {
 
-                this.onPropertiesChanged([{
-                    localId,
-                    service: 'DimmableSwitch',
-                    index,
-                    member: 'brightness',
-                    value: val,
-                    error: err,
-                    timestamp: new Date()
-                }]);
-            }
-        });
+                    this.onPropertiesChanged([{
+                        localId: devicePath,
+                        service: 'DimmableSwitch',
+                        index,
+                        member: 'brightness',
+                        value: _brightness,
+                        error: err,
+                        timestamp: new Date()
+                    }]);
+                }
+            });
 
         return true;
     }
 
-    protected stepDown(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
+    protected stepDown(devicePath: string, value: number, callback: (_brightness: number) => void, index: string): boolean {
 
         log('stepDown');
 
-        log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
 
-        return this.setBrightness(localId, 0, index);
+        // if (value - 10 < 0)
+        //     value = 0;
+        // else
+        //     value -= 10;
+
+        return this.setBrightness(devicePath, value, index);
     }
 
-    protected stepUp(localId: string, value: any, callback: (value: any) => void, index: string): boolean {
+    protected stepUp(devicePath: string, value: number, callback: (_brightness: number) => void, index: string): boolean {
 
         log('stepUp');
 
-        log(`localId: ${localId}, value: ${value}, callback: ${callback}, index: ${index}`);
+        log(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
 
-        return this.setBrightness(localId, 255, index);
+        // if (value + 10 > 100)
+        //     value = 100;
+        // else
+        //     value += 10;
+
+        return this.setBrightness(devicePath, value, index);
     }
 }

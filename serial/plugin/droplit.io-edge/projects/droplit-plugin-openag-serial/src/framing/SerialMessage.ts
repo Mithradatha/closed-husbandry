@@ -1,4 +1,4 @@
-import { Sequence } from '../UtilTypes';
+import { Sequence } from '../util/Types';
 import Message from './Message';
 
 export default class SerialMessage extends Message {
@@ -6,6 +6,7 @@ export default class SerialMessage extends Message {
     private _sequence: Sequence;
 
     public constructor(msg: Buffer, sequence: Sequence) {
+
         super(msg);
 
         this._sequence = sequence;

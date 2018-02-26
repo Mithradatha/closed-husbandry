@@ -1,8 +1,10 @@
-import { Mode, Direction } from '../UtilTypes';
+import { Direction, Service, Member } from '../util/Types';
 
 export default interface PinOptions {
 
-    mode: Mode;
+    // mode: Mode;
     direction: Direction;
+    service: Service;
+    member: Member;
     state: any;
 }
