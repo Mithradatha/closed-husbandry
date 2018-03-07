@@ -1,0 +1,18 @@
+{
+    "devices": [{
+        "path": "COM5",
+        "pins": [{
+                "index": 12,
+                "direction": "Output",
+                "service": "BinarySwitch",
+                "state": "off"
+            },
+            {
+                "index": 2,
+                "direction": "Input",
+                "service": "DimmableSwitch",
+                "state": 0
+            }
+        ]
+    }]
+}
