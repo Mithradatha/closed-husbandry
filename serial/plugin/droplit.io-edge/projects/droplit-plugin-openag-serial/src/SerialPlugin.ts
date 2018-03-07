@@ -2,56 +2,15 @@ import { DroplitPlugin, DeviceServiceMember } from 'droplit-plugin';
 import { setImmediate } from 'timers';
 import SerialDeviceProxy from './devices/SerialDeviceProxy';
 import log from './util/Logger';
-import PinOptions from './pins/PinOptions';
+import { PluginConfiguration } from './config.interface';
 
 const DEVICE_SERVICES: string[] = ['BinarySwitch', 'DimmableSwitch'];
-const DEVICE_MEMBERS: { [name: string]: string } = {
-    BinarySwitch: 'switch',
-    DimmableSwitch: 'brightness'
-};
-
-const PINS: { [index: string]: PinOptions } = {
-    13: {
-        direction: 'Output',
-        service: 'DimmableSwitch',
-        member: 'brightness',
-        state: 100
-    },
-    9: {
-        direction: 'Input',
-        service: 'BinarySwitch',
-        member: 'switch',
-        state: 'off'
-    }
-};
 
 export class SerialPlugin extends DroplitPlugin {
 
-    private devices: { [path: string]: SerialDeviceProxy };
+    private config: PluginConfiguration = require('./config.json');
 
-    private services: any;
-
-    public constructor() {
-
-        super();
-
-        this.devices = {};
-
-        this.services = {
-            BinarySwitch: {
-                get_switch: this.getSwitch,
-                set_switch: this.setSwitch,
-                switchOff: this.switchOff,
-                switchOn: this.switchOn
-            },
-            DimmableSwitch: {
-                get_brightness: this.getBrightness,
-                set_brightness: this.setBrightness,
-                stepDown: this.stepDown,
-                stepUp: this.stepUp
-            }
-        };
-    }
+    private devices: { [path: string]: SerialDeviceProxy } = {};
 
     public discover(): void {
 
@@ -63,7 +22,7 @@ export class SerialPlugin extends DroplitPlugin {
 
             if (!this.devices[devicePath]) {
 
-                const device = new SerialDeviceProxy(devicePath, PINS);
+                const device = new SerialDeviceProxy(devicePath, this.config.devices[]);
 
                 device.connect().then((devicePath: string) => {
 
@@ -71,7 +30,6 @@ export class SerialPlugin extends DroplitPlugin {
                         localId: devicePath,
                         address: devicePath,
                         services: DEVICE_SERVICES,
-                        promotedMembers: DEVICE_MEMBERS,
                         timestamp: new Date()
                     });
 

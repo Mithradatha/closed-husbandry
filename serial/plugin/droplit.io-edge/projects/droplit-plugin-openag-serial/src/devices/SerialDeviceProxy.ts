@@ -1,11 +1,11 @@
 import SerialDevice from './SerialDevice';
 import ServiceClassFactory from '../services/ServiceClassFactory';
 import PinDirectionRequest from '../requests/PinDirectionRequest';
-import PinOptions from '../pins/PinOptions';
 import Pin from '../pins/Pin';
 import { DeviceServiceMember } from 'droplit-plugin';
 import Response from '../responses/Response';
 import { Service } from '../util/Types';
+import { PinConfiguration } from '../config.interface';
 
 const BAUD_RATE = 9600;
 const DELIMITER = 0x0;
@@ -21,7 +21,7 @@ export default class SerialDeviceProxy {
 
     public constructor(
         serialDevicePath: string,
-        private pinOptions: { [index: number]: PinOptions }
+        private pinOptions: { [index: number]: PinConfiguration }
     ) {
 
         this.device = new SerialDevice({

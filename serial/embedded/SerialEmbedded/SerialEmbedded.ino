@@ -57,7 +57,7 @@ void retrieve()
     uint8_t request[requestlen];
 
     FletcherChecksum::strip(decoded, sz, request);
-    
+
     if (sequence == request[0])
     {
       execute(request, requestlen);
@@ -88,61 +88,84 @@ void loop()
 
 void execute(const uint8_t *buf, const size_t sz)
 {
-  if (sz > 2)
+  const uint8_t seq = buf[0];
+  const uint8_t cmd = buf[1];
+
+  switch (cmd)
   {
-    const uint8_t seq = buf[0];
-    const uint8_t pin = buf[1];
-    const uint8_t cmd = buf[2];
-
-    uint8_t response[3];
-    response[0] = seq;
-
-    size_t responselen;
-
-    switch (cmd)
-    {
-      case 0x0: // Digital Read
+    case 0x0: // Digital Read
       {
-        //pinMode(pin, INPUT);
-        responselen = 2;
-        response[1] = digitalRead(pin);
+        const uint8_t pin = buf[2];
+        const size_t responselen = 3;
+        uint8_t response[responselen];
+        response[0] = seq;
+        response[1] = cmd;
+        response[2] = digitalRead(pin);
+        deliver(response, responselen);
         break;
       }
-      case 0x1: // Digital Write
+    case 0x1: // Digital Write
       {
-        //pinMode(pin, OUTPUT);
-        responselen = 1;
-        const uint8_t dVal = (buf[3] == 0x0) ? LOW : HIGH;
+        const uint8_t pin = buf[2];
+        const uint8_t val = buf[3];
+        const size_t responselen = 2;
+        uint8_t response[responselen];
+        response[0] = seq;
+        response[1] = cmd;
+        const uint8_t dVal = (val == 0x0) ? LOW : HIGH;
         digitalWrite(pin, dVal);
+        deliver(response, responselen);
         break;
       }
-      case 0x2: // Analog Read
+    case 0x2: // Analog Read
       {
-        //pinMode(pin, INPUT);
-        responselen = 3;
+        const uint8_t pin = buf[2];
+        const size_t responselen = 4;
+        uint8_t response[responselen];
+        response[0] = seq;
+        response[1] = cmd;
         uint16_t aVal = analogRead(pin);
-        response[1] = lowByte(aVal);
-        response[2] = highByte(aVal);
+        response[2] = lowByte(aVal);
+        response[3] = highByte(aVal);
+        deliver(response, responselen);
         break;
       }
-      case 0x3: // Analog Write
+    case 0x3: // Analog Write
       {
-        //pinMode(pin, OUTPUT);
-        responselen = 1;
-        analogWrite(pin, buf[3]);
+        const uint8_t pin = buf[2];
+        const uint8_t val = buf[3];
+        const size_t responselen = 2;
+        uint8_t response[responselen];
+        response[0] = seq;
+        response[1] = cmd;
+        analogWrite(pin, val);
+        deliver(response, responselen);
         break;
       }
-      case 0x4: // Pin Direction
+    case 0x4: // Pin Direction
       {
-        const uint8_t pVal = (buf[3] == 0x0) ? INPUT : OUTPUT;
-        responselen = 1;
+        const uint8_t pin = buf[2];
+        const uint8_t val = buf[3];
+        const size_t responselen = 2;
+        uint8_t response[responselen];
+        response[0] = seq;
+        response[1] = cmd;
+        const uint8_t pVal = (val == 0x0) ? INPUT : OUTPUT;
         pinMode(pin, pVal);
+        deliver(response, responselen);
         break;
       }
-    }
-    
-    deliver(response, responselen);
-    sequence = !seq;
+    case 0x6: // Acknowledgement
+      {
+        const size_t responselen = 2;
+        uint8_t response[responselen];
+        response[0] = seq;
+        response[1] = cmd;
+        deliver(response, responselen);
+        break;
+      }
   }
+
+  sequence = !seq;
 }
 

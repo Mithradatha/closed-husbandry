@@ -7,5 +7,6 @@ export type Delimeter = number;
 /**** Pin ****/
 export type Mode = 'Digital' | 'Analog';
 export type Service = 'BinarySwitch' | 'DimmableSwitch';
+export type State = 'on' | 'off' | number;
 export type Member = 'switch' | 'brightness';
 export type Direction = 'Input' | 'Output';
