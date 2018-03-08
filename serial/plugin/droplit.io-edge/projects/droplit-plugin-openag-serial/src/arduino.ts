@@ -1,29 +1,35 @@
 
-export namespace ArduinoConverter {
+export type LOW = 0x0;
+export type HIGH = 0x1;
 
-    export function fromAnalog8(
+export type INPUT = 0x0;
+export type OUTPUT = 0x1;
+
+export abstract class Converter {
+
+    static FromAnalog8(
         value: number, outMin: number, outMax: number): number {
-        return this.map(value, 0, 255, outMin, outMax);
+        return Converter.Map(value, 0, 255, outMin, outMax);
     }
 
-    export function toAnalog8(
+    static ToAnalog8(
         value: number, inMin: number, inMax: number): number {
-        return this.map(value, inMin, inMax, 0, 255);
+        return Converter.Map(value, inMin, inMax, 0, 255);
     }
 
-    export function fromAnalog10(
+    static FromAnalog10(
         value: number, outMin: number, outMax: number): number {
-        return this.map(value, 0, 1023, outMin, outMax);
+        return Converter.Map(value, 0, 1023, outMin, outMax);
     }
 
-    export function toDigital(
+    static ToDigital(
         value: number, inMin: number, inMax: number): number {
-        return this.map(value, inMin, inMax, 0, 1);
+        return Converter.Map(value, inMin, inMax, 0, 1);
     }
 
-    export function fromDigital(
+    static FromDigital(
         value: number, outMin: number, outMax: number): number {
-        return this.map(value, 0, 1, outMin, outMax);
+        return Converter.Map(value, 0, 1, outMin, outMax);
     }
 
     /**
@@ -36,7 +42,7 @@ export namespace ArduinoConverter {
      * @param {number} outMax output maximum range
      * @returns {number} output value in range [outMin, outMax]
      */
-    export function map(value: number,
+    static Map(value: number,
         inMin: number, inMax: number,
         outMin: number, outMax: number
     ): number {

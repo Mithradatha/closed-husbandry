@@ -19,11 +19,13 @@
   },
   "dependencies": {
     "async": "^2.6.0",
+    "debug": "^3.1.0",
     "droplit-plugin": "../droplit-plugin",
-    "serialport": "^6.0.4"
+    "serialport": "^6.1.1"
   },
   "devDependencies": {
     "@types/async": "^2.0.47",
-    "@types/serialport": "^6.0.0"
+    "@types/debug": "0.0.30",
+    "@types/serialport": "^6.0.1"
   }
 }

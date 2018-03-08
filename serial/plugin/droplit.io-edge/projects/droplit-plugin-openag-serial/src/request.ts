@@ -1,4 +1,4 @@
-import { INPUT, OUTPUT, LOW, HIGH } from './type';
+import { INPUT, OUTPUT, LOW, HIGH } from './arduino';
 import * as Frame from './frame';
 
 export abstract class Request {

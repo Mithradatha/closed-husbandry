@@ -2,6 +2,8 @@ import { Request } from './request';
 import { Response, Factory as ResponseFactory } from './response';
 import { FletcherEncoder } from './fletcherEncoder';
 import { CobsEncoder } from './cobsEncoder';
+import * as debug from 'debug';
+const logger = debug('serial:frame');
 
 export type Sequence = 0x0 | 0x1;
 
@@ -28,17 +30,25 @@ export class Builder {
 
     construct(request: Request, sequence: Sequence): Buffer {
 
+        logger('construct(%O, %O)', request, sequence);
         const payload: Buffer = request.buffer;
-        const message = Buffer.from([sequence, payload]);
+        const message = Buffer.concat([Buffer.from([sequence]), payload]);
+
+        logger('construct:message=%O', message);
 
         const fletcherEncoded = this.fletcher.encode(message);
+        logger('construct:fletcherEncoded=%O', fletcherEncoded);
         const cobsEncoded = this.cobs.encode(fletcherEncoded);
+        logger('construct:cobsEncoded=%O', cobsEncoded);
 
-        return Buffer.from([cobsEncoded, this.delimiter]);
+        const buf = Buffer.concat([cobsEncoded, Buffer.from([this.delimiter])]);
+        logger('construct:buf=%O', buf);
+        return buf;
     }
 
     destruct(buffer: Buffer, sequence: Sequence): Promise<Response> {
 
+        logger('destruct(%O)', sequence);
         return new Promise<Response>((resolve, reject) => {
 
             const cobsDecoded: Buffer = this.cobs.decode(buffer);

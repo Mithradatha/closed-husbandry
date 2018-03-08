@@ -2,16 +2,22 @@
     "devices": [{
         "path": "COM5",
         "pins": [{
-                "index": 12,
+                "index": 13,
                 "direction": "Output",
-                "service": "BinarySwitch",
-                "state": "off"
+                "service": {
+                    "name": "BinarySwitch",
+                    "property": "switch",
+                    "state": "off"
+                }
             },
             {
                 "index": 2,
                 "direction": "Input",
-                "service": "DimmableSwitch",
-                "state": 0
+                "service": {
+                    "name": "DimmableSwitch",
+                    "property": "brightness",
+                    "state": 0
+                }
             }
         ]
     }]
