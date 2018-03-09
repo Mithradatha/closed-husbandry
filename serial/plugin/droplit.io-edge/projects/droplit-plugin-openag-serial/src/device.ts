@@ -17,10 +17,8 @@ export interface AsyncRequestHandler {
     send(request: Request): Promise<Response>;
 }
 
-export interface Options {
+export interface Options extends SerialPort.OpenOptions {
 
-    autoOpen: boolean;
-    baudRate: number;
     devicePath: string;
     delimiter: number;
     initSequence: Sequence;
@@ -45,7 +43,7 @@ export class Device implements AsyncRequestHandler {
         this.options = {
 
             autoOpen: false,
-            baudRate: 96000,
+            baudRate: 9600,
             devicePath: path,
             delimiter: 0x0,
             initSequence: 0x0,
@@ -62,7 +60,22 @@ export class Device implements AsyncRequestHandler {
         this.serialPort = new SerialPort(path, this.options);
         this.serialPort.on('error', err => this.onError(err));
         this.serialPort.on('close', err => this.onClose(err));
-        this.serialPort.on('data', data => deviceLogger('data %O', data));
+
+        const parser = this.serialPort.pipe(
+            new SerialPort.parsers.Delimiter({
+                delimiter: [this.options.delimiter]
+            }));
+
+        parser.on('data', (data: Buffer) => {
+
+            deviceLogger('onData');
+            this.frame.destruct(data, this.lock.sequence)
+                .then((response: Response) => {
+
+                    this.lock.notify(response);
+                });
+
+        });
     }
 
     get connected() { return this.isConnected; }
@@ -79,37 +92,21 @@ export class Device implements AsyncRequestHandler {
                 else {
 
                     deviceLogger('onOpen');
-                    const parser = this.serialPort.pipe(
-                        new SerialPort.parsers.Delimiter({
-                            delimiter: [this.options.delimiter]
-                        }));
 
-                    parser.on('data', (data: Buffer) => this.onData(data));
+                    deviceLogger('sending acknowledgement');
+                    this.send(new Acknowledgement())
+                        .then((res: Response) => {
 
-                    // deviceLogger('sending acknowledgement');
-                    // this.send(new Acknowledgement())
-                    //     .then((res: Response) => {
-
-                    //         this.isConnected = true;
-                    //         resolve();
-                    //     })
-                    //     .catch((error: any) => reject(error));
+                            this.isConnected = true;
+                            resolve();
+                        })
+                        .catch((error: any) => reject(error));
 
                     this.isConnected = true;
                     resolve();
                 }
             });
         });
-    }
-
-    private onData(data: Buffer): void {
-
-        deviceLogger('onData');
-        this.frame.destruct(data, this.lock.sequence)
-            .then((response: Response) => {
-
-                this.lock.notify(response);
-            });
     }
 
     send(request: Request): Promise<Response> {
@@ -136,7 +133,7 @@ export class Device implements AsyncRequestHandler {
             this.serialPort.write(msg, (error: any, bytes: number) => {
 
                 if (error) reject(error);
-                // else logger(`bytes written: ${bytes}`);
+                else deviceLogger('bytes written: %d', bytes);
             });
 
             const intervalId = setInterval(() => {
@@ -147,7 +144,7 @@ export class Device implements AsyncRequestHandler {
                         clearInterval(intervalId);
                         resolve(res);
                     })
-                    .catch(error => deviceLogger('error: %O', error));
+                    .catch(ignored => { });
 
             }, this.options.ackInterval);
 
@@ -301,7 +298,7 @@ export class Proxy {
                     callback({
                         localId: this.config.path,
                         service: pin.service.name,
-                        index: idx,
+                        index: String(pin.index),
                         member: pin.service.property,
                         value: pin.service.state,
                         error: err,

@@ -86,7 +86,7 @@ export class SequenceLock {
 
     await(): Promise<Response> {
 
-        logger('await');
+        // logger('await');
         return new Promise<Response>((resolve, reject) => {
 
             if (this.prison.isLocked(this._sequence))

@@ -20,24 +20,24 @@ void setup()
   Serial.begin(BAUD_RATE);
 
   // 01 06 04 0d 01 c6 27 00
-//  recv[recvx++] = 0x01;
-//  recv[recvx++] = 0x06;
-//  recv[recvx++] = 0x04;
-//  recv[recvx++] = 0x0d;
-//  recv[recvx++] = 0x01;
-//  recv[recvx++] = 0xc6;
-//  recv[recvx++] = 0x27;
-//  retrieve();
+  //  recv[recvx++] = 0x01;
+  //  recv[recvx++] = 0x06;
+  //  recv[recvx++] = 0x04;
+  //  recv[recvx++] = 0x0d;
+  //  recv[recvx++] = 0x01;
+  //  recv[recvx++] = 0xc6;
+  //  recv[recvx++] = 0x27;
+  //  retrieve();
 
-//  const size_t encodedlen = 6;
-//  uint8_t encoded[encodedlen];
-//  encoded[0] = 0x01;
-//  encoded[1] = 0x04;
-//  encoded[2] = 0x04;
-//  encoded[3] = 0xF7;
-//  encoded[4] = 0x04;
-//  encoded[5] = 0x00;
-//  Serial.write(encoded, encodedlen);
+  //  const size_t encodedlen = 6;
+  //  uint8_t encoded[encodedlen];
+  //  encoded[0] = 0x01;
+  //  encoded[1] = 0x04;
+  //  encoded[2] = 0x04;
+  //  encoded[3] = 0xF7;
+  //  encoded[4] = 0x04;
+  //  encoded[5] = 0x00;
+  //  Serial.write(encoded, encodedlen);
 }
 
 void deliver(const uint8_t *src, const size_t sz)
@@ -93,23 +93,31 @@ void retrieve()
 
 void loop()
 {
-    while (Serial.available() > 0)
-    {
-      const uint8_t token = Serial.read();
+//  const size_t responselen = 2;
+//  uint8_t response[responselen];
+//  response[0] = sequence;
+//  response[1] = 0x4;
+//  deliver(response, responselen);
+//  delay(1000);
+
+
+      while (Serial.available() > 0)
+      {
+        const uint8_t token = Serial.read();
   
-      if (token == DELIMITER)
-      {
-        retrieve();
+        if (token == DELIMITER)
+        {
+          retrieve();
+        }
+        else if (recvx + 1 < BUFFER_SIZE)
+        {
+          recv[recvx++] = token;
+        }
+        else
+        {
+          // overflow
+        }
       }
-      else if (recvx + 1 < BUFFER_SIZE)
-      {
-        recv[recvx++] = token;
-      }
-      else
-      {
-        // overflow
-      }
-    }
 }
 
 void execute(const uint8_t *buf, const size_t sz)

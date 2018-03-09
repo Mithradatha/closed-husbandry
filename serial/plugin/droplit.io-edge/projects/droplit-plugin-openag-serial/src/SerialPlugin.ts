@@ -1,8 +1,8 @@
 import { DroplitPlugin, DeviceServiceMember } from 'droplit-plugin';
 import { setImmediate } from 'timers';
 import { Proxy as DeviceProxy } from './device';
-import { Config } from './config';
-import { Name } from './service';
+import { Config, Device as DeviceConfig } from './config';
+import { Name, DimmableSwitch } from './service';
 import * as debug from 'debug';
 const logger = debug('serial:serialplugin');
 
@@ -10,6 +10,27 @@ export class SerialPlugin extends DroplitPlugin {
 
     private config: Config = require('./config.json');
     private devices: { [path: string]: DeviceProxy } = {};
+
+    private services: any;
+
+    constructor() {
+        super();
+
+        this.services = {
+            BinarySwitch: {
+                get_switch: this.getSwitch,
+                set_switch: this.setSwitch,
+                switchOff: this.switchOff,
+                switchOn: this.switchOn
+            },
+            DimmableSwitch: {
+                get_brightness: this.getBrightness,
+                set_brightness: this.setBrightness,
+                stepDown: this.stepDown,
+                stepUp: this.stepUp
+            }
+        };
+    }
 
     public discover(): void {
 
@@ -81,7 +102,8 @@ export class SerialPlugin extends DroplitPlugin {
 
         setImmediate(() => {
 
-            this.devices[devicePath].get(Name.BinarySwitch, Number(index), callback);
+            this.devices[devicePath].get(Name.BinarySwitch,
+                Number(index), callback);
         });
 
         return true;
