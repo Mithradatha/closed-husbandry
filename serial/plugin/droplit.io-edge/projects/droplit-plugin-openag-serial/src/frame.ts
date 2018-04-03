@@ -17,6 +17,7 @@ export enum Id {
     Acknowledgement = 0x6
 }
 
+// Serializer
 export class Builder {
 
     private cobs: CobsEncoder;
@@ -28,6 +29,7 @@ export class Builder {
         this.fletcher = new FletcherEncoder();
     }
 
+    // serialize
     construct(request: Request, sequence: Sequence): Buffer {
 
         logger('construct(%O, %O)', request, sequence);
@@ -46,6 +48,7 @@ export class Builder {
         return buf;
     }
 
+    // deserialize
     destruct(buffer: Buffer, sequence: Sequence): Promise<Response> {
 
         logger('destruct(%O)', sequence);
