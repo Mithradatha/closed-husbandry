@@ -1,41 +1,20 @@
 import { DroplitPlugin, DeviceServiceMember } from 'droplit-plugin';
 import { setImmediate } from 'timers';
-import SerialDeviceProxy from './devices/SerialDeviceProxy';
-import log from './util/Logger';
-import PinOptions from './pins/PinOptions';
-
-const DEVICE_SERVICES: string[] = ['BinarySwitch', 'DimmableSwitch'];
-const DEVICE_MEMBERS: { [name: string]: string } = {
-    BinarySwitch: 'switch',
-    DimmableSwitch: 'brightness'
-};
-
-const PINS: { [index: string]: PinOptions } = {
-    13: {
-        direction: 'Output',
-        service: 'DimmableSwitch',
-        member: 'brightness',
-        state: 100
-    },
-    9: {
-        direction: 'Input',
-        service: 'BinarySwitch',
-        member: 'switch',
-        state: 'off'
-    }
-};
+import { Proxy as DeviceProxy } from './device';
+import { Config } from './config';
+import { Name as Service } from './service';
+import * as debug from 'debug';
+const logger = debug('serial:serialplugin');
 
 export class SerialPlugin extends DroplitPlugin {
 
-    private devices: { [path: string]: SerialDeviceProxy };
+    private config: Config = require('./config.json');
+    private devices: { [path: string]: DeviceProxy } = {};
 
     private services: any;
 
-    public constructor() {
-
+    constructor() {
         super();
-
-        this.devices = {};
 
         this.services = {
             BinarySwitch: {
@@ -49,48 +28,67 @@ export class SerialPlugin extends DroplitPlugin {
                 set_brightness: this.setBrightness,
                 stepDown: this.stepDown,
                 stepUp: this.stepUp
+            },
+            FakeSchedule: {
+                schedule: this.schedule
             }
         };
     }
 
     public discover(): void {
 
-        log('discover');
+        logger('discover');
 
-        const devicePaths: string[] = SerialDeviceProxy.Discover();
+        DeviceProxy.Discover().then(devicePaths => {
 
-        devicePaths.forEach(devicePath => {
+            logger('device paths: %O', devicePaths);
 
-            if (!this.devices[devicePath]) {
+            devicePaths.forEach(devicePath => {
 
-                const device = new SerialDeviceProxy(devicePath, PINS);
+                if (!this.devices[devicePath]) {
 
-                device.connect().then((devicePath: string) => {
+                    logger('config: %O', this.config);
 
-                    this.onDeviceInfo({
-                        localId: devicePath,
-                        address: devicePath,
-                        services: DEVICE_SERVICES,
-                        promotedMembers: DEVICE_MEMBERS,
-                        timestamp: new Date()
-                    });
+                    const supportedDevices = this.config.devices.filter((device => device.path === devicePath));
 
-                    this.devices[devicePath] = device;
+                    if (supportedDevices.length > 0) {
 
-                    device.initialize((properties: DeviceServiceMember) => {
-                        this.onPropertiesChanged([properties]);
+                        const proxyConfig = supportedDevices[0];
+                        logger('proxyConfig: %O', proxyConfig);
 
-                        this.onDiscoverComplete();
-                    });
+                        const device = new DeviceProxy(proxyConfig);
+                        const services: { [name: string]: boolean } = {};
 
-                }).catch(ignore => this.onDiscoverComplete());
-            }
+                        proxyConfig.pins.forEach(pin => {
+                            services[pin.service.name] = true;
+                        });
+
+                        device.connect().then(() => {
+
+                            this.onDeviceInfo({
+                                localId: devicePath,
+                                address: devicePath,
+                                // services: Object.keys(services),
+                                services: ['BinarySwitch', 'DimmableSwitch', 'FakeSchedule'],
+                                timestamp: new Date()
+                            });
+
+                            this.devices[devicePath] = device;
+
+                            device.initialize((properties: DeviceServiceMember) => {
+                                this.onPropertiesChanged([properties]);
+                            }).then(() => this.onDiscoverComplete());
+
+                        }).catch(ignore => this.onDiscoverComplete());
+                    }
+                }
+            });
         });
     }
 
     public dropDevice(localId: string): boolean {
 
-        log('dropDevice');
+        logger('dropDevice');
 
         const device = this.devices[localId];
         if (device) device.disconnect();
@@ -100,15 +98,15 @@ export class SerialPlugin extends DroplitPlugin {
 
     protected getSwitch(devicePath: string, callback: (_switch: string) => void, index: string): boolean {
 
-        log('getSwitch');
+        logger('getSwitch');
 
-        log(`localId: ${devicePath}, callback: ${callback}, index: ${index}`);
+        logger(`localId: ${devicePath}, callback: ${callback}, index: ${index}`);
 
         if (!this.devices[devicePath]) return false;
 
         setImmediate(() => {
 
-            this.devices[devicePath].get('BinarySwitch',
+            this.devices[devicePath].get(Service.BinarySwitch,
                 Number(index), callback);
         });
 
@@ -117,21 +115,21 @@ export class SerialPlugin extends DroplitPlugin {
 
     protected setSwitch(devicePath: string, _switch: string, index: string): boolean {
 
-        log('setSwitch');
+        logger('setSwitch');
 
-        log(`localId: ${devicePath}, value: ${_switch}, index: ${index}`);
+        logger(`localId: ${devicePath}, value: ${_switch}, index: ${index}`);
 
         const device = this.devices[devicePath];
         const pin = Number(index);
 
         if (!device || !(_switch === 'on' || _switch === 'off')) return false;
 
-        log('devices.set');
+        logger('devices.set');
 
-        this.devices[devicePath].set('BinarySwitch', pin, _switch,
+        this.devices[devicePath].set(Service.BinarySwitch, pin, _switch,
             (err?: Error, previousValue?: string) => {
 
-                log(`err: ${err}, val: ${previousValue}`);
+                logger(`err: ${err}, val: ${previousValue}`);
 
                 if (previousValue !== _switch) {
 
@@ -152,33 +150,33 @@ export class SerialPlugin extends DroplitPlugin {
 
     protected switchOff(devicePath: string, value: any, callback: (_switch: any) => void, index: string): boolean {
 
-        log('switchOff');
+        logger('switchOff');
 
-        log(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
+        logger(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
 
         return this.setSwitch(devicePath, 'off', index);
     }
 
     protected switchOn(devicePath: string, value: any, callback: (_switch: any) => void, index: string): boolean {
 
-        log('switchOn');
+        logger('switchOn');
 
-        log(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
+        logger(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
 
         return this.setSwitch(devicePath, 'on', index);
     }
 
     protected getBrightness(devicePath: string, callback: (_brightness: number) => void, index: string): boolean {
 
-        log('getBrightness');
+        logger('getBrightness');
 
-        log(`localId: ${devicePath}, callback: ${callback}, index: ${index}`);
+        logger(`localId: ${devicePath}, callback: ${callback}, index: ${index}`);
 
         if (!this.devices[devicePath]) return false;
 
         setImmediate(() => {
 
-            this.devices[devicePath].get('DimmableSwitch',
+            this.devices[devicePath].get(Service.DimmableSwitch,
                 Number(index), callback);
         });
 
@@ -187,20 +185,20 @@ export class SerialPlugin extends DroplitPlugin {
 
     protected setBrightness(devicePath: string, _brightness: number, index: string): boolean {
 
-        log('setBrightness');
+        logger('setBrightness');
 
-        log(`localId: ${devicePath}, value: ${_brightness}, index: ${index}`);
+        logger(`localId: ${devicePath}, value: ${_brightness}, index: ${index}`);
 
         const device = this.devices[devicePath];
         const pin = Number(index);
 
         if (!device || (_brightness < 0 || _brightness > 100)) {
 
-            log('value out of expected range');
+            logger('value out of expected range');
             return false;
         }
 
-        this.devices[devicePath].set('DimmableSwitch', pin, _brightness,
+        this.devices[devicePath].set(Service.DimmableSwitch, pin, _brightness,
             (err?: Error, previousValue?: number) => {
 
                 if (previousValue !== _brightness) {
@@ -222,9 +220,9 @@ export class SerialPlugin extends DroplitPlugin {
 
     protected stepDown(devicePath: string, value: number, callback: (_brightness: number) => void, index: string): boolean {
 
-        log('stepDown');
+        logger('stepDown');
 
-        log(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
+        logger(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
 
         // if (value - 10 < 0)
         //     value = 0;
@@ -236,9 +234,9 @@ export class SerialPlugin extends DroplitPlugin {
 
     protected stepUp(devicePath: string, value: number, callback: (_brightness: number) => void, index: string): boolean {
 
-        log('stepUp');
+        logger('stepUp');
 
-        log(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
+        logger(`localId: ${devicePath}, value: ${value}, callback: ${callback}, index: ${index}`);
 
         // if (value + 10 > 100)
         //     value = 100;
@@ -246,5 +244,58 @@ export class SerialPlugin extends DroplitPlugin {
         //     value += 10;
 
         return this.setBrightness(devicePath, value, index);
+    }
+
+    protected async schedule(devicePath: string, sequence: string, callback: (val: any) => void, index: string): Promise<boolean> {
+
+        logger('schedule');
+
+        logger(`localId: ${devicePath}, value: ${sequence}, callback: ${callback}, index: ${index}`);
+
+        // remove brackets
+        const brackets = /[[\]]/g;
+        const unbracketedItems = sequence.replace(brackets, '');
+
+        logger(`unbracketedItems: ${unbracketedItems}`);
+
+        const items: string[] = unbracketedItems.split(',');
+        logger(`items: ${items}`);
+
+        for (const item of items) {
+
+            const separator = /[.=]/g;
+            const service = item.split(separator);
+            logger(`service: ${service}`);
+
+            const name = service[0];
+            const index = service[1];
+            const value = service[2];
+
+            logger(`name: ${name}, index: ${index}, value: ${value}`);
+
+            switch (name) {
+
+                case Service.BinarySwitch:
+
+                    logger(`calling setSwitch @${new Date()}`);
+                    this.setSwitch(devicePath, value, index);
+                    break;
+
+                case Service.DimmableSwitch:
+
+                    logger(`calling setBrightness @${new Date()}`);
+                    this.setBrightness(devicePath, Number(value), index);
+                    break;
+
+                default: logger('No service names matched');
+            }
+
+            const delay = () =>
+                new Promise(resolve => setTimeout(resolve, 1000));
+
+            await delay();
+        }
+
+        return true;
     }
 }

@@ -1,25 +1,31 @@
 {
-    "name": "droplit-plugin-openag-serial",
-    "description": "Open Agriculture Serial Plugin",
-    "author": "Open Agriculture",
-    "version": "2.0.0",
-    "private": false,
-    "contributors": [{
-        "name": "Samuel Kellar",
-        "email": "skellar2014@my.fit.edu"
-    }],
-    "main": "index.js",
-    "eslintConfig": {
-        "env": {
-            "es6": true,
-            "node": true
-        }
-    },
-    "dependencies": {
-        "droplit-plugin": "../droplit-plugin",
-        "serialport": "^6.0.4"
-    },
-    "devDependencies": {
-        "@types/serialport": "^6.0.0"
+  "name": "droplit-plugin-openag-serial",
+  "description": "Open Agriculture Serial Plugin",
+  "author": "Open Agriculture",
+  "version": "2.0.0",
+  "private": false,
+  "contributors": [
+    {
+      "name": "Samuel Kellar",
+      "email": "skellar2014@my.fit.edu"
     }
+  ],
+  "main": "index.js",
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true
+    }
+  },
+  "dependencies": {
+    "async": "^2.6.0",
+    "debug": "^3.1.0",
+    "droplit-plugin": "../droplit-plugin",
+    "serialport": "^6.1.1"
+  },
+  "devDependencies": {
+    "@types/async": "^2.0.47",
+    "@types/debug": "0.0.30",
+    "@types/serialport": "^6.0.1"
+  }
 }
